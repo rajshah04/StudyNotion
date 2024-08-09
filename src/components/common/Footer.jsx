@@ -3,7 +3,6 @@ import logo from "../../assets/Logo/Logo-Full-Light.png" ;
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaGoogle, FaTwitter, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 import { FooterLink2 } from "../../data/footer-links" ;
-import { HiHeart } from 'react-icons/hi';
 
 const Resources = [
   "Articles",
@@ -145,7 +144,7 @@ const Footer = () => {
           </div>
 
           {/* Section 2 */}
-{/* 
+
           <div className='lg:w-[50%] flex flex-wrap flex-row justify-between pl-3 lg:pl-5 gap-3'>
             {FooterLink2.map((ele, i) => {
               return (
@@ -169,7 +168,7 @@ const Footer = () => {
                 </div>
               ) ;
             })}
-          </div> */}
+          </div>
 
         </div>
 
