@@ -174,6 +174,33 @@ const Footer = () => {
 
       </div>
 
+      <div className='flex flex-row items-center justify-between w-11/12 max-w-maxContent text-richblack-400 mx-auto pb-14 text-sm'>
+        
+        {/* Section 1 */}
+        <div className='flex justify-between lg:items-start items-center flex-col lg:flex-row gap-3 w-full'>
+
+          <div className='flex flex-row'>  
+            {BottomFooter.map((ele, index) => {
+              return (
+                <div key={index} className={` ${BottomFooter.length - 1 === index
+                  ? ""
+                  : "border-r border-richblack-700 cursor-pointer hover:text-richblack-50 transition-all duration-200"
+                } px-3`}>
+                  <Link to={ele.split(" ").join("-").toLowerCase()}>
+                    {ele}
+                  </Link>
+                </div>
+              ) ;
+            })}
+          </div>
+
+          <div className='text-center'>
+            Made with ❤️ © 2024 Studynotion
+          </div>
+
+        </div>
+      </div>
+
     </div>
   )
 }
