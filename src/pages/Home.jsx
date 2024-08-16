@@ -50,12 +50,42 @@ const Home = () => {
                 </video>
             </div>
 
+            {/* Code Section 1 */}
+            <div>
+                {/* TODO -- done : try making 2 different codes to display in the section */}
+                <CodeBlocks 
+                position={"lg:flex-row"} 
+                heading={<h1 className='text-white font-semibold text-4xl'>Unlock your <HighlightText text={"coding potential"} /> with our online courses. </h1>} 
+                subheading={"Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."}
+                ctabtn1={
+                    {
+                        text: "Try it Yourself",
+                        linkto: "/login",
+                        active: true
+                    }
+                }
+                ctabtn2={
+                    {
+                        text: "Learn More",
+                        linkto: "/signup",
+                        active: false
+                    }
+                } 
+                
+                codeblock={
+                    `<!DOCTYPE html> \n<html>\n <head>\n <title>My First Webpage</title>\n <link rel="stylesheet" href="styles.css">\n </head>\n <body>\n <h1> <a href="/"> Header </a>\n </h1>\n <nav><a href="one/"> One </a> <a href="two/"> Two </a> <a href="three/"> Three </a> \n </nav>\n </body>\n </html> `
+                } 
+                codeColor={`text-yellow-25`}
+                backgroundGradient={<div className='codeblock1 absolute'> </div>}
+                />
+
+            </div>
+        
         </div>
         
-        
         {/* Section 2 */}
-        
-        
+
+
         {/* Section 3 */}
         
         
