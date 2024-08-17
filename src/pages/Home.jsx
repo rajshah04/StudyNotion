@@ -79,13 +79,53 @@ const Home = () => {
                 backgroundGradient={<div className='codeblock1 absolute'> </div>}
                 />
 
+                {/* Code Section 2 */}
+
+                <CodeBlocks 
+                position={"lg:flex-row-reverse"} 
+                heading={<h1 className='text-white font-semibold text-4xl'>Start <HighlightText text={"coding in seconds."} /></h1>} 
+                subheading={"Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."}
+                ctabtn1={
+                    {
+                        text: "Continue Lesson",
+                        linkto: "/login",
+                        active: true
+                    }
+                }
+                ctabtn2={
+                    {
+                        text: "Learn More",
+                        linkto: "/signup",
+                        active: false
+                    }
+                } 
+                
+                codeblock={
+                    `import React from "react" ;
+                    import { FaArrowRight } from "react-icons/fa" ;
+                    
+                    const Home = () => {
+
+                    return (
+                            <div className="flex justify-center items-center">
+                            <h1> Learn React </h1>
+                            <FaArrowRight />
+                            </div>
+                        ) ;
+                    }
+
+                    export default Home ;`
+                } 
+                codeColor={`text-white`}
+                backgroundGradient={<div className='codeblock2 absolute'> </div>}
+                />
             </div>
-        
+
         </div>
-        
+
         {/* Section 2 */}
-
-
+        
+        
         {/* Section 3 */}
         
         
