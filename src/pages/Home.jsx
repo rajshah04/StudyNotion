@@ -8,6 +8,8 @@ import CodeBlocks from '../components/core/HomePage/CodeBlocks';
 import Footer from '../components/common/Footer';
 import TimeLineSection from '../components/core/HomePage/TimeLineSection' ;
 import LearningLanguageSection from '../components/core/HomePage/LearningLanguageSection';
+import InstructorSection from '../components/core/HomePage/InstructorSection';
+import ExploreMoreSection from '../components/core/HomePage/ExploreMoreSection';
 
 const Home = () => {
   return (
@@ -24,12 +26,12 @@ const Home = () => {
                 </div>
             </Link>
 
-            <div className='text-center text-4xl font-semibold mt-7'>
+            <div className='text-left lg:text-center text-4xl font-semibold mt-7'>
                 {/* <h1>Empower Your Future with <span className=''>Coding Skills</span></h1> */}
                 <h1>Empower Your Future with <HighlightText text="Coding Skills" /></h1>
             </div>
 
-            <div className='mt-7 text-center w-[90%] text-richblack-300 text-lg font-bold'>
+            <div className='mt-7 text-left lg:text-center lg:w-[90%] text-richblack-300 text-lg font-bold'>
                 <p>With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors.</p>
             </div>
 
@@ -44,8 +46,8 @@ const Home = () => {
             </div>
 
             {/* video */}
-            <div className='mx-6 my-12 shadow-[10px_-5px_50px_-5px] shadow-blue-200'>
-                <video className="shadow-[25px_25px_rgba(255,255,255)]" autoPlay muted loop>
+            <div className='mx-1 lg:mx-6 my-12 shadow-[10px_-5px_50px_-5px] shadow-blue-200'>
+                <video className="shadow-[10px_10px_rgba(255,255,255)] lg:shadow-[25px_25px_rgba(255,255,255)]" autoPlay muted loop>
                     <source src={Banner} type='video/mp4' />
                 </video>
             </div>
@@ -54,7 +56,7 @@ const Home = () => {
             <div>
                 {/* TODO -- done : try making 2 different codes to display in the section */}
                 <CodeBlocks 
-                position={"lg:flex-row"} 
+                position={"flex-col lg:flex-row"} 
                 heading={<h1 className='text-white font-semibold text-4xl'>Unlock your <HighlightText text={"coding potential"} /> with our online courses. </h1>} 
                 subheading={"Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."}
                 ctabtn1={
@@ -121,6 +123,9 @@ const Home = () => {
                 />
             </div>
 
+            {/* Explore More Section */}
+            <ExploreMoreSection />
+
         </div>
 
         {/* Section 2 */}
@@ -128,7 +133,7 @@ const Home = () => {
             <div className="homepage_bg h-[320px]">
                 {/* Explore Full Catagory Section */}
                 <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
-                    <div className="lg:h-[150px]"></div>
+                    <div className="lg:h-[90px]"></div>
                     <div className="flex flex-row gap-7 text-white lg:mt-8">
                         <CTAButton active={true} linkto={"/signup"}>
                             <div className="flex items-center gap-2">
@@ -146,7 +151,7 @@ const Home = () => {
             <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
                 {/* Job that is in Demand - Section 1 */}
                 <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
-                    <div className="text-4xl font-semibold lg:w-[45%] ">
+                    <div className="text-4xl font-semibold lg:w-[45%] text-richblack-900">
                         Get the skills you need for a{" "}
                         <HighlightText text={"job that is in demand."} />
                     </div>
@@ -173,7 +178,15 @@ const Home = () => {
         </div>
         
         {/* Section 3 */}
-        
+        <div className='relative mx-auto flex flex-col gap-y-8 w-11/12 max-w-maxContent text-white items-center justify-between my-10'>
+
+            <InstructorSection />
+            
+            <h2 className='font-semibold text-4xl'>Reviews from other learners</h2>
+           
+            {/* reviews part*/}
+
+        </div>
         
         {/* Footer */}
         <Footer />
