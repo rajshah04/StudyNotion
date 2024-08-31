@@ -54,3 +54,8 @@ html, body {
   filter: blur(34px);
   transform: matrix(1, 0, -0.03, 1, 0, 0);
 }
+
+.homepage_bg {
+  background-image: url('./assets/Images/bghome.svg');
+  background-size: auto;
+}

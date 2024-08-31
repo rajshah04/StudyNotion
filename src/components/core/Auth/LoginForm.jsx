@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../../services/operations/authAPI';
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false) ;
@@ -20,12 +22,16 @@ const LoginForm = () => {
         })) ;
     }
 
-    const submitHandler = (e) => {
+    const dispatch = useDispatch() ;
+    const navigate = useNavigate() ;
 
+    const submitHandler = (e) => {
+        e.preventDefault() ;
+        dispatch(login(email, password, navigate)) ;
     }
 
-    console.log(accountType) ;
-    console.log(formData) ;
+    // console.log(accountType) ;
+    // console.log(formData) ;
 
     return (
         <form className='mt-6 flex w-full flex-col gap-y-4' onSubmit={submitHandler}>
