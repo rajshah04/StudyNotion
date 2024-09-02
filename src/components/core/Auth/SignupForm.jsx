@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import {countryCode} from '../../../data/countrycode.json';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { sendotp, signup } from '../../../services/operations/authAPI';
+// import { setSignupData } from '../../../slices/authSlice';
 
 const SignupForm = () => {
     const [countryCode, setCountryCode] = useState("+91") ;
@@ -26,12 +30,19 @@ const SignupForm = () => {
         })) ;
     }
 
-    const submitHandler = (e) => {
+    const dispatch = useDispatch() ;
+    const navigate = useNavigate() ;
 
+    const submitHandler = (e) => {
+        e.preventDefault() ;
+        dispatch(signup(accountType, firstName, lastName, email, password, confirmPassword, navigate)) ;
+
+        // dispatch(setSignupData(formData)) ;
+        dispatch(sendotp(formData.email, navigate)) ;
     }
 
-    console.log(accountType) ;
-    console.log(formData) ;
+    // console.log(accountType) ;
+    // console.log(formData) ;
 
     return (
         <form className='mt-6 flex w-full flex-col gap-y-4' onSubmit={submitHandler}>

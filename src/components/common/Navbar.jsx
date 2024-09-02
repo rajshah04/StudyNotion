@@ -116,11 +116,13 @@ const Navbar = () => {
                     {
                         user && user?.accountType != "Instructor" && (
                             <Link to="/dashboard/cart" className='relative'>
-                                <AiOutlineShoppingCart className='text-richblack-5' size={25} />
+                                <AiOutlineShoppingCart className='text-richblack-5' size={26} />
                                 {
                                     totalItems > 0 && (
-                                        <span>
-                                            {totalItems}
+                                        <span className='absolute -top-2 -right-1 bg-richblack-5 rounded-full w-5 h-5 animate-bounce flex items-center justify-center'>
+                                            <p className='text-richblack-900 text-sm font-semibold'>
+                                                {totalItems}
+                                            </p>
                                         </span>
                                     )
                                 }

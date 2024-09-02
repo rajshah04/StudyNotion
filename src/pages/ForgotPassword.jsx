@@ -19,7 +19,7 @@ const ForgotPassword = () => {
     return (
         <div className='flex justify-center items-center mx-auto h-[90vh] text-richblack-5 w-96'>
             {
-                !loading ?
+                loading ?
                 (
                     <div>
                         Loading...
@@ -55,7 +55,7 @@ const ForgotPassword = () => {
                                 )
                             }
 
-                            <button type='submit' className='bg-yellow-100 text-richblack-900 border-b-2 border-r-2 border-yellow-25 rounded-md px-4 py-2 mt-6'>
+                            <button type='submit' className='bg-yellow-100 text-richblack-900 border-b-2 border-r-2 border-yellow-25 rounded-md px-4 py-2 mt-6 font-medium'>
                                 {
                                     emailSent ? "Resend Email"
                                     : "Reset Password"

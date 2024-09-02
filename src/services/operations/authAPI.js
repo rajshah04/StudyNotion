@@ -20,6 +20,7 @@ export function login(email, password, navigate){
             // console.log(response.data.token) ;
 
             if(!response.data.success){
+                // toast.error(response.response.data.message) ;
                 throw new Error(response.data.message) ;
             }
 
@@ -36,7 +37,7 @@ export function login(email, password, navigate){
         }
         catch(err){
             console.log("LOGIN API ERROR............", err) ;
-            toast.error("Login Failed") ;
+            toast.error(err.response.data.message) ;
         }
 
         dispatch(setLoading(false)) ;
@@ -165,7 +166,7 @@ export function resetPassword(token, password, confirmPassword){
         try{
             const response = await apiConnector("POST", RESETPASSWORD_API, {token, password, confirmPassword}) ;
 
-            console.log(response) ;
+            console.log("RESET PASSWORD API RESPONSE ---> ", response) ;
 
             if(!response.data.success){
                 throw new Error(response.data.message) ;

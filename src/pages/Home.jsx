@@ -15,10 +15,10 @@ const Home = () => {
   return (
     <div>
         {/* Section 1 */}
-        <div className='relative mx-auto flex flex-col w-11/12 max-w-maxContent text-white items-center justify-between'>
+        <div className='relative mx-auto flex flex-col w-11/12 max-w-maxContent text-white items-center justify-between py-8'>
 
             <Link to={"/signup"} >
-                <div className='group mt-16 p-1 mx-auto bg-richblack-800 font-bold text-richblack-200 rounded-full transition-all duration-200 hover:scale-95 w-fit border-b-2 border-richblack-700 hover:border-0'>
+                <div className='group p-1 mx-auto bg-richblack-800 font-bold text-richblack-200 rounded-full transition-all duration-200 hover:scale-95 w-fit border-b-2 border-richblack-700 hover:border-0'>
                     <div className='flex flex-row items-center gap-3 px-6 py-[5px] rounded-full transition-all duration-200 group-hover:bg-richblack-900'>
                         <p>Become an Instructor</p>
                         <FaArrowRight />    
