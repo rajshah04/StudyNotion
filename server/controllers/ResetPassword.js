@@ -14,7 +14,8 @@ exports.resetPasswordToken = async(req, res) => {
         if(!user){
             return res.status(401).json({
                 success: false,
-                message: `This Email: ${email} is not Registered With Us. Please enter a valid Email `
+                // message: `This email: ${email} is not registered with us. Please enter a valid email. `
+                message: `This email address is not registered with us. Please enter a valid email address.`
             }) ;
         }
 
@@ -43,7 +44,7 @@ exports.resetPasswordToken = async(req, res) => {
         // send mail containing the url
         const title = "Password Reset Link" ;
 
-        const result = await mailSender(email, title, `Password Reset Link: ${url}`) ;
+        const result = await mailSender(email, title, `Password Reset Link: ${url} . Please click on this url to reset your password.`) ;
 
         console.log("Result of sending password reset link in mail", result) ;
 
