@@ -6,7 +6,7 @@ import { resetPassword } from '../services/operations/authAPI';
 
 const UpdatePassword = () => {
     const dispatch = useDispatch() ;
-    const loading = useSelector( (state) => state.auth) ;
+    const { loading } = useSelector( (state) => state.auth) ;
 
     const [showPassword, setShowPassword] = useState(false) ;
     const [showConfirmPassword, setShowConfirmPassword] = useState(false) ;

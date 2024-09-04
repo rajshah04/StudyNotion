@@ -4,7 +4,8 @@ import {countryCode} from '../../../data/countrycode.json';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { sendotp, signup } from '../../../services/operations/authAPI';
-// import { setSignupData } from '../../../slices/authSlice';
+import { setSignupData } from '../../../slices/authSlice';
+import { ACCOUNT_TYPE } from '../../../utils/constants';
 
 const SignupForm = () => {
     const [countryCode, setCountryCode] = useState("+91") ;
@@ -19,7 +20,7 @@ const SignupForm = () => {
         confirmPassword: ""
     }) ;
 
-    const [accountType, setAccountType] = useState("Student") ;
+    const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT) ;
 
     const {firstName, lastName, email, phoneNo, password, confirmPassword} = formData ;
 
@@ -35,21 +36,38 @@ const SignupForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault() ;
-        dispatch(signup(accountType, firstName, lastName, email, password, confirmPassword, navigate)) ;
 
+        const signupData = {
+            ...formData,
+            accountType
+        } ;
+
+        dispatch(setSignupData(signupData)) ;
+
+        // dispatch(signup(accountType, firstName, lastName, email, password, confirmPassword, navigate)) ;
         // dispatch(setSignupData(formData)) ;
         dispatch(sendotp(formData.email, navigate)) ;
+
+        setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNo: "",
+            password: "",
+            confirmPassword: ""
+        }) ;
+
+        console.log(accountType) ;
+        console.log(formData) ;
     }
 
-    // console.log(accountType) ;
-    // console.log(formData) ;
 
     return (
         <form className='mt-6 flex w-full flex-col gap-y-4' onSubmit={submitHandler}>
 
             <div className='my-2 p-1 hidden lg:flex justify-center items-center bg-richblack-800 border-richblack-600 border-b-2 rounded-full text-richblack-300 font-medium w-fit'>
-                <h1 className={`${accountType === "Student" ? "bg-richblack-900 text-white border-white rounded-full" : ""} cursor-pointer transition-all duration-200 gap-9 hover:text-richblack-5 hover:bg-richblack-900 hover:rounded-full px-8 py-2`} onClick={() => setAccountType("Student")}>Student</h1>
-                <h1 className={`${accountType === "Instructor" ? "bg-richblack-900 text-white border-white rounded-full" : ""} cursor-pointer transition-all duration-200 gap-9 hover:text-richblack-5 hover:bg-richblack-900 hover:rounded-full px-8 py-2`} onClick={() => setAccountType("Instructor")}>Instructor</h1>
+                <h1 className={`${accountType === ACCOUNT_TYPE.STUDENT ? "bg-richblack-900 text-white border-white rounded-full" : ""} cursor-pointer transition-all duration-200 gap-9 hover:text-richblack-5 hover:bg-richblack-900 hover:rounded-full px-8 py-2`} onClick={() => setAccountType(ACCOUNT_TYPE.STUDENT)}>Student</h1>
+                <h1 className={`${accountType === ACCOUNT_TYPE.INSTRUCTOR ? "bg-richblack-900 text-white border-white rounded-full" : ""} cursor-pointer transition-all duration-200 gap-9 hover:text-richblack-5 hover:bg-richblack-900 hover:rounded-full px-8 py-2`} onClick={() => setAccountType(ACCOUNT_TYPE.INSTRUCTOR)}>Instructor</h1>
             </div>
 
             {/* Name div */}
