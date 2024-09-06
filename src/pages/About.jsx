@@ -7,7 +7,8 @@ import Quote from '../components/core/AboutPage/Quote';
 import FoundingStory from '../assets/Images/FoundingStory.png';
 import Stats from '../components/core/AboutPage/Stats';
 import LearningGridSection from '../components/core/AboutPage/LearningGridSection';
-
+import Footer from '../components/common/Footer';
+import ContactFormSection from '../components/core/AboutPage/ContactFormSection';
 
 const About = () => {
   return (
@@ -98,10 +99,18 @@ const About = () => {
 
         <Stats />
         
-        <section className="mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-white">
+        <section className="mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between items-center gap-10 text-richblack-5">
             <LearningGridSection />
+            <ContactFormSection />
         </section>
 
+        <section className="mx-auto my-20 flex w-11/12 max-w-maxContent flex-col justify-between items-center gap-10 text-white">
+            <h1 className='font-semibold text-4xl'>
+                Reviews from other learners
+            </h1>
+        </section>
+
+        <Footer />    
 
     </div>
   )

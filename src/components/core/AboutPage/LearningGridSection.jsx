@@ -71,8 +71,9 @@ const LearningGridSection = () => {
                             </div>
                         )
                         : (
-                            <div className='p-8 flex flex-col gap-10 items-stretch'>
-                                <h1 className="text-richblack-5 text-xl font-semibold max-w-xs">
+                            // <div className={`p-10 flex flex-col ${card.order !== 1 ? "gap-[68px]" : "gap-10"} `}>
+                            <div className={`p-10 flex flex-col gap-10`}>
+                                <h1 className="text-richblack-5 text-xl font-semibold">
                                     {card.heading}
                                 </h1>
 
