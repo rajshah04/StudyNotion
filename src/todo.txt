@@ -10,8 +10,9 @@
 10. add phone number to the signup form and also to the backend and try sending sms
 11. try to add the feature where the one to check the website does not need to add his/her email address and can check the website with both accountType - student as well as instructor
 12. watch the whole video again and do h.w. -- add dashboard, logout button -- done 
-13. try creating the fully functioning update-password page from figma file 
+13. try creating the fully functioning update-password page from figma file -- done
 14. try adding conditions to the passwords in update-password and also try to implement those conditions in the signup page as well
-15. try making the verify-email page
-16. make the verify-email page fully functional
+15. try making the verify-email page -- done
+16. make the verify-email page fully functional -- done
 17. also add time limit to resend the email of 30 seconds
+18. create form as it is, then make changes according to contact us page and about page -- done
