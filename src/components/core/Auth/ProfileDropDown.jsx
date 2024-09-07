@@ -38,13 +38,13 @@ const ProfileDropDown = () => {
         <div className={`${openBox ? "visible opacity-100" : "invisible opacity-0" } absolute left-[50%] -translate-x-[80%] translate-y-[30%] top-[50%] flex flex-col rounded-md bg-richblack-100 text-richblack-900 p-2 w-44 z-50`} ref={ref} onClick={(e) => e.stopPropagation()}>
 
         <Link to="/dashboard">
-          <div className='flex items-center gap-2 py-2 px-3 hover:bg-richblack-900 hover:text-richblack-5 hover:rounded-md'>
+          <div className='flex items-center gap-2 py-2 px-3 hover:bg-richblack-700 hover:text-richblack-5 hover:rounded-md'>
             <VscDashboard className='text-xl' />
             Dashboard
           </div>
         </Link>
 
-        <div className='flex items-center gap-2 py-2 px-3 hover:bg-richblack-900 hover:text-richblack-5 hover:rounded-md' 
+        <div className='flex items-center gap-2 py-2 px-3 hover:bg-richblack-700 hover:text-richblack-5 hover:rounded-md' 
         onClick={() => {
           // function to logout
           dispatch(logout(navigate)) ;

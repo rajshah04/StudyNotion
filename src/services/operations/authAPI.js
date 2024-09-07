@@ -33,6 +33,7 @@ export function login(email, password, navigate){
             dispatch(setUser({...response.data.user, image: userImage})) ;
 
             localStorage.setItem("token", JSON.stringify(response.data.token)) ;
+            localStorage.setItem("user", JSON.stringify(response.data.user)) ;
             navigate("/dashboard/my-profile") ;
         }
         catch(err){
@@ -117,7 +118,7 @@ export function logout(navigate){
         dispatch(setUser(null)) ;
         
         // TODO : function to reset cart
-
+        localStorage.removeItem("user") ;
         localStorage.removeItem("token") ;
         toast.success("Logged Out") ;
         navigate("/") ;
