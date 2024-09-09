@@ -16,7 +16,7 @@ export function login(email, password, navigate){
         try{
             const response = await apiConnector("POST", LOGIN_API, {email, password}) ;
 
-            console.log("LOGIN API RESPONSE ----> ", response) ;
+            // console.log("LOGIN API RESPONSE ----> ", response) ;
             // console.log(response.data.token) ;
 
             if(!response.data.success){
@@ -32,6 +32,8 @@ export function login(email, password, navigate){
             : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}` ;
             dispatch(setUser({...response.data.user, image: userImage})) ;
 
+            // console.log("Printing USER info", response.data.user) ;
+            
             localStorage.setItem("token", JSON.stringify(response.data.token)) ;
             localStorage.setItem("user", JSON.stringify(response.data.user)) ;
             navigate("/dashboard/my-profile") ;
