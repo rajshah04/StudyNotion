@@ -8,9 +8,11 @@ const Dashboard = () => {
     const { loading: profileLoading} = useSelector((state) => state.auth) ;
 
     if(authLoading || profileLoading){
-        return <div className='text-white text-4xl mt-10'>
-            Loading...
-        </div>
+        return (
+            <div className='w-[100vw] h-[calc(100vh-3.5rem)] grid place-items-center'>
+                <div className='custom-loader' />
+            </div>
+        )
     }
     
     return (

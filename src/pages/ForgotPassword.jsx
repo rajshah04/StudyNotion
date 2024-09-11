@@ -21,8 +21,8 @@ const ForgotPassword = () => {
             {
                 loading ?
                 (
-                    <div>
-                        Loading...
+                    <div className='w-[100vw] h-[calc(100vh-3.5rem)] grid place-items-center'>
+                        <div className='custom-loader' />
                     </div>
                 ) :
                 (

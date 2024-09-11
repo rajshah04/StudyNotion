@@ -39,8 +39,8 @@ const UpdatePassword = () => {
         <div className='flex justify-center items-center mx-auto h-[90vh] text-richblack-5 w-96'>
             {
                 loading ? (
-                    <div>
-                        Loading...
+                    <div className='w-[100vw] h-[calc(100vh-3.5rem)] grid place-items-center'>
+                        <div className='custom-loader' />
                     </div>
                 ) 
                 : (
