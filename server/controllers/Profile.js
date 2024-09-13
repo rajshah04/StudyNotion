@@ -17,10 +17,11 @@ exports.updateProfile = async(req, res) => {
         console.log(req.user) ;
 
         // validate data - no need
-        if(!gender || !contactNumber || !userId){
+        // if(!gender || !contactNumber || !userId){
+        if(!gender || !userId){
             return res.status(400).json({
                 success: false,
-                message: "Gender and Contact No. both are required."
+                message: "Gender and User both are required."
             }) ;
         }
 

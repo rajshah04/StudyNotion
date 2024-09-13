@@ -20,6 +20,7 @@ const EditProfileInfo = () => {
     } = useForm() ;
 
     const submitHandler = (data) => {
+        console.log(data)
         dispatch(updateProfile(token, data)) ;
     }
 
@@ -35,7 +36,7 @@ const EditProfileInfo = () => {
 
                     <div className='flex flex-col gap-2 lg:w-[45%]'>
                         <label htmlFor="firstName" className='text-richblack-5 text-sm font-normal'>First Name
-                            <span className='text-pink-300 text-lg'>*</span>
+                            <span className='text-red-600 text-lg'>*</span>
                         </label>
                         <input type='text' id='firstName' name='firstName' placeholder='Enter first name'
                         {...register("firstName", {required: true})}
@@ -52,7 +53,7 @@ const EditProfileInfo = () => {
                     </div>
                     <div className='flex flex-col gap-2 lg:w-[45%]'>
                         <label htmlFor="lastName" className='text-richblack-5 text-sm font-normal'>Last Name
-                            <span className='text-pink-300 text-lg'>*</span>
+                            <span className='text-red-600 text-lg'>*</span>
                         </label>
                         <input type='text' id='lastName' name='lastName' placeholder='Enter last name'
                         {...register("lastName", {required: true})}
@@ -97,9 +98,9 @@ const EditProfileInfo = () => {
                         <div className='w-full rounded-lg bg-richblack-700 p-3 text-richblack-5 border-b-2 border-richblack-600 placeholder:text-richblack-400 flex gap-x-16'>
                             <label htmlFor="male" className='flex gap-x-4 justify-center items-center'>
                                 <input
-                                    {...register("weather")}
+                                    {...register("gender")}
                                     type="radio"
-                                    value="male"
+                                    value="Male"
                                     id="male"
                                     // onClick={() => (console.log("Selected Male"))}
                                     className='accent-yellow-25'
@@ -110,9 +111,9 @@ const EditProfileInfo = () => {
                             </label>
                             <label htmlFor="female" className='flex gap-x-4 justify-center items-center'>
                                 <input
-                                    {...register("weather")}
+                                    {...register("gender")}
                                     type="radio"
-                                    value="female"
+                                    value="Female"
                                     id="female"
                                     // onClick={() => (console.log("Selected Female"))}
                                     className='accent-yellow-25'
@@ -172,7 +173,7 @@ const EditProfileInfo = () => {
 
             </div>
 
-                <div className='w-full my-4 flex gap-x-4 justify-end'>
+                <div className='w-full mt-8 flex gap-x-4 justify-end'>
 
                     <button className='rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50 hover:scale-95 transition-all duration-200' onClick={() => navigate("/dashboard/my-profile")}>
                         Cancel

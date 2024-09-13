@@ -17,3 +17,11 @@ export const authEndpoints = {
 export const contactEndpoints = {
     CONTACT_US_API: BASE_URL + "/reach/contact",
 }
+
+// SETTINGS PAGE API
+export const settingsEndpoints = {
+    UPDATE_PROFILE_PICTURE_API: BASE_URL + "/profile/updateProfilePicture",
+    UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
+    CHANGE_PASSWORD_API: BASE_URL + "/auth/changepassword",
+    DELETE_ACCOUNT_API: BASE_URL + "/profile/deleteAccount",
+}
