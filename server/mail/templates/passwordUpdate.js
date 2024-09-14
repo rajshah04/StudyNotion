@@ -14,6 +14,7 @@ exports.passwordUpdate = (email, name) => {
                 color: #333333;
                 margin: 0;
                 padding: 0;
+                text-align: left;
             }
     
     
@@ -21,7 +22,7 @@ exports.passwordUpdate = (email, name) => {
                 max-width: 600px;
                 margin: 0 auto;
                 padding: 20px;
-                text-align: center;
+                
             }
     
             .logo {

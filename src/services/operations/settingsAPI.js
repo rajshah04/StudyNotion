@@ -43,3 +43,29 @@ export function updateProfile(token, formData){
         toast.dismiss(toastId) ;
     }
 }
+
+export function changePassword(token, formData){
+    return async (dispatch) => {
+        const toastId = toast.loading("Loading...") ;
+
+        try{
+            const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
+                Authorization: `Bearer ${token}`,
+            }) ;
+
+            console.log("CHANGE_PASSWORD_API API RESPONSE............", response) ;
+
+            if(!response.data.success){
+                throw new Error(response.data.message) ;
+            }
+
+            toast.success(response.data.message) ;
+        }
+        catch(err){
+            console.log("CHANGE PASSWORD API ERROR ---> ", err) ;
+            toast.error(err.response.data.message) ;
+        }
+
+        toast.dismiss(toastId) ;
+    }
+}

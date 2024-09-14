@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt") ;
 const jwt = require("jsonwebtoken") ;
 require("dotenv").config() ;
 const mailSender = require("../utils/mailSender") ;
-const { passwordUpdated } = require("../mail/templates/passwordUpdate") ;
+const { passwordUpdate } = require("../mail/templates/passwordUpdate") ;
 
 // send otp
 exports.sendOTP = async(req, res) => {
@@ -261,20 +261,24 @@ exports.changePassword = async(req, res) => {
 
         // get data from req body
         // get oldPassword, newPassword, confirmPassword
-        const {oldPassword, newPassword, confirmPassword} = req.body ;
+        const {password, newPassword, confirmPassword} = req.body ;
+
+        console.log("Old password : ", password) ;
+        console.log("New password : ", newPassword) ;
+        console.log("Confirm password : ", confirmPassword) ;
 
         // validation
-        if(!oldPassword || !newPassword || !confirmPassword){
+        if(!password || !newPassword || !confirmPassword){
             return res.status(403).json({
                 success: false ,
                 message: "All fields are required."
             }) ;
         }
 
-        if(oldPassword === newPassword){
+        if(password === newPassword){
             return res.status(403).json({
                 success: false ,
-                message: "Old Password and New Password cannot be same."
+                message: "Current Password and New Password cannot be same."
             }) ;
         }
 
@@ -288,9 +292,13 @@ exports.changePassword = async(req, res) => {
         // how to fetch email id of user from the token
         const email = req.user.email ;
 
+        console.log("Email : ", email) ;
+
         const user = await User.findOne({email}) ;
 
-        if(!await bcrypt.compare(oldPassword, user.password)){
+        console.log("User : ", user) ;
+
+        if(!await bcrypt.compare(password, user.password)){
             return res.status(400).json({
                 success: false,
                 message: "Old passsword do not match."
@@ -308,9 +316,9 @@ exports.changePassword = async(req, res) => {
             // send mail -- Password updated
             const sendMail = await mailSender(email, 
                 "Password for your account has been updated", 
-                passwordUpdated(
+                passwordUpdate(
                     updatedUserDetails.email,
-                    `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
+                    `${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
                 )) ;
     
             console.log("Result of sending mail of updated password: ", sendMail.response) ;
