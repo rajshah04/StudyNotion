@@ -2,6 +2,7 @@ import React from 'react';
 import ChangeProfilePic from './ChangeProfilePic';
 import EditProfileInfo from './EditProfileInfo';
 import ChangePassword from './ChangePassword';
+import DeleteAccount from './DeleteAccount';
 
 const Settings = () => {
   return (
@@ -14,6 +15,8 @@ const Settings = () => {
         <EditProfileInfo />
 
         <ChangePassword />
+
+        <DeleteAccount />
 
     </div>
   )

@@ -69,3 +69,29 @@ export function changePassword(token, formData){
         toast.dismiss(toastId) ;
     }
 }
+
+export function deleteAccount(token){
+    return async(dispatch) => {
+        const toastId = toast.loading("Loading...") ;
+
+        try{
+            const response = await apiConnector("DELETE", DELETE_ACCOUNT_API, null, {
+                Authorization: `Bearer ${token}`,
+            }) ;
+
+            console.log("DELETE ACCOUNT API RESPONSE............", response) ;
+
+            if(!response.data.success){
+                throw new Error(response.data.message) ;
+            }
+
+            toast.success(response.data.message) ;
+        }
+        catch(err){
+            console.log("DELETE ACCOUNT API ERROR ---> ", err) ;
+            toast.error(err.response.data.message) ;
+        }
+
+        toast.dismiss(toastId) ;
+    }
+}
