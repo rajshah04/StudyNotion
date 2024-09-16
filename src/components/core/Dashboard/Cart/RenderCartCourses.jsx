@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart } from '../../../../slices/cartSlice';
+import { MdDelete } from 'react-icons/md';
 
 const RenderCartCourses = () => {
 
@@ -24,12 +25,14 @@ const RenderCartCourses = () => {
                                 <p className='text-sm text-richblack-300'>
                                     {course?.category?.name}
                                 </p>
+
+                                {/* TODO : add ratings with stars and reviews count */}
                             </div>
                         </div>
 
                         <div className='flex flex-col items-end space-y-2'>
                             <button onClick={() => dispatch(removeFromCart(course?.id))} className='flex items-center gap-x-1 rounded-md border border-richblack-600 bg-richblack-700 py-3 px-[12px] text-red-600'>
-
+                                <MdDelete />    
                                 <span>
                                     Remove
                                 </span>
