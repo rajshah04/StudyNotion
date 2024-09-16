@@ -15,6 +15,7 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import MyProfile from "./components/core/Dashboard/MyProfile";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./components/core/Dashboard/Settings/index"
+import Cart from "./components/core/Dashboard/Cart";
 
 function App() {
   return (
@@ -67,6 +68,8 @@ function App() {
         <Route path="/dashboard/my-profile" element={<MyProfile />} />
         
         <Route path="/dashboard/settings" element={<Settings />} />
+        
+        <Route path="/dashboard/cart" element={<Cart />} />
 
         </Route>
 
