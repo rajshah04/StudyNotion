@@ -3,6 +3,7 @@ import { authEndpoints } from "../apis";
 import { setLoading, setToken } from "../../slices/authSlice";
 import { apiConnector } from "../apiconnector" ;
 import { setUser } from "../../slices/profileSlice";
+import { resetCart } from '../../slices/cartSlice';
 
 
 const {LOGIN_API, SIGNUP_API, SENDOTP_API, RESETPASSWORDTOKEN_API, RESETPASSWORD_API} = authEndpoints ;
@@ -120,6 +121,7 @@ export function logout(navigate){
         dispatch(setUser(null)) ;
         
         // TODO : function to reset cart
+        dispatch(resetCart()) ;
         localStorage.removeItem("user") ;
         localStorage.removeItem("token") ;
         toast.success("Logged Out") ;
