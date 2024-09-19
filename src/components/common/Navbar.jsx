@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import ProfileDropDown from '../core/Auth/ProfileDropDown';
 import { apiConnector } from '../../services/apiconnector';
-import { categories } from '../../services/apis';
+import { courseEndpoints } from '../../services/apis';
 import { IoIosArrowDown } from 'react-icons/io';
 
 
@@ -15,32 +15,24 @@ const Navbar = () => {
     const { user } = useSelector( (state) => state.profile ) ;
     const { totalItems } = useSelector( (state) => state.cart ) ;
 
-    // const [subLinks, setSubLinks] = useState([]) ;
+    const [subLinks, setSubLinks] = useState([]) ;
 
-    // const fetchSubLinks = async() => {
-    //     try{
-    //         const result = await apiConnector("GET", categories.CATEGORIES_API) ;
-    //         console.log("Printing sublinks result", result) ;
-    //         setSubLinks(result.data.data) ;
-    //     }catch(err){
-    //         console.log("Could not fetch the catalogue list") ;
-    //     }
-    // }
+    const fetchSubLinks = async() => {
+        try{
+            const result = await apiConnector("GET", courseEndpoints.COURSE_CATEGORIES_API) ;
+            console.log("Printing sublinks result", result) ;
+            console.log(result.data.allCategoriesDetails)
+            setSubLinks(result.data.allCategoriesDetails) ;
 
-    // useEffect( () => {
-    //     fetchSubLinks() ;
-    // }, [])
-
-    const subLinks = [
-        {
-            title: "Python",
-            path: "/catalogue/python",
-        },
-        {
-            title: "Web development",
-            path: "/catalogue/web-dev",
+            console.log("Sublinks : ", subLinks) ;
+        }catch(err){
+            console.log("Could not fetch the catalogue list", err) ;
         }
-    ] ;
+    }
+
+    useEffect( () => {
+        fetchSubLinks() ;
+    }, [])
 
     const location = useLocation() ;
     const matchRoute = (route) => {
@@ -80,9 +72,9 @@ const Navbar = () => {
                                                     {
                                                         subLinks.length ? (
                                                             subLinks.map((subLink, index) => (
-                                                                <Link to={`${subLink.path}`} key={index}>
+                                                                <Link to={`${subLink.name.toLowerCase()}`} key={index}>
                                                                     <p>
-                                                                        {subLink.title}
+                                                                        {subLink.name}
                                                                     </p>
                                                                 </Link>
                                                             ) )

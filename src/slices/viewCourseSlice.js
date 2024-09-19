@@ -1,4 +1,4 @@
-const { createSlice } = require("@reduxjs/toolkit")
+const { createSlice } = require("@reduxjs/toolkit");
 
 
 const initialState = {
@@ -30,6 +30,6 @@ const viewCourseSlice = createSlice({
     }
 }) ;
 
-export const { setCourseSectionData, setCourseEntireData, setTotalNoOfLectures, setCompletedLectures, updateCompletedLectures} = viewCourseSlice.actions ;
+export const { setCourseSectionData, setCourseEntireData, setTotalNoOfLectures, setCompletedLectures, updateCompletedLectures } = viewCourseSlice.actions ;
 
 export default viewCourseSlice.reducer ;
