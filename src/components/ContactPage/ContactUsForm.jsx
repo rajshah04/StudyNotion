@@ -40,7 +40,7 @@ const ContactUsForm = () => {
             
             <div className='flex gap-6'>
                 {/* firstName */}
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 w-full lg:w-[50%]'>
                     <label htmlFor='firstName' className='text-sm text-richblack-5'>First Name {" "}
                         <sup className='text-pink-300'>*</sup>
                     </label>
@@ -56,7 +56,7 @@ const ContactUsForm = () => {
                 </div>
 
                 {/* lastName */}
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 w-full lg:w-[50%]'>
                     <label htmlFor='lastName' className='text-sm text-richblack-5'>Last Name</label>
                     <input type='text' name='lastName' id='lastName' placeholder='Enter last name'
                     {...register("lastName")} className='w-full rounded-lg bg-richblack-800 p-3 text-richblack-5 border-b-2 border-richblack-700' />
