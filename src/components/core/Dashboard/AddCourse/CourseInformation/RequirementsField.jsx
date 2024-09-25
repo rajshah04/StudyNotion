@@ -25,13 +25,13 @@ const RequirementsField = ({name, label, placeholder, register, errors, setValue
             setRequirementList(course?.instructions) ;
         }
         register(name, {required: true,
-            // validate: (value) => value.length > 0
+            validate: (value) => value.length > 0
         })
     }, []) ;
 
-    // useEffect(() => {
-    //     setValue(name, requirementList) ;
-    // }, [requirementList]) ;
+    useEffect(() => {
+        setValue(name, requirementList) ;
+    }, [requirementList]) ;
 
     return (
         <div className='flex flex-col gap-2'>

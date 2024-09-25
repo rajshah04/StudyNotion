@@ -7,6 +7,7 @@ import RequirementsField from './RequirementsField';
 import { setCourse, setStep } from '../../../../../slices/courseSlice';
 import CommonBtn from '../../../../common/CommonBtn';
 import toast from 'react-hot-toast';
+import TagsInput from './TagsInput';
 
 const CourseInformationForm = () => {
 
@@ -266,7 +267,7 @@ const CourseInformationForm = () => {
 
       {/* course tags */}
       {/* create a custom component for handling tags input */}
-      {/* <TagsInput label="Tags" name="courseTags" placeholder="Enter tags and press enter" register={register} errors={errors} setValue={setValue} getValue={getValue} /> */}
+      <TagsInput label="Tags" name="courseTags" placeholder="Enter tags and press enter" register={register} errors={errors} setValue={setValue} getValue={getValue} />
 
       {/* course thumbnail */}
       {/* create a custom component for taking image as input and display it */}
@@ -280,7 +281,7 @@ const CourseInformationForm = () => {
           </sup>
         </label>
 
-        <textarea id='courseBenefits' name='courseBenefits' placeholder='Enter description of the course' className='min-h-[70px] w-full rounded-lg bg-richblack-700 p-3 text-richblack-5 border-b-2  border-richblack-600'
+        <textarea id='courseBenefits' name='courseBenefits' placeholder='Enter benefits of the course' className='min-h-[70px] w-full rounded-lg bg-richblack-700 p-3 text-richblack-5 border-b-2  border-richblack-600'
         {...register("courseBenefits", {required: true})} />
         {
           errors.courseBenefits && (
