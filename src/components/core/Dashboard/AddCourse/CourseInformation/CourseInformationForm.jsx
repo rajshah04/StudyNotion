@@ -297,10 +297,10 @@ const CourseInformationForm = () => {
       {/* video - 101 - 1:04:00 */}
       <RequirementsField label="Course Requirements" name="courseRequirements" placeholder="Enter requirements and press enter" register={register} errors={errors} setValue={setValue} getValue={getValue} />
 
-      <div>
+      <div className='flex gap-x-2 justify-end'>
         {
           editCourse && (
-            <button onClick={() => dispatch(setStep(2))} className='flex items-center gap-x-2 bg-richblack-300'>
+            <button onClick={() => dispatch(setStep(2))} className='flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900'>
               Continue without Saving
             </button>
           )
