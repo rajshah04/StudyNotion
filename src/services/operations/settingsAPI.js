@@ -7,9 +7,42 @@ import { setUser } from "../../slices/profileSlice";
 
 const {UPDATE_PROFILE_PICTURE_API, UPDATE_PROFILE_API, CHANGE_PASSWORD_API, DELETE_ACCOUNT_API} = settingsEndpoints ;
 
-// export function updateProfilePicture (){
+export function updateProfilePicture(token, formData){
+    return async(dispatch) => {
+        const toastId = toast.loading("Loading...") ;
 
-// }
+        try{
+            const response = await apiConnector("PUT", UPDATE_PROFILE_PICTURE_API, formData, {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+            }) ;
+
+            console.log("UPDATE_DISPLAY_PICTURE_API API RESPONSE............", response) ;
+        
+            if (!response.data.success) {
+               throw new Error(response.data.message) ;
+            }
+
+            toast.success("Display Picture Updated Successfully") ;
+            dispatch(setUser(response.data.updatedUserDetails)) ;
+            
+            // const userImage = response.data?.user?.image ? response.data?.user?.image 
+            // : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}` ;
+            // dispatch(setUser({...response.data.user, image: userImage})) ;
+
+            // // console.log("Printing USER info", response.data.user) ;
+            
+            // localStorage.setItem("token", JSON.stringify(response.data.token)) ;
+            // localStorage.setItem("user", JSON.stringify(response.data.user)) ;
+        }
+        catch(err){
+            console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", err) ;
+            toast.error("Could Not Update Display Picture") ;
+        }
+
+        toast.dismiss(toastId) ;
+    }
+}
 
 export function updateProfile(token, formData){
     return async(dispatch) => {

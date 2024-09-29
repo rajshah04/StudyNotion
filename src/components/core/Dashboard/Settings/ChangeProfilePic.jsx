@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MdCloudUpload } from 'react-icons/md';
-import ImageUploading from 'react-images-uploading';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfilePicture } from '../../../../services/operations/settingsAPI';
 
-// TODO : functionality to upload or remove image in frontend
+// functionality to upload or remove image in frontend
  
 const ChangeProfilePic = () => {
     const dispatch = useDispatch() ;

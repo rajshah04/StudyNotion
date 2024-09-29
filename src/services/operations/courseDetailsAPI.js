@@ -147,7 +147,8 @@ export const createSection = async (data, token) => {
     }
 
     toast.success("Course Section Created") ;
-    result = response?.data?.updatedCourse ;
+    result = response?.data?.updatedCourseDetails ;
+    // console.log("RESULT in courseDetails API : ", result) ;
   } catch (err) {
     console.log("CREATE SECTION API ERROR............", err) ;
     toast.error(err.message) ;
