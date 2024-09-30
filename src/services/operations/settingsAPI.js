@@ -52,17 +52,8 @@ export function removeProfilePicture(token){
                throw new Error(response.data.message) ;
             }
 
-            toast.success("Profile Picture Updated Successfully") ;
+            toast.success("Profile Picture Removed Successfully") ;
             dispatch(setUser(response.data.updatedUserDetails)) ;
-            
-            // const userImage = response.data?.user?.image ? response.data?.user?.image 
-            // : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}` ;
-            // dispatch(setUser({...response.data.user, image: userImage})) ;
-
-            // // console.log("Printing USER info", response.data.user) ;
-            
-            // localStorage.setItem("token", JSON.stringify(response.data.token)) ;
-            // localStorage.setItem("user", JSON.stringify(response.data.user)) ;
         }
         catch(err){
             console.log("REMOVE_PROFILE_PICTURE_API API ERROR............", err) ;
