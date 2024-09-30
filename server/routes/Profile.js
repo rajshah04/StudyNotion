@@ -1,7 +1,7 @@
 const express = require("express") ;
 const router = express.Router() ;
 
-const {updateProfile, getAllUserDetails, deleteAccount, updateProfilePicture} = require("../controllers/Profile") ;
+const {updateProfile, getAllUserDetails, deleteAccount, updateProfilePicture, removeProfilePicture} = require("../controllers/Profile") ;
 const {auth} = require("../middlewares/auth") ;
 
 // PROFILE ROUTES
@@ -14,6 +14,8 @@ router.delete("/deleteAccount", auth, deleteAccount) ;
 router.get("/getAllUserDetails", auth, getAllUserDetails) ;
 // TODO: route for updating the profile picture
 router.put("/updateProfilePicture", auth, updateProfilePicture) ;
+// route for removing the profile picture
+router.put("/removeProfilePicture", auth, removeProfilePicture) ;
 
 
 module.exports = router ;

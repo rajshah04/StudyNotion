@@ -4,8 +4,7 @@ import { apiConnector } from "../apiconnector";
 import { setUser } from "../../slices/profileSlice";
 
 
-
-const {UPDATE_PROFILE_PICTURE_API, UPDATE_PROFILE_API, CHANGE_PASSWORD_API, DELETE_ACCOUNT_API} = settingsEndpoints ;
+const {UPDATE_PROFILE_PICTURE_API, REMOVE_PROFILE_PICTURE_API, UPDATE_PROFILE_API, CHANGE_PASSWORD_API, DELETE_ACCOUNT_API} = settingsEndpoints ;
 
 export function updateProfilePicture(token, formData){
     return async(dispatch) => {
@@ -17,13 +16,43 @@ export function updateProfilePicture(token, formData){
                 Authorization: `Bearer ${token}`,
             }) ;
 
-            console.log("UPDATE_DISPLAY_PICTURE_API API RESPONSE............", response) ;
+            console.log("UPDATE_PROFILE_PICTURE_API API RESPONSE............", response) ;
         
             if (!response.data.success) {
                throw new Error(response.data.message) ;
             }
 
-            toast.success("Display Picture Updated Successfully") ;
+            toast.success("Profile Picture Updated Successfully") ;
+            dispatch(setUser(response.data.updatedUserDetails)) ;
+
+            localStorage.setItem("user", response.data.updatedUserDetails) ;
+        }
+        catch(err){
+            console.log("UPDATE_PROFILE_PICTURE_API API ERROR............", err) ;
+            toast.error("Could Not Update Profile Picture") ;
+        }
+
+        toast.dismiss(toastId) ;
+    }
+}
+
+export function removeProfilePicture(token){
+    return async(dispatch) => {
+        const toastId = toast.loading("Loading...") ;
+        console.log(token) ;
+
+        try{
+            const response = await apiConnector("PUT", REMOVE_PROFILE_PICTURE_API, null, {
+                Authorization: `Bearer ${token}`,
+            }) ;
+
+            console.log("REMOVE_PROFILE_PICTURE_API API RESPONSE............", response) ;
+        
+            if (!response.data.success) {
+               throw new Error(response.data.message) ;
+            }
+
+            toast.success("Profile Picture Updated Successfully") ;
             dispatch(setUser(response.data.updatedUserDetails)) ;
             
             // const userImage = response.data?.user?.image ? response.data?.user?.image 
@@ -36,8 +65,8 @@ export function updateProfilePicture(token, formData){
             // localStorage.setItem("user", JSON.stringify(response.data.user)) ;
         }
         catch(err){
-            console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", err) ;
-            toast.error("Could Not Update Display Picture") ;
+            console.log("REMOVE_PROFILE_PICTURE_API API ERROR............", err) ;
+            toast.error("Could Not Remove Profile Picture") ;
         }
 
         toast.dismiss(toastId) ;

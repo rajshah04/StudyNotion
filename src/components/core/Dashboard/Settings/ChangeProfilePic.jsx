@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MdCloudUpload } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfilePicture } from '../../../../services/operations/settingsAPI';
+import { removeProfilePicture, updateProfilePicture } from '../../../../services/operations/settingsAPI';
+import { setUser } from '../../../../slices/profileSlice';
 
 // functionality to upload or remove image in frontend
  
@@ -50,10 +51,10 @@ const ChangeProfilePic = () => {
             dispatch(updateProfilePicture(token, formData)).then(() => {
               setLoading(false) ;
             })
-          }
-          catch(err){
-            console.log("ERROR MESSAGE - ", err.message)
-          }
+        }
+        catch(err){
+        console.log("ERROR MESSAGE - ", err.message) ;
+        }
     }
     
 
@@ -69,7 +70,7 @@ const ChangeProfilePic = () => {
     }, [image]) ;
 
     const removeImageHandler = () => {
-        
+        dispatch(removeProfilePicture(token)) ;
     }
 
     return (

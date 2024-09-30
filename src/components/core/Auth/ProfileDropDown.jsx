@@ -23,7 +23,7 @@ const ProfileDropDown = () => {
 
   return (
     <button className='relative' onClick={() => setOpenBox(value => !value)}>
-      <img src={user?.image} alt={`profile-${user.firstName}`} className="aspect-square w-[30px] rounded-full object-cover" />
+      <img src={user?.image} alt={`profile-${user?.firstName}`} className="aspect-square w-[30px] rounded-full object-cover" />
       {/* <AiOutlineCaretDown className="text-sm text-richblack-100" /> */}
 
       {openBox && (

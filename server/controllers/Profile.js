@@ -205,11 +205,58 @@ exports.updateProfilePicture = async(req, res) => {
             message: "Profile Picture Uploaded Successfully",
             updatedUserDetails
         }) ;
-    } catch (error) {
-        console.log(error) ;
+    } catch (err) {
+        console.log(err) ;
         return res.status(400).json({
             success: false,
-            message: error.message
+            message: err.message
         }) ;
     }
 }
+
+exports.removeProfilePicture = async(req, res) => {
+    try{
+        const userId = req.user.id ;
+    
+        console.log("User id : ", userId) ;
+
+        const user = await User.findById(userId) ;
+        // console.log("User : ", user) ;
+
+        const firstName = user.firstName ;
+        const lastName = user.lastName ;
+
+        console.log(firstName, " ", lastName) ;
+    
+        // update the user schema of the user
+        const updatedUserDetails = await User.findOneAndUpdate({_id: userId},
+            {
+                image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+            },
+            {new: true}
+        ) ;
+
+        // return response
+        return res.status(200).json({
+            success: true,
+            message: "Profile Picture Removed Successfully",
+            updatedUserDetails
+        }) ;
+    }
+    catch(err){
+        console.log(err) ;
+        return res.status(400).json({
+            success: false,
+            message: err.message
+        }) ;
+    }
+}
+
+// TODO : write controller for getEnrolledCourses
+// exports.getEnrolledCourses = async(req, res) => {
+
+//     // get user id
+//     const userId = req.user.id ;
+
+//     // 
+// }
