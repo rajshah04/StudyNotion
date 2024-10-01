@@ -67,11 +67,12 @@ exports.createSubSection = async(req, res) => {
     }
 }
 
-// update the subsection
+// TODO : update the subsection
 exports.updateSubSection = async(req, res) => {
     try{
         
-    }catch(err){
+    }
+    catch(err){
 
     }
 }
@@ -79,9 +80,37 @@ exports.updateSubSection = async(req, res) => {
 // delete the subsection
 exports.deleteSubSection = async(req, res) => {
     try{
+        // fetch the data
+        const {subSectionId, sectionId} = req.body ;
+
+        const section = await Section.findByIdAndUpdate({_id: sectionId},
+                                            {
+                                                $pull:{
+                                                    subSection: subSectionId
+                                                }
+                                            },
+                                            {
+                                                new: true
+                                            }
+        ).populate("subSection").exec() ;
+
+        console.log("Section : ", section) ;
+
+        const deletedSubSection = await SubSection.findByIdAndDelete({_id: subSectionId}) ;
+
+        console.log("Subsection deleted successfully", deletedSubSection) ;
+
+        if (!deletedSubSection) {
+            return res.status(404).json({
+                success: false,
+                message: "SubSection not found",
+            }) ;
+        }
+
         return res.json({
             success: true,
-            message: "SubSection deleted Successfully"
+            message: "SubSection deleted Successfully",
+            data: section,
         }) ;
     }catch(err){
         console.log(err) ;
