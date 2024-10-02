@@ -10,7 +10,10 @@ exports.createSubSection = async(req, res) => {
         const {sectionId, title, description} = req.body ;
 
         // extract file/video
+        // console.log("Req : ", req) ;
+        // console.log(req.files) ;
         const video = req.files.videoFile ;
+        // console.log(video) ;
 
         // validate data
         if(!sectionId || !title || !description || !video){
@@ -67,13 +70,65 @@ exports.createSubSection = async(req, res) => {
     }
 }
 
-// TODO : update the subsection
+// TODO -- done : update the subsection
 exports.updateSubSection = async(req, res) => {
     try{
-        
+        // fetch the data
+        const {sectionId, subSectionId, title, description} = req.body ;
+
+        const subSection = await SubSection.findById(subSectionId) ;
+
+        // validate the data
+        if(!subSection){
+            return res.status(404).json({
+                success: false,
+                message: "Subsection Not Found."
+            }) ;
+        }
+
+        console.log("SubSection (before update) : ", subSection) ;
+
+        if(title){
+            subSection.title = title ;
+        }
+
+        if(description){
+            subSection.description = description ;
+        }
+
+        if(req.files && req.files.videoFile !== undefined){
+            const video = req.files.videoFile ;
+
+            // upload video to cloudinary
+            const uploadDetails = await uploadImageToCloudinary(video, process.env.FOLDER_NAME) ;
+            
+            console.log("Video file uploaded on cloud : ", uploadDetails) ;
+
+            subSection.videoUrl = uploadDetails.secure_url ;
+            subSection.timeDuration = uploadDetails.durations ;
+        }
+
+        // update the subsection
+        await subSection.save() ;
+
+        const updatedSection = await Section.findById(sectionId).populate("subSection").exec() ;
+
+        console.log("Updated Section : ", updatedSection) ;
+
+        // return the updated section
+        return res.status(200).json({
+            success: true,
+            message: "SubSection updated successfully, sending updated section in data" ,
+            data: updatedSection
+        }) ;
     }
     catch(err){
+        console.log("Error in updating the subsection", err.message) ;
 
+        return res.status(500).json({
+            success: false,
+            message: "Some error occured in updating the subsection"
+        }) ;
     }
 }
 
@@ -109,7 +164,7 @@ exports.deleteSubSection = async(req, res) => {
 
         return res.json({
             success: true,
-            message: "SubSection deleted Successfully",
+            message: "SubSection deleted Successfully and sending the updated section in data",
             data: section,
         }) ;
     }catch(err){
