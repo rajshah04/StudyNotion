@@ -8,6 +8,7 @@ import { setCourse, setStep } from '../../../../../slices/courseSlice';
 import CommonBtn from '../../../../common/CommonBtn';
 import toast from 'react-hot-toast';
 import TagsInput from './TagsInput';
+import UploadCourseImageVideo from '../UploadCourseImageVideo';
 
 const CourseInformationForm = () => {
 
@@ -61,7 +62,7 @@ const CourseInformationForm = () => {
       // currValue.courseTags.toString() !== course.tag.toString() || 
       currValue.courseBenefits !== course.whatYouWillLearn || 
       currValue.courseCategory._id !== course.category._id || 
-      // currValue.courseImage !== course.thumbnail || 
+      currValue.courseImage !== course.thumbnail || 
       currValue.courseRequirements.toString() !== course.instructions.toString() )
       return true ;
     else  
@@ -99,9 +100,9 @@ const CourseInformationForm = () => {
           formData.append("category", data.courseCategory) ;
         }
         
-        // if(currValue.courseImage !== course.thumbnail){
-        //   formData.append("thumbnail", data.courseImage) ;
-        // }
+        if(currValue.courseImage !== course.thumbnail){
+          formData.append("thumbnail", data.courseImage) ;
+        }
         
         if(currValue.courseRequirements.toString() !== course.instructions.toString()){
           formData.append("instructions", JSON.stringify(data.courseRequirements)) ;
@@ -136,7 +137,7 @@ const CourseInformationForm = () => {
     // formData.append("tag", JSON.stringify(data.courseTags)) ;
     formData.append("whatYouWillLearn", data.courseBenefits) ;
     formData.append("category", data.courseCategory) ;
-    // formData.append("thumbnail", data.courseImage) ;
+    formData.append("thumbnail", data.courseImage) ;
     formData.append("instructions", JSON.stringify(data.courseRequirements)) ;
     // formData.append("status", COURSE_STATUS.DRAFT) ;
 
@@ -271,6 +272,7 @@ const CourseInformationForm = () => {
 
       {/* course thumbnail */}
       {/* create a custom component for taking image as input and display it */}
+      <UploadCourseImageVideo label="Course Thumbnail" name="courseThumbnail" register={register} setValue={setValue} errors={errors} editData={editCourse ? course?.thumbnail : null} />
 
       {/* benefits of the course */}
       <div className='flex flex-col gap-2'>
