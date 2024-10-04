@@ -40,8 +40,11 @@ const NestedView = ({handleChangeEditSectionName}) => {
         const result = await deleteSubSection({subSectionId, sectionId, token}) ;
 
         if(result){
-            // TODO : what extra to add here
-            dispatch(setCourse(result)) ;
+            // updating the course
+            const updatedCourseContent = course.courseContent.map((section) => section._id === sectionId ? result : section) ;
+
+            const updatedCourse = {...course, courseContent: updatedCourseContent} ;
+            dispatch(setCourse(updatedCourse)) ;
         }
 
         setConfirmationModal(null) ;
@@ -106,7 +109,7 @@ const NestedView = ({handleChangeEditSectionName}) => {
 
                                                 <button onClick={() => {
                                                     setConfirmationModal({
-                                                        text1: "Delete this SUb Section",
+                                                        text1: "Delete this Sub Section",
                                                         text2: "Selected lectures  will be deleted.",
                                                         btn1Text: "Delete",
                                                         btn2Text: "Cancel",
