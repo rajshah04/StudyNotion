@@ -6,7 +6,7 @@ exports.uploadImageToCloudinary = async(file, folder, height, quality) => {
     if(height){
         options.height = height ;
     }
-    console.log("hi") ;
+    console.log("Inside Cloudinary function") ;
     if(quality){
         options.quality = quality ;
     }

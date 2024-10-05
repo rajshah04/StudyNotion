@@ -47,7 +47,7 @@ const CourseInformationForm = () => {
       setValue("courseBenefits", course.whatYouWillLearn) ;
       setValue("courseCategory", course.category) ;
       setValue("courseRequirement", course.instructions) ;
-      setValue("courseImage", course.thumbnail) ;
+      setValue("courseThumbnail", course.thumbnail) ;
     }
 
     getCategories() ;
@@ -58,11 +58,10 @@ const CourseInformationForm = () => {
     if(currValue.courseTitle !== course.courseName ||
       currValue.courseDesc !== course.courseDescription || 
       currValue.coursePrice !== course.price || 
-      // currValue.courseTitle !== course.courseName || 
-      // currValue.courseTags.toString() !== course.tag.toString() || 
+      currValue.courseTags.toString() !== course.tag.toString() || 
       currValue.courseBenefits !== course.whatYouWillLearn || 
       currValue.courseCategory._id !== course.category._id || 
-      currValue.courseImage !== course.thumbnail || 
+      currValue.courseThumbnail !== course.thumbnail || 
       currValue.courseRequirements.toString() !== course.instructions.toString() )
       return true ;
     else  
@@ -88,9 +87,9 @@ const CourseInformationForm = () => {
           formData.append("price", data.coursePrice) ;
         }
         
-        // if(currValue.courseTags.toString() !== course.tag.toString()){
-        //   formData.append("tag", JSON.stringify(data.courseTags)) ;
-        // }
+        if(currValue.courseTags.toString() !== course.tag.toString()){
+          formData.append("tag", JSON.stringify(data.courseTags)) ;
+        }
         
         if(currValue.courseBenefits !== course.whatYouWillLearn){
           formData.append("whatYouWillLearn", data.courseBenefits) ;
@@ -100,8 +99,8 @@ const CourseInformationForm = () => {
           formData.append("category", data.courseCategory) ;
         }
         
-        if(currValue.courseImage !== course.thumbnail){
-          formData.append("thumbnail", data.courseImage) ;
+        if(currValue.courseThumbnail !== course.thumbnail){
+          formData.append("thumbnail", data.courseThumbnail) ;
         }
         
         if(currValue.courseRequirements.toString() !== course.instructions.toString()){
@@ -134,10 +133,10 @@ const CourseInformationForm = () => {
     formData.append("courseName", data.courseTitle) ;
     formData.append("courseDescription", data.courseDesc) ;
     formData.append("price", data.coursePrice) ;
-    // formData.append("tag", JSON.stringify(data.courseTags)) ;
+    formData.append("tag", JSON.stringify(data.courseTags)) ;
     formData.append("whatYouWillLearn", data.courseBenefits) ;
     formData.append("category", data.courseCategory) ;
-    formData.append("thumbnail", data.courseImage) ;
+    formData.append("thumbnail", data.courseThumbnail) ;
     formData.append("instructions", JSON.stringify(data.courseRequirements)) ;
     // formData.append("status", COURSE_STATUS.DRAFT) ;
 
@@ -147,6 +146,9 @@ const CourseInformationForm = () => {
     console.log("FORMDATA : ", formData) ;
     console.log("RESULT : ", result) ;
     console.log("STEP : ", step) ;
+    console.log(formData.get("thumbnail")) ;
+    console.log(formData.get("tag")) ;
+    // console.log(formData.get("")) ;
     
     if(result){
       console.log("INSIDE RESULT COND")

@@ -1,6 +1,6 @@
 const User = require("../models/User") ;
 const Category = require("../models/Category") ;
-const uplaodImageToCloudinary = require("../utils/imageUploader") ;
+const { uploadImageToCloudinary } = require("../utils/imageUploader") ;
 const Course = require("../models/Course") ;
 
 // handler function to create course
@@ -8,18 +8,30 @@ exports.createCourse = async(req, res) => {
     try{
 
         // fetch data
-        const {courseName, courseDescription, whatYouWillLearn, price, category} = req.body ;
+        // fetch status also
+        let {courseName, courseDescription, whatYouWillLearn, price, category, status, instructions, tag} = req.body ;
 
+        console.log("BEFORE PARSING")
+        instructions = JSON.parse(instructions) ;
+        console.log("AFTER PARSING")
+        console.log("INSTRUCTIONS : ", instructions) ;
+        console.log("TAGS : ", tag) ;
+
+        console.log("FILES ->", req.files) ;
         // get thumbnail
-        const thumbnail = req.files.thumbnailImage ;
+        const thumbnail = req.files.thumbnail ;
 
         // validation
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail){
+        // add status to necessary places in this file/function
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail || !instructions || !tag){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
             }) ;
         }
+
+        if(!status || status === undefined)
+            status = "Draft" ;
 
         // check for Instructor
         const userId = req.user.id ;
@@ -45,8 +57,8 @@ exports.createCourse = async(req, res) => {
         }
 
         // upload image to cloudinary
-        const thumbnailImage = await uplaodImageToCloudinary(thumbnail, process.env.FOLDER_NAME) ;
-        console.log(thumbnailImage) ;
+        const courseThumbnail = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME) ;
+        console.log(courseThumbnail) ;
 
         // create an entry for new course
         const newCourse = await Course.create({courseName, 
@@ -54,8 +66,11 @@ exports.createCourse = async(req, res) => {
             instructor: instructorDetails._id,
             whatYouWillLearn,
             price,
-            thumbnail: thumbnailImage.secure_url,
-            category: categoryDetails._id
+            tag,
+            thumbnail: courseThumbnail.secure_url,
+            category: categoryDetails._id,
+            // status: status,
+            instructions
         }) ;
 
         // add the new course to the User schema of Instructor

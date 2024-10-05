@@ -39,7 +39,7 @@ const courseSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        // required: true
+        required: true
     },
     tag: {
         type: [String],
@@ -52,9 +52,9 @@ const courseSchema = new mongoose.Schema({
             required: true
         }
     ],
-    // instructions: {
-	// 	type: [String],
-	// },
+    instructions: {
+		type: [String],
+	},
 	// status: {
 	// 	type: String,
 	// 	enum: ["Draft", "Published"],
