@@ -45,6 +45,8 @@ const NestedView = ({handleChangeEditSectionName}) => {
 
             const updatedCourse = {...course, courseContent: updatedCourseContent} ;
             dispatch(setCourse(updatedCourse)) ;
+            // console.log("New course : ", course) ;
+            // console.log("Course updated")
         }
 
         setConfirmationModal(null) ;
@@ -93,7 +95,7 @@ const NestedView = ({handleChangeEditSectionName}) => {
 
                             <div className='px-6 pb-4'>
                                 {
-                                    section?.subSection?.map((data) => (
+                                    section?.subSection.map((data) => (
                                         <div key={data?._id} onClick={() => setViewSubSection(data)} className='flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2'>
                                             <div className='flex items-center gap-x-4 py-2'>
                                             <RxDropdownMenu className='text-2xl text-richblack-50' />
@@ -102,7 +104,7 @@ const NestedView = ({handleChangeEditSectionName}) => {
                                                 </p>
                                             </div>
 
-                                            <div className='flex items-center gap-x-4'>
+                                            <div onClick={(e) => e.stopPropagation()} className='flex items-center gap-x-4'>
                                                 <button onClick={() => setEditSubSection({...data, sectionId: section._id})}>
                                                     <RiEdit2Fill className='text-xl text-richblack-300' /> 
                                                 </button>

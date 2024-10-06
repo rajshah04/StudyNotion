@@ -14,7 +14,7 @@ const SubSectionModal = ({modalData, setModalData, add = false, view = false, ed
         register,
         handleSubmit,
         setValue,
-        getValue,
+        getValues,
         formState: {errors},
     } = useForm() ;
 
@@ -25,6 +25,7 @@ const SubSectionModal = ({modalData, setModalData, add = false, view = false, ed
 
     useEffect(() => {
         if(view || edit){
+            // console.log("Modal Data : ", modalData) ;
             setValue("lectureTitle", modalData.title) ;
             setValue("lectureDesc", modalData.description) ;
             setValue("lectureVideo", modalData.videoUrl) ;
@@ -32,7 +33,8 @@ const SubSectionModal = ({modalData, setModalData, add = false, view = false, ed
     }, []) ;
 
     const isFormUpdated = () => {
-        const currentValues = getValue() ;
+        console.log("In is form updated ?")
+        const currentValues = getValues() ;
         if(currentValues.lectureTitle !== modalData.title || currentValues.lectureDesc !== modalData.description || currentValues.lectureVideo !== modalData.videoUrl){
             return true ;
         }
@@ -42,7 +44,7 @@ const SubSectionModal = ({modalData, setModalData, add = false, view = false, ed
     }
 
     const handleEditSubSection = async() => {
-        const currentValues = getValue() ;
+        const currentValues = getValues() ;
         const formData = new FormData() ;
 
         formData.append("sectionId", modalData.sectionId) ;
@@ -65,7 +67,11 @@ const SubSectionModal = ({modalData, setModalData, add = false, view = false, ed
         const result = await updateSubSection(formData, token) ;
 
         if(result){
-            dispatch(setCourse(result)) ;
+            // updating the course
+            const updatedCourseContent = course.courseContent.map((section) => section._id === modalData.sectionId ? result : section) ;
+
+            const updatedCourse = {...course, courseContent: updatedCourseContent} ;
+            dispatch(setCourse(updatedCourse)) ;
         }
 
         setModalData(null) ;
@@ -78,11 +84,13 @@ const SubSectionModal = ({modalData, setModalData, add = false, view = false, ed
             return ;
 
         if(edit){
-            if(isFormUpdated){
-                toast.error("No changes made to the form") ;
+            if(isFormUpdated()){
+                console.log("Is form updated true")
+                handleEditSubSection() ;
             }
             else{
-                handleEditSubSection() ;
+                console.log("Is form updated false")
+                toast.error("No changes made to the form") ;
             }
             return ;
         }
@@ -99,8 +107,14 @@ const SubSectionModal = ({modalData, setModalData, add = false, view = false, ed
 
         if(result){
             // check for validation
-            dispatch(setCourse(result)) ;
+            // updating the course
+            const updatedCourseContent = course.courseContent.map((section) => section._id === modalData ? result : section) ;
+
+            const updatedCourse = {...course, courseContent: updatedCourseContent} ;
+            dispatch(setCourse(updatedCourse)) ;
+            console.log("New created course : ", course) ;
         }
+        console.log("New created course : ", course) ;
 
         setModalData(null) ;
         setLoading(false) ;

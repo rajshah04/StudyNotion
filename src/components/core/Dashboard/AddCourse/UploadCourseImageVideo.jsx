@@ -9,7 +9,9 @@ const UploadCourseImageVideo = ({name, label, register, setValue, errors, video 
 
     const { course } = useSelector((state) => state.course) ;
     const [selectedFile, setSelectedFile] = useState(null) ;
-    const [previewFile, setPreviewFile] = useState(null) ;
+    const [previewFile, setPreviewFile] = useState(
+        viewData ? viewData : editData ? editData : null
+    ) ;
     
     const onDrop = (acceptedFiles) => {
         const file = acceptedFiles[0]

@@ -127,7 +127,7 @@ const CourseBuilderForm = () => {
 
           {
             editSectionName && (
-              <button type='button' onClick={() => cancelEdit} className='text-sm text-richblack-300 underline'>
+              <button type='button' onClick={() => cancelEdit()} className='text-sm text-richblack-300 underline'>
                 Cancel Edit
               </button>
             )
