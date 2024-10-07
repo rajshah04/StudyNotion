@@ -11,7 +11,7 @@ exports.createCourse = async(req, res) => {
         // fetch status also
         let {courseName, courseDescription, whatYouWillLearn, price, category, status, instructions, tag} = req.body ;
 
-        console.log("BEFORE PARSING")
+        console.log("BEFORE PARSING INSTRUCTIONS : ", instructions) ;
         instructions = JSON.parse(instructions) ;
         console.log("AFTER PARSING")
         console.log("INSTRUCTIONS : ", instructions) ;
@@ -69,7 +69,7 @@ exports.createCourse = async(req, res) => {
             tag,
             thumbnail: courseThumbnail.secure_url,
             category: categoryDetails._id,
-            // status: status,
+            status,
             instructions
         }) ;
 
@@ -120,6 +120,8 @@ exports.createCourse = async(req, res) => {
         })
     }
 }
+
+// handler function to edit course
 
 // handler function to getAllCourses
 exports.getAllCourses = async(req, res) => {
@@ -218,3 +220,43 @@ exports.getCourseDetails = async(req, res) => {
         }) ;
     }
 }
+
+// handler function to get full course details
+
+
+// handler funciton to get Instructor courses
+exports.getInstructorCourses = async(req, res) => {
+    try{
+
+        // fetch the instructor's id
+        const instructorId = req.user.id ;
+        console.log("Instructor id : ", instructorId) ;
+
+        // fetch the first name and the last name of the instructor
+        const instructor = await User.findById(instructorId) ;
+        console.log("Instructor : ", instructor) ;
+
+        const firstName = instructor?.firstName ;
+        const lastName = instructor?.lastName ;
+        
+        // find the courses of the instructor
+        const instructorCourses = await Course.find({instructor: instructorId}).sort({ createdAt: -1 }) ;
+
+        // return the courses
+        return res.status(200).json({
+            success: true,
+            message: `Instructor ${firstName} ${lastName}'s all courses fetched Successfully`,
+            instructorCourses
+        }) ;
+    }
+    catch(err){
+        console.log(err) ;
+        return res.status(400).json({
+            success: false,
+            message: `Some error occured in fetching the Instructor ${firstName} ${lastName}'s courses`,
+            error: err.message
+        }) ;
+    }
+}
+
+// handler function to delete a course -- TODO

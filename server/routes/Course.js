@@ -1,7 +1,7 @@
 const express = require("express") ;
 const router = express.Router() ;
 
-const {createCourse, getAllCourses, getCourseDetails} = require("../controllers/Course") ;
+const {createCourse, getAllCourses, getCourseDetails, getInstructorCourses} = require("../controllers/Course") ;
 const {createSection, updateSection, deleteSection} = require("../controllers/Section") ;
 const {createSubSection, updateSubSection, deleteSubSection} = require("../controllers/Subsection") ;
 const {createCategory, showAllCategories, categoryPageDetails} = require("../controllers/Category") ;
@@ -34,6 +34,9 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection) ;
 router.get("/getAllCourses", getAllCourses) ;
 // route for getting details of a specific course by id
 router.get("/getCourseDetails", getCourseDetails) ;
+
+// route for getting all the courses of a particular Instructor
+router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses) ;
 
 
 // CATEGORY ROUTES (only by Admin)
