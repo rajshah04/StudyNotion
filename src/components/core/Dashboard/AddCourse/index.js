@@ -17,12 +17,15 @@ const AddCourse = () => {
                 </div>
             </div>
 
-            <div className='sticky top-10 hidden max-w-[400px] flex-1 w-full lg:w-[40%] text-richblack-5 bg-richblack-800 max-h-fit p-6 border border-richblack-700 rounded-lg  xl:block'>
+            <div className='sticky top-10 hidden max-w-[400px] flex-1 w-full lg:w-[40%] text-richblack-5 text-sm bg-richblack-800 max-h-fit p-6 border border-richblack-700 rounded-lg  xl:block'>
                 <p className='font-semibold text-lg mb-8'>⚡Course Upload Tips</p>
 
                 <ul className='ml-5 space-y-4 list-item list-disc'>
                     <li>
                         Set the Course Price option or make it free.
+                    </li>
+                    <li>
+                        To add a tag, type the text and press "enter" button or "," button .
                     </li>
                     <li>
                         Standard size for the Course thumbnail is 1024 x 576.
