@@ -2,6 +2,8 @@ const User = require("../models/User") ;
 const Category = require("../models/Category") ;
 const { uploadImageToCloudinary } = require("../utils/imageUploader") ;
 const Course = require("../models/Course") ;
+const Section = require("../models/Section") ;
+const SubSection = require("../models/SubSection") ;
 
 // handler function to create course
 exports.createCourse = async(req, res) => {
@@ -160,9 +162,11 @@ exports.getCourseDetails = async(req, res) => {
         // fetch data - courseId
         const {courseId} = req.body ;
 
+        const course = await Course.findById(courseId) ;
+
         // validate data
-        if(!courseId){
-            return res.status(400).json({
+        if(!course){
+            return res.status(404).json({
                 success: false,
                 message: `Could not find the course with ${courseId}`
             }) ;
@@ -260,3 +264,78 @@ exports.getInstructorCourses = async(req, res) => {
 }
 
 // handler function to delete a course -- TODO
+exports.deleteCourse = async(req, res) => {
+    try{
+        // fetch the course id
+        const {courseId} = req.body ;
+        console.log("Course id to be deleted : ", courseId) ;
+
+        // fetch the course details
+        const course = await Course.findById(courseId) ;
+
+        if(!course){
+            console.log("Course not found") ;
+            return res.status(404).json({
+                success: false,
+                message: "Course Not Found"
+            }) ;
+        }
+
+        // delete every subsection of every section of the course
+        for(let sectionId of course.courseContent){
+            const section = await Section.findById(sectionId) ;
+
+            if(section){
+                console.log(section.subSection) ;
+                for(let subsectionId of section.subSection){
+                    const subSection = await SubSection.findByIdAndDelete(subsectionId) ;
+    
+                    console.log("Deleted Subsection : ", subSection) ;
+                }
+            }
+
+            const deletedSection = await Section.findByIdAndDelete(section) ;
+
+            console.log("Deleted Section : ", deletedSection) ;
+        }
+
+
+        // need to delete the rating and review of the course ??
+
+        // remove the course from its category
+        const category = await Category.findByIdAndUpdate(course.category,
+            {
+                $pull:{
+                    course: courseId
+                }
+            },
+            {
+                new: true
+            }
+        ) ;
+
+        console.log("Category after removing course id : ", category) ;
+
+        
+
+        // unenrol all the students enrolled in the course
+
+        // TRY - notify the student about their unenrollment from the given course - either through an email or a notification (toaster)
+
+        // delete the course
+        await Course.findByIdAndDelete(courseId) ;
+
+        return res.status(200).json({
+            success: true,
+            message: "Course deleted Successfully"
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured while deleting a course : ", err.message) ;
+        return res.status(400).json({
+            success: false,
+            message: "Some error occured while deleting a course",
+            error: err.message
+        }) ;
+    }
+}
