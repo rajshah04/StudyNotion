@@ -9,6 +9,7 @@ import CommonBtn from '../../../../common/CommonBtn';
 import toast from 'react-hot-toast';
 import TagsInput from './TagsInput';
 import UploadCourseImageVideo from '../UploadCourseImageVideo';
+import { COURSE_STATUS } from '../../../../../utils/constants';
 
 const CourseInformationForm = () => {
 
@@ -16,7 +17,7 @@ const CourseInformationForm = () => {
     register,
     handleSubmit,
     setValue,
-    getValue,
+    getValues,
     formState: {errors},
   } = useForm() ;
 
@@ -41,7 +42,7 @@ const CourseInformationForm = () => {
 
     if(editCourse){
       setValue("courseTitle", course.courseName) ;
-      setValue("courseShortDesc", course.courseDescription) ;
+      setValue("courseDesc", course.courseDescription) ;
       setValue("coursePrice", course.price) ;
       setValue("courseTags", course.tag) ;
       setValue("courseBenefits", course.whatYouWillLearn) ;
@@ -54,7 +55,7 @@ const CourseInformationForm = () => {
   },[]) ;
 
   const isFormUpdated = () => {
-    const currValue = getValue() ;
+    const currValue = getValues() ;
     if(currValue.courseTitle !== course.courseName ||
       currValue.courseDesc !== course.courseDescription || 
       currValue.coursePrice !== course.price || 
@@ -69,9 +70,11 @@ const CourseInformationForm = () => {
   }
 
   const submitHandler = async(data) => {
+    console.log("Course data on submit : ", data) ;
+
     if(editCourse){
       if(isFormUpdated){
-        const currValue = getValue() ;
+        const currValue = getValues() ;
         const formData = new FormData() ;
 
         formData.append("courseId", course._id) ;
@@ -115,7 +118,7 @@ const CourseInformationForm = () => {
         // setLoading(false) ;
         
         if(result){
-          setStep(2) ;
+          dispatch(setStep(2))
           dispatch(setCourse(result)) ;
         }
 
@@ -148,7 +151,6 @@ const CourseInformationForm = () => {
     console.log("STEP : ", step) ;
     console.log(formData.get("thumbnail")) ;
     console.log(formData.get("tag")) ;
-    // console.log(formData.get("")) ;
     
     if(result){
       console.log("INSIDE RESULT COND")
@@ -220,6 +222,7 @@ const CourseInformationForm = () => {
         {...register("coursePrice", {
           required: true,
           valueAsNumber: true,
+          // add regex that only positive numbers are entered
           })} />
 
           <HiOutlineCurrencyRupee className='absolute top-[42px] left-4 text-xl text-richblack-5' />
@@ -270,7 +273,7 @@ const CourseInformationForm = () => {
 
       {/* course tags */}
       {/* create a custom component for handling tags input */}
-      <TagsInput label="Tags" name="courseTags" placeholder="Enter tags and press enter" register={register} errors={errors} setValue={setValue} getValue={getValue} />
+      <TagsInput label="Tags" name="courseTags" placeholder="Enter tags and press enter" register={register} errors={errors} setValue={setValue} getValues={getValues} />
 
       {/* course thumbnail */}
       {/* create a custom component for taking image as input and display it */}
@@ -299,7 +302,7 @@ const CourseInformationForm = () => {
 
       {/* requirements field */}
       {/* video - 101 - 1:04:00 */}
-      <RequirementsField label="Course Requirements" name="courseRequirements" placeholder="Enter requirements and press enter" register={register} errors={errors} setValue={setValue} getValue={getValue} />
+      <RequirementsField label="Course Requirements" name="courseRequirements" placeholder="Enter requirements and press enter" register={register} errors={errors} setValue={setValue} getValue={getValues} />
 
       <div className='flex gap-x-2 justify-end'>
         {

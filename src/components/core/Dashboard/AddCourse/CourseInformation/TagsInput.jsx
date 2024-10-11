@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { IoCloseSharp } from 'react-icons/io5';
 
-const TagsInput = ({label, name, placeholder, register, errors, setValue, getValue}) => {
+const TagsInput = ({label, name, placeholder, register, errors, setValue, getValues}) => {
 
     const { course, editCourse } = useSelector((state) => state.course) ;
     const [tags, setTags] = useState([]) ;
@@ -56,38 +56,38 @@ const TagsInput = ({label, name, placeholder, register, errors, setValue, getVal
 
     return (
         <div className='flex flex-col gap-2'>
-        <label htmlFor={name} className='text-richblack-5 text-sm font-normal'>
-          {label}
-          <sup className='text-red-600'>
-            *
-          </sup>
-        </label>
+            <label htmlFor={name} className='text-richblack-5 text-sm font-normal'>
+            {label}
+            <sup className='text-red-600'>
+                *
+            </sup>
+            </label>
 
-        <div className="flex w-full flex-wrap gap-y-2">
-            {/* show tags */}
+            <div className="flex w-full flex-wrap gap-y-2">
+                {/* show tags */}
+                {
+                    tags.map((tag, index) => (
+                        <div key={index} className='m-1 flex items-center rounded-full bg-yellow-400 px-2 py-1 text-sm text-richblack-5'>
+
+                            {tag}
+
+                            <button type='button' onClick={() => handleToDeleteTag(index)}>
+                                <IoCloseSharp />
+                            </button>
+                        </div>
+                    ))
+                }
+
+                {/* input */}
+                <input id={name} name={name} placeholder={placeholder} className='w-full rounded-lg bg-richblack-700 p-3 text-richblack-5 border-b-2  border-richblack-600' onKeyDown={handleToAddTag} />
+            </div>
             {
-                tags.map((tag, index) => (
-                    <div key={index} className='m-1 flex items-center rounded-full bg-yellow-400 px-2 py-1 text-sm text-richblack-5'>
-
-                        {tag}
-
-                        <button type='button' onClick={() => handleToDeleteTag(index)}>
-                            <IoCloseSharp />
-                        </button>
-                    </div>
-                ))
+                errors[name] && (
+                    <span className="-mt-1 text-[12px] text-red-500">
+                    Course Tags are required.
+                    </span>
+                )
             }
-
-            {/* input */}
-            <input id={name} name={name} placeholder={placeholder} className='w-full rounded-lg bg-richblack-700 p-3 text-richblack-5 border-b-2  border-richblack-600' onKeyDown={handleToAddTag} />
-        </div>
-        {
-          errors[name] && (
-            <span className="-mt-1 text-[12px] text-red-500">
-              Course Tags are required.
-            </span>
-          )
-        }
 
         </div>
     )
