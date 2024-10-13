@@ -1,7 +1,7 @@
 const express = require("express") ;
 const router = express.Router() ;
 
-const {createCourse, getAllCourses, getCourseDetails, getInstructorCourses, deleteCourse} = require("../controllers/Course") ;
+const {createCourse, getAllCourses, getCourseDetails, getInstructorCourses, deleteCourse, editCourse, getFullCourseDetails} = require("../controllers/Course") ;
 const {createSection, updateSection, deleteSection} = require("../controllers/Section") ;
 const {createSubSection, updateSubSection, deleteSubSection} = require("../controllers/Subsection") ;
 const {createCategory, showAllCategories, categoryPageDetails} = require("../controllers/Category") ;
@@ -15,6 +15,8 @@ const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth"
 // Courses can only be created by instructors
 router.post("/createCourse", auth, isInstructor, createCourse) ;
 
+// edit a course
+router.post("/editCourse", auth, isInstructor, editCourse) ;
 // delete a course
 router.delete("/deleteCourse", auth, isInstructor, deleteCourse) ;
 
@@ -36,7 +38,9 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection) ;
 // route for getting a list of all available courses
 router.get("/getAllCourses", getAllCourses) ;
 // route for getting details of a specific course by id
-router.get("/getCourseDetails", getCourseDetails) ;
+router.post("/getCourseDetails", getCourseDetails) ;
+// route for getting details of a specific course
+router.post("/getFullCourseDetails", auth, getFullCourseDetails) ;
 
 // route for getting all the courses of a particular Instructor
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses) ;

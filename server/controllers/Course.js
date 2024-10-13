@@ -124,6 +124,84 @@ exports.createCourse = async(req, res) => {
 }
 
 // handler function to edit course
+exports.editCourse = async(req, res) => {
+    try{
+        console.log("req.body : ", req.body) ;
+        // fetch the data
+        // const { courseId } = req.body ;
+        const {courseId, ...updatedInformation} = req.body ;
+
+        console.log("Updated Info : ", updatedInformation) ;
+
+        const course = await Course.findById(courseId) ;
+
+        // validate the data
+        if(!course){
+            return res.status(404).json({
+                success: false,
+                message: `Course Not Found with course id : ${courseId}`
+            }) ;
+        }
+
+        // check whether tumbnail is updated or not
+        if(req.files){
+            const thumbnail = req.files.thumbnail ;
+
+            const uploadThumbnail = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME) ;
+
+            course.thumbnail = uploadThumbnail.secure_url ;
+        }
+
+        // how to update all the remaining information using a for loop ??
+        for(const item in updatedInformation){
+            if(updatedInformation.hasOwnProperty(item)){
+                console.log("Properties of course : ", item, updatedInformation[item]) ;
+                if(item === "tag" || item === "instructions"){
+                    course[item] = JSON.parse(updatedInformation[item]) ;
+                }
+                else
+                    course[item] = updatedInformation[item] ;
+                console.log("Updated properties of course : ", item, " : ", course[item]) ;
+            }
+        }
+
+        course.save() ;
+
+        // fetch the updated course
+        const updatedCourse = await Course.findById(courseId).populate({
+                                                                path: "instructor",
+                                                                populate: {
+                                                                    path: "additionalDetails"
+                                                                }  
+                                                            })
+                                                            .populate("category")
+                                                            .populate("ratingAndReviews")
+                                                            .populate({
+                                                                path: "courseContent",
+                                                                populate: {
+                                                                    path: "subSection"
+                                                                }
+                                                            })
+                                                            .exec() ;
+
+        console.log("Updated Course : ", updatedCourse) ;
+
+        // return the updated course details
+        return res.status(200).json({
+            success: true,
+            message: "Course updated/edited Successfully",
+            updatedCourse
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured while editing the course ", err.message) ;
+        return res.status(400).json({
+            success: false,
+            message: "Error occurred while editing course",
+            error: err.message 
+        }) ;
+    }
+}
 
 // handler function to getAllCourses
 exports.getAllCourses = async(req, res) => {
@@ -202,13 +280,15 @@ exports.getCourseDetails = async(req, res) => {
                                         // )
                                         .exec() ;
 
-        // // validation
-        // if(!courseDetails){
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: `Could not find the course with ${courseId}`
-        //     }) ;
-        // }
+        // validation
+        if(!courseDetails){
+            return res.status(400).json({
+                success: false,
+                message: `Could not find the course with course id : ${courseId}`
+            }) ;
+        }
+
+        // count total duration of the course
         
         // return response
         return res.status(200).json({
@@ -226,6 +306,45 @@ exports.getCourseDetails = async(req, res) => {
 }
 
 // handler function to get full course details
+exports.getFullCourseDetails = async(req, res) => {
+    try{
+        const { courseId } = req.body ;
+        const userId = req.user.id ;
+        const courseDetails = await Course.findById(courseId).populate({
+                                                                path: "instructor",
+                                                                populate: {
+                                                                path: "additionalDetails",
+                                                                },
+                                                            })
+                                                            .populate("category")
+                                                            .populate("ratingAndReviews")
+                                                            .populate({
+                                                                path: "courseContent",
+                                                                populate: {
+                                                                path: "subSection",
+                                                                },
+                                                            })
+                                                            .exec() ;
+
+        // a lot more to add like total duration of the course, course progress
+
+        return res.status(200).json({
+            success: true,
+            message: "Full Course details fetched Successfully",
+            data: {
+                courseDetails,
+            },
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured while fetching the course details : ", err.message) ;
+        return res.status.json({
+            success: false,
+            message: "Some error occured in fetching the course details.",
+            error: err.message
+        }) ;
+    }
+}
 
 
 // handler funciton to get Instructor courses
