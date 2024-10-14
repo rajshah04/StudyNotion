@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
-import { COURSE_STATUS } from '../../../../utils/constants';
+import { COURSE_STATUS, TRUNCATE_LENGTH } from '../../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import ConfirmationModal from '../../../common/ConfirmationModal';
 import { fetchInstructorCourses, deleteCourse } from '../../../../services/operations/courseDetailsAPI';
@@ -18,8 +18,6 @@ const CoursesTable = ({courses, setCourses}) => {
 
     const [loading, setLoading] = useState(false) ;
     const [confirmationModal, setConfirmationModal] = useState(null) ;
-
-    const TRUNCATE_LENGTH = 30 ;
 
     const navigate = useNavigate() ;
 
@@ -60,6 +58,8 @@ const CoursesTable = ({courses, setCourses}) => {
         setLoading(false) ;
     }
 
+    console.log("Instructor's Courses : ", courses) ;
+
     return (
         <div>
             <Table className='rounded-3xl border border-richblack-800'>
@@ -95,7 +95,7 @@ const CoursesTable = ({courses, setCourses}) => {
                                     <Td className='flex flex-1 gap-x-4'>
                                         <img src={course?.thumbnail} className='h-[150px] w-[220px] rounded-lg object-cover' loading='lazy' />
 
-                                        <div className='flex flex-col items-start justify-between'>
+                                        <div className='flex flex-col items-start justify-start gap-y-4'>
                                             <p className='text-lg font-semibold text-richblack-5'>
                                                 {course.courseName}
                                             </p>
@@ -111,7 +111,7 @@ const CoursesTable = ({courses, setCourses}) => {
                                             </p>
                                             {
                                                 course.status === COURSE_STATUS.DRAFT ? (
-                                                    <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                                                    <p className="flex w-fit flex-row items-center justify-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
                                                         <HiClock size={14} />
                                                         Drafted
                                                     </p>

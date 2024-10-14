@@ -120,7 +120,7 @@ export const editCourseDetails = async (data, token) => {
     }
     
     toast.success("Course Details Updated Successfully") ;
-    result = response?.data?.data ;
+    result = response?.data?.updatedCourse ;
   } catch (err) {
     console.log("EDIT COURSE API ERROR............", err) ;
     toast.error(err.message) ;

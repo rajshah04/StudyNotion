@@ -8,3 +8,5 @@ export const COURSE_STATUS = {
     DRAFT: "Draft",
     PUBLISHED: "Published",
 }
+
+export const TRUNCATE_LENGTH = 30 ;

@@ -5,6 +5,7 @@ import CommonBtn from '../../../../common/CommonBtn';
 import { resetCourseState, setStep } from '../../../../../slices/courseSlice';
 import { COURSE_STATUS } from '../../../../../utils/constants';
 import { editCourseDetails } from '../../../../../services/operations/courseDetailsAPI';
+import { useNavigate } from 'react-router-dom';
 
 const PublishCourseForm = () => {
 
@@ -14,6 +15,7 @@ const PublishCourseForm = () => {
     const [loading, setLoading] = useState(false) ;
 
     const dispatch = useDispatch() ;
+    const navigate = useNavigate() ;
 
     const {
         register,
@@ -51,11 +53,11 @@ const PublishCourseForm = () => {
 
             setLoading(true) ;
             
-            // const result = await editCourseDetails(formData, token) ;
+            const result = await editCourseDetails(formData, token) ;
 
-            // if(result){
-            //     goToCourses() ;
-            // }
+            if(result){
+                goToCourses() ;
+            }
 
             setLoading(false) ;
         }
@@ -63,7 +65,8 @@ const PublishCourseForm = () => {
 
     const goToCourses = () => {
         dispatch(resetCourseState()) ;
-        // TODO : navigate to /dashboard/my-courses
+        // navigate to /dashboard/my-courses
+        navigate("/dashboard/my-courses") ;
     }
 
     return (

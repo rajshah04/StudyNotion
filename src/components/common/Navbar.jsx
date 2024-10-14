@@ -20,11 +20,11 @@ const Navbar = () => {
     const fetchSubLinks = async() => {
         try{
             const result = await apiConnector("GET", courseEndpoints.COURSE_CATEGORIES_API) ;
-            console.log("Printing sublinks result", result) ;
-            console.log(result.data.allCategoriesDetails)
+            // console.log("Printing sublinks result", result) ;
+            // console.log(result.data.allCategoriesDetails)
             setSubLinks(result.data.allCategoriesDetails) ;
 
-            console.log("Sublinks : ", subLinks) ;
+            console.log("Categories : ", subLinks) ;
         }catch(err){
             console.log("Could not fetch the catalogue list", err) ;
         }
@@ -57,6 +57,7 @@ const Navbar = () => {
                                 <li key={index}>
                                     {
                                         link.title === "Catalogue" ? (
+                                            // TODO : look the down arrow on hover(make it up arrow)
                                             <div className='relative flex gap-2 items-center group'>
                                                 <p>
                                                     {link.title}
@@ -64,7 +65,7 @@ const Navbar = () => {
                                                 <IoIosArrowDown />
 
                                                 <div className='invisible absolute left-[50%]
-                                                -translate-x-[50%] translate-y-[40%] top-[50%] flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[300px] z-50'>
+                                                -translate-x-[50%] translate-y-[30%] top-[50%] flex flex-col rounded-md bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[300px] z-50'>
 
                                                     <div className='absolute left-[50%] top-0 translate-y-[-40%] translate-x-[120%] h-6 w-6 rotate-45 rounded bg-richblack-5'>
                                                     </div>
