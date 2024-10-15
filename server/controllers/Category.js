@@ -1,4 +1,5 @@
 const Category = require("../models/Category") ;
+const Course = require("../models/Course");
 
 // handler function to create Category
 exports.createCategory = async(req, res) => {
@@ -81,14 +82,17 @@ exports.categoryPageDetails = async(req, res) => {
         const differentCategories = await Category.find({_id: {$ne: categoryId}}) ;
 
         // get top 10 selling courses
-        
+        const top10Courses = await Course.find({status: "Published"}).sort({ studentsEnrolled: -1}).limit(10).populate("instructor").populate("category").exec() ;
+
+        console.log("Top 10 selling courses : ", top10Courses) ;
 
         // return response  
         return res.status(200).json({
             success: true,
             data: {
                 selectedCategory,
-                differentCategories
+                differentCategories,
+                top10Courses
             }
         }) ;
     }catch(err){
