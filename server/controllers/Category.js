@@ -61,11 +61,13 @@ exports.showAllCategories = async(req, res) => {
     }
 }
 
-// TODO: get top 10 selling courses
+// TODO -- done: get top 10 selling courses
 exports.categoryPageDetails = async(req, res) => {
     try{
         // get categoryId
         const {categoryId} = req.body ;
+
+        console.log("Category id in category page details : ", categoryId) ;
 
         // get courses for specified categoryId
         const selectedCategory = await Category.findById(categoryId).populate("course").exec() ;

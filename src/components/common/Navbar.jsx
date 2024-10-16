@@ -41,8 +41,8 @@ const Navbar = () => {
 
     const location = useLocation() ;
     const matchRoute = (route) => {
-        console.log("Route : ", route)
-        console.log("Loc pathname : ", location.pathname) ;
+        // console.log("Route : ", route)
+        // console.log("Loc pathname : ", location.pathname) ;
         return matchPath({path:route}, location.pathname) ;
     }
 

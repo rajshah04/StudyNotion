@@ -4,6 +4,11 @@ export const categories = {
     CATEGORIES_API: BASE_URL + "/course/showAllCategories",
 }
 
+// CATALOGOU PAGE DATA
+export const catalogueData = {
+    CATALOGUE_PAGE_DATA_API: BASE_URL + "/course/getCategoryPageDetails",
+}
+
 // AUTH Endpoints
 export const authEndpoints = {
     LOGIN_API: BASE_URL + "/auth/login",
