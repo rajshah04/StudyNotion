@@ -4,6 +4,7 @@ const User = require("../models/User") ;
 const mailSender = require("../utils/mailSender") ;
 const {courseEnrollmentEmail} = require("../mail/templates/courseEnrollmentEmail") ;
 const { default: mongoose } = require("mongoose");
+const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail");
 
 
 // initiate the razorpay order
@@ -180,6 +181,36 @@ const enrollStudents = async(courses, userId, res) => {
         return res.status(500).json({
             success: false,
             message: err.message
+        }) ;
+    }
+}
+
+// send payment successful mail
+exports.sendPaymentSuccessEmail = async(req, res) => {
+    const {orderId, paymentId, amount} = req.body ;
+
+    const userId = req.user.id ;
+
+    if(!orderId || !paymentId || !amount){
+        return res.status(400).json({
+            success: false, 
+            message: "All fields are necessary"
+        }) ;
+    }
+
+    try{
+        const enrolledStudent = await User.findById(userId) ;
+
+        const mailResponse = await mailSender(enrolledStudent.email, `Payment Received`, paymentSuccessEmail(`${enrolledStudent.firstName}`, amount / 100, orderId, paymentId)) ;
+
+        console.log("Mail response of sending payment success mail : ", mailResponse) ;
+    }
+    catch(err){
+        console.log("Error occured while sending mail : ", err.message) ;
+        return res.status(400).json({
+            success: false,
+            message: "Some error occured while sending email",
+            error: err.message
         }) ;
     }
 }
