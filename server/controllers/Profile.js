@@ -253,10 +253,38 @@ exports.removeProfilePicture = async(req, res) => {
 }
 
 // TODO : write controller for getEnrolledCourses
-// exports.getEnrolledCourses = async(req, res) => {
+exports.getEnrolledCourses = async(req, res) => {
+    try{
+        // fetch userId
+        const userId = req.user.id ;
 
-//     // get user id
-//     const userId = req.user.id ;
+        const userDetails = await User.findById(userId).populate({
+                                                            path: "courses",
+                                                            populate: {
+                                                                path: "courseContent",
+                                                                populate: {
+                                                                path: "subSection",
+                                                                },
+                                                            },
+                                                        })
+                                                        .exec() ;
 
-//     // 
-// }
+        if(!userDetails){
+            return res.status(400).json({
+                success: false,
+                message: `Cannot find user with id: ${userDetails}`,
+            }) ;
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: userDetails.courses,
+        }) ;
+    }
+    catch(err){
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+        }) ;
+    }
+}

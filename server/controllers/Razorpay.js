@@ -3,8 +3,9 @@ const Course = require("../models/Course") ;
 const User = require("../models/User") ;
 const mailSender = require("../utils/mailSender") ;
 const {courseEnrollmentEmail} = require("../mail/templates/courseEnrollmentEmail") ;
-const { default: mongoose } = require("mongoose");
-const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail");
+const { default: mongoose } = require("mongoose") ;
+const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail") ;
+const crypto = require("crypto") ;
 
 
 // initiate the razorpay order
@@ -117,7 +118,7 @@ exports.verifyPayment = async(req, res) => {
         }) ;
     }
 
-    return res.status(200).json({
+    return res.status(401).json({
         success: "false" ,
         message: "Payment Failed"
     }) ;
