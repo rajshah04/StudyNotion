@@ -1,6 +1,10 @@
 const Category = require("../models/Category") ;
 const Course = require("../models/Course");
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max)
+}
+
 // handler function to create Category
 exports.createCategory = async(req, res) => {
     try{
@@ -81,7 +85,18 @@ exports.categoryPageDetails = async(req, res) => {
         }
 
         // get courses for different categories
-        const differentCategories = await Category.find({_id: {$ne: categoryId}}) ;
+        const otherCategories = await Category.find({
+            _id: { $ne: categoryId },
+        }) ;
+
+        let differentCategories = await Category.findOne([getRandomInt(otherCategories.length)]._id)
+            .populate({
+                path: "course",
+                match: { status: "Published" },
+            })
+            .exec() ;
+
+        console.log("Different Categories' Courses", differentCategories) ;
 
         // get top 10 selling courses
         const top10Courses = await Course.find({status: "Published"}).sort({ studentsEnrolled: -1}).limit(10).populate("instructor").populate("category").exec() ;

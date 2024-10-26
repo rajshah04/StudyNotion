@@ -1,7 +1,7 @@
 const express = require("express") ;
 const router = express.Router() ;
 
-const {updateProfile, getAllUserDetails, deleteAccount, updateProfilePicture, removeProfilePicture} = require("../controllers/Profile") ;
+const {updateProfile, getAllUserDetails, deleteAccount, updateProfilePicture, removeProfilePicture, getEnrolledCourses} = require("../controllers/Profile") ;
 const {auth} = require("../middlewares/auth") ;
 
 // PROFILE ROUTES
@@ -16,6 +16,9 @@ router.get("/getAllUserDetails", auth, getAllUserDetails) ;
 router.put("/updateProfilePicture", auth, updateProfilePicture) ;
 // route for removing the profile picture
 router.put("/removeProfilePicture", auth, removeProfilePicture) ;
+
+// route for getting enrolled courses details
+router.get("/getEnrolledCourses", auth, getEnrolledCourses) ;
 
 
 module.exports = router ;
