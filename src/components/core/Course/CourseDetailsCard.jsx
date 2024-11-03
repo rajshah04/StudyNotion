@@ -1,11 +1,11 @@
-import copy from 'copy-to-clipboard';
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ACCOUNT_TYPE } from '../../../utils/constants';
+import copy from 'copy-to-clipboard';
 import { addToCart } from '../../../slices/cartSlice';
-import { FaRegDotCircle, FaShareSquare } from 'react-icons/fa';
+import { FaShareSquare } from 'react-icons/fa';
 import { GoDotFill } from 'react-icons/go';
 
 const CourseDetailsCard = ({course, setConfirmationModal, buyCourseHandler}) => {
