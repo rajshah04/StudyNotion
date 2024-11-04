@@ -10,7 +10,7 @@ const dateFormatter = (createdAt) => {
     const hour = date.getHours() ;
     const minutes = date.getMinutes() ;
     const period = hour >= 12 ? "P.M." : "A.M." ;
-    const formattedTime = `${hour % 12}:${minutes.toString().padStart(2, "0")} ${period}` ;
+    const formattedTime = `${(hour % 12) < 10 ? "0" + hour % 12 : hour % 12}:${minutes.toString().padStart(2, "0")} ${period}` ;
 
     // console.log(`${formattedDate} | ${formattedTime}`)
 

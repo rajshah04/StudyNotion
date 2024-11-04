@@ -1,5 +1,5 @@
 const getAvgRating = (ratingArray) => {
-    if(ratingArray?.length === 0) return 0 ;
+    if(!ratingArray || ratingArray?.length === 0) return 0 ;
 
     const totalRatingCount = ratingArray.reduce((acc, curr) => {
         acc += curr.rating ;
