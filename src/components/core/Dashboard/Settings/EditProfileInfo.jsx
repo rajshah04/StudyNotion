@@ -22,6 +22,7 @@ const EditProfileInfo = () => {
     const submitHandler = (data) => {
         console.log(data)
         dispatch(updateProfile(token, data)) ;
+        navigate("/dashboard/my-profile") ;
     }
 
     return (
