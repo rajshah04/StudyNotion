@@ -179,18 +179,95 @@ const CourseDetails = () => {
                             </span>
                         </p>
                     </div>
+                {/* </div> */}
+
+            {/* </div> */}
+
+                    <div className='absolute right-0 top-0 z-30 min-h-[600px] max-w-[410px]'>
+                        <CourseDetailsCard course={courseData} setConfirmationModal={setConfirmationModal} buyCourseHandler={buyCourseHandler} />
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div className='mx-auto box-content px-4 text-start text-richblack-5 lg:w-[1260px]'>
+
+                <div className='mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]'>
+
+                    <div className='my-8 border border-richblack-600 p-8'>
+                        <p className='text-3xl font-semibold'>
+                            What You Will Learn
+                        </p>
+
+                        <div className='mt-5'>
+                            {whatYouWillLearn}
+                        </div>
+                    </div>
+
+                    <div className='max-w-[830px]'>
+                        <div className='flex flex-col gap-4'>
+                            <p className='text-3xl font-semibold'>
+                                Course Content
+                            </p>
+                        
+
+                            <div className='flex flex-wrap gap-4 justify-between'> 
+                                <div className='flex gap-4'>
+                                    <span>
+                                        {courseContent.length} section(s)
+                                    </span>
+
+                                    <span>
+                                        {totalLectures} lectures
+                                    </span>
+
+                                    <span>
+                                        {/* add total duration of the course here */}
+                                        {/* {courseData.to} total duration */}
+                                    </span>
+                                </div>
+                                
+                                <div>
+                                    <button onClick={() => setIsActive([])} className='text-yellow-25'>
+                                        Collapse all sections
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {/* add section-subsection details here */}
+                        
+
+
+                        {/* instructor's details */}
+                        <div className='mb-12 py-4'>
+                            <p className='text-3xl font-semibold'>
+                                Instructor
+                            </p>
+
+                            <div className='flex items-center gap-6 my-4 py-4'>
+                                <img src={image} className='h-16 w-16 rounded-full object-cover' />
+
+                                <p className='text-lg'>
+                                    {firstName} {lastName}
+                                </p>
+
+                            </div>
+                            
+                            <p className='text-lg'>
+                                {about}
+                            </p>
+                        </div>
+                        
+                    </div>
+
                 </div>
 
             </div>
 
             
-
-
-
-
-
-
-
             <Footer />
 
             {
