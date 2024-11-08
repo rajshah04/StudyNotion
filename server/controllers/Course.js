@@ -4,6 +4,8 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader") ;
 const Course = require("../models/Course") ;
 const Section = require("../models/Section") ;
 const SubSection = require("../models/SubSection") ;
+const { convertSecondsToDuration } = require("../utils/secondsToDuration") ;
+const CourseProgress = require("../models/CourseProgress") ;
 
 // handler function to create course
 exports.createCourse = async(req, res) => {
@@ -326,13 +328,37 @@ exports.getFullCourseDetails = async(req, res) => {
                                                             })
                                                             .exec() ;
 
-        // a lot more to add like total duration of the course, course progress
+        if(!courseDetails){
+            return res.status(400).json({
+                success: false,
+                message: `Could not find course with id: ${courseId}`
+            }) ;
+        }
+
+        // a lot more to add like total duration of the course, course progress -- TODO -- done
+        
+        let totalDurationInSeconds = 0 ;
+
+        courseDetails.courseContent.forEach((section) => {
+            section.subSection.forEach((subSection) => {
+                const timeDurationInSeconds = parseInt(subSection.timeDuration)
+                totalDurationInSeconds += timeDurationInSeconds
+            })
+        })
+
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds) ;
+
+        const courseProgressCount = await CourseProgress.findOne({courseID: courseId, userId: userId}) ;
+      
+        console.log("courseProgressCount : ", courseProgressCount) ;
 
         return res.status(200).json({
             success: true,
             message: "Full Course details fetched Successfully",
             data: {
                 courseDetails,
+                totalDuration,
+                completedVideos: courseProgressCount?.completedVideos ? courseProgressCount?.completedVideos : []
             },
         }) ;
     }
