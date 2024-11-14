@@ -5,6 +5,7 @@ import { updateCompletedLectures } from '../../../slices/viewCourseSlice';
 import { Player } from 'video-react';
 import 'video-react/dist/video-react.css'; // import css
 import CommonBtn from '../../common/CommonBtn';
+import { markLectureAsComplete } from '../../../services/operations/courseDetailsAPI';
 
 
 
@@ -21,7 +22,7 @@ const VideoDetails = () => {
 
   const navigate = useNavigate() ;
   const dispatch = useDispatch() ;
-  const videoPlayerRef = useRef() ;
+  const videoPlayerRef = useRef(null) ;
   const location = useLocation() ;
 
   useEffect(() => {
@@ -37,19 +38,21 @@ const VideoDetails = () => {
         // assuming all 3 fields are present
         const filteredData = courseSectionData.filter((course) => course._id === sectionId) ;
 
-        const filteredVideoData = filteredData?.[0].subsection.filter((data) => data._id === subSectionId) ;
+        const filteredVideoData = filteredData?.[0].subSection.filter((data) => data._id === subSectionId) ;
 
         setVideoData(filteredVideoData[0]) ;
         setVideoEnded(false) ;
       }
     }
+
+    setVideoSpecificDetails() ;
   }, [courseSectionData, coursEntireData, location.pathname]) ;
 
 
-  const ifFirstVideo = () => {
+  const isFirstVideo = () => {
     const currentSectionIndex = courseSectionData.findIndex((data) => data._id === sectionId) ;
 
-    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex((data) => data._id === subSectionId) ;
+    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex((data) => data._id === subSectionId) ;
 
     if(currentSectionIndex === 0 && currentSubSectionIndex === 0){
       return true ;
@@ -59,12 +62,12 @@ const VideoDetails = () => {
     }
   }
 
-  const ifLastVideo = () => {
+  const isLastVideo = () => {
     const currentSectionIndex = courseSectionData.findIndex((data) => data._id === sectionId) ;
 
     const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length ;
 
-    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex((data) => data._id === subSectionId) ;
+    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex((data) => data._id === subSectionId) ;
 
     if(currentSectionIndex === courseSectionData.length - 1 && currentSubSectionIndex === noOfSubSections - 1){
       return true ;
@@ -79,7 +82,7 @@ const VideoDetails = () => {
 
     const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length ;
 
-    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex((data) => data._id === subSectionId) ;
+    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex((data) => data._id === subSectionId) ;
 
     if(currentSubSectionIndex !== noOfSubSections - 1){
       // same section's next video
@@ -102,7 +105,7 @@ const VideoDetails = () => {
 
     const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length ;
 
-    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSectionId.findIndex((data) => data._id === subSectionId) ;
+    const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex((data) => data._id === subSectionId) ;
 
     if(currentSubSectionIndex !== 0){
       // same section's previous video
@@ -136,21 +139,21 @@ const VideoDetails = () => {
   }
 
   const handleRewatchVideo = () => {
-    if(playerRef?.current){
-      playerRef.current?.seek(0) ;
+    if(videoPlayerRef?.current){
+      videoPlayerRef.current?.seek(0) ;
       setVideoEnded(false) ;
     }
   }
 
   return (
-    <div>
+    <div className='flex flex-col gap-5 text-white'>
       {
         !videoData ? (
           <div>
             No Data Found
           </div>
         ) : (
-          <Player ref={playerRef} aspectRatio='16:9' playsInline onEnded={() => setVideoEnded(true)} src={videoData?.videoUrl}>
+          <Player ref={videoPlayerRef} aspectRatio='16:9' playsInline onEnded={() => setVideoEnded(true)} src={videoData?.videoUrl}>
 
             {/* add play button icon */}
 
