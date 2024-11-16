@@ -6,6 +6,7 @@ const {createSection, updateSection, deleteSection} = require("../controllers/Se
 const {createSubSection, updateSubSection, deleteSubSection} = require("../controllers/Subsection") ;
 const {createCategory, showAllCategories, categoryPageDetails} = require("../controllers/Category") ;
 const {createRating, getAverageRating, getAllRating, getCourseRelatedRating} = require("../controllers/RatingAndReview") ;
+const {updateCourseProgress} = require("../controllers/CourseProgress") ;
 
 // Importing Middlewares
 const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth") ;
@@ -61,5 +62,10 @@ router.post("/createRating", auth, isStudent, createRating) ;
 router.get("/getAverageRating", getAverageRating) ;
 router.get("/getAllRating", getAllRating) ;
 router.get("/getCourseRelatedRating", getCourseRelatedRating) ;
+
+// COURSE PROGRESS
+
+// route to update the course progress
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress) ;
 
 module.exports = router ;
