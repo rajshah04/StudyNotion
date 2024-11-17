@@ -6,6 +6,7 @@ const {courseEnrollmentEmail} = require("../mail/templates/courseEnrollmentEmail
 const { default: mongoose } = require("mongoose") ;
 const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail") ;
 const crypto = require("crypto") ;
+const CourseProgress = require("../models/CourseProgress");
 
 
 // initiate the razorpay order
@@ -149,10 +150,14 @@ const enrollStudents = async(courses, userId, res) => {
 
             console.log("Updated course detail after adding student : ", courseDetail) ;
 
+            const courseProgress = await CourseProgress.create({courseId: courseId, userId: userId, completedVideos: []}) ;
+
+            // find and add the student to their list of enrolled courses
             const user = await User.findByIdAndUpdate(userId, 
                 {
                     $push: {
-                        courses: course
+                        courses: course,
+                        courseProgress: courseProgress._id,
                     },
                 },
                 {

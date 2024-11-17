@@ -3,7 +3,7 @@ const User = require("../models/User") ;
 const Course = require("../models/Course") ;
 const CourseProgress = require("../models/CourseProgress");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
-const { default: mongoose } = require("mongoose");
+const { convertSecondsToDuration } = require("../utils/secondsToDuration") ;
 
 exports.updateProfile = async(req, res) => {
     try{
@@ -252,13 +252,13 @@ exports.removeProfilePicture = async(req, res) => {
     }
 }
 
-// TODO : write controller for getEnrolledCourses
+// TODO -- done : write controller for getEnrolledCourses
 exports.getEnrolledCourses = async(req, res) => {
     try{
         // fetch userId
         const userId = req.user.id ;
 
-        const userDetails = await User.findById(userId).populate({
+        let userDetails = await User.findById(userId).populate({
                                                             path: "courses",
                                                             populate: {
                                                                 path: "courseContent",
@@ -269,6 +269,40 @@ exports.getEnrolledCourses = async(req, res) => {
                                                         })
                                                         .exec() ;
 
+        console.log("User Details before updating time duration : ", userDetails) ;
+
+        // adding time duration to each course && progress percentage
+        userDetails = userDetails.toObject() ;
+    
+        let subSectionLength = 0 ;
+
+        for (let i = 0 ; i < userDetails.courses.length ; i++) {
+            let totalDurationInSeconds = 0 ;
+            subSectionLength = 0 ;
+
+            console.log("Inside 1st loop") ;
+
+            for (let j = 0 ; j < userDetails.courses[i].courseContent.length ; j++) {
+                totalDurationInSeconds += userDetails.courses[i].courseContent[j].subSection.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0) ;
+                userDetails.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSeconds) ;
+                subSectionLength += userDetails.courses[i].courseContent[j].subSection.length ;
+            } 
+
+            let courseProgressCount = await CourseProgress.findOne({courseID: userDetails.courses[i]._id,userId: userId}) ;
+
+            courseProgressCount = courseProgressCount?.completedVideos.length ;
+
+            if(subSectionLength === 0) {
+                userDetails.courses[i].progressPercentage = 100 ;
+            }
+            else{
+                // make it up to 2 decimal point
+                const multiplier = Math.pow(10, 2) ;
+
+                userDetails.courses[i].progressPercentage = Math.round((courseProgressCount / subSectionLength) * 100 * multiplier) / multiplier ;
+            }
+        }
+
         if(!userDetails){
             return res.status(400).json({
                 success: false,
@@ -276,12 +310,15 @@ exports.getEnrolledCourses = async(req, res) => {
             }) ;
         }
 
+        console.log("User's after updating time duration : ", userDetails) ;
+
         return res.status(200).json({
             success: true,
             data: userDetails.courses,
         }) ;
     }
     catch(err){
+        console.log("Error occured in get enrolled courses : ", err) ;
         return res.status(500).json({
             success: false,
             message: err.message,
