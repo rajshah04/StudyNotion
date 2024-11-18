@@ -4,7 +4,7 @@ export const categories = {
     CATEGORIES_API: BASE_URL + "/course/showAllCategories",
 }
 
-// CATALOGOU PAGE DATA
+// CATALOGUE PAGE DATA
 export const catalogueData = {
     CATALOGUE_PAGE_DATA_API: BASE_URL + "/course/getCategoryPageDetails",
 }
@@ -62,4 +62,11 @@ export const studentEndpoints = {
     COURSE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
     COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
     SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessfulEmail"
+}
+
+// RATING AND REVIEW ENDPOINTS
+export const ratingAndReviewEndpoints = {
+    GET_ALL_RATING: BASE_URL + "/course/getAllRating",
+    GET_COURSE_RELATED_RATING: BASE_URL + "/course/getCourseRelatedRating",
+    GET_COURSE_AVERAGE_RATING: BASE_URL + "/course/getAverageRating"
 }

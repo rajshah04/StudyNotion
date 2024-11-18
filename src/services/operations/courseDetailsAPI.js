@@ -15,7 +15,7 @@ export const getAllCourses = async () => {
     const response = await apiConnector("GET", GET_ALL_COURSE_API) ;
 
     if (!response?.data?.success) {
-      throw new Error("Could Not Fetch Course Categories") ;
+      throw new Error("Could Not Fetch All Courses") ;
     }
 
     result = response?.data?.data ;
@@ -426,7 +426,7 @@ export const createRating = async (data, token) => {
   } catch (err) {
     success = false ;
     console.log("CREATE RATING API ERROR............", err) ;
-    toast.error(err.message) ;
+    toast.error(err.response.data.message) ;
   }
   toast.dismiss(toastId) ;
   return success ;
