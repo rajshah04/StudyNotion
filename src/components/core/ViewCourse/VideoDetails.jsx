@@ -153,7 +153,7 @@ const VideoDetails = () => {
             No Data Found
           </div>
         ) : (
-          <Player ref={videoPlayerRef} aspectRatio='16:9' playsInline onEnded={() => setVideoEnded(true)} src={videoData?.videoUrl}>
+          <Player ref={videoPlayerRef} aspectRatio='16:9' playsInline onEnded={() => setVideoEnded(true)} src={videoData?.videoUrl} height={`50vh`}>
 
             {/* add play button icon */}
 
@@ -190,11 +190,11 @@ const VideoDetails = () => {
         )
       }
 
-      <h1>
+      <h1 className='mt-4 text-3xl font-semibold'>
         {videoData?.title}
       </h1>
 
-      <p>
+      <p className='pt-2 pb-6'>
         {videoData?.description}
       </p>
 
