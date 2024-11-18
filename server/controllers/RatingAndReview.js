@@ -13,6 +13,10 @@ exports.createRating = async(req, res) => {
         // fetch data from req.body
         const {rating, review, courseId} = req.body ;
 
+        // console.log("Rating : ", rating) ;
+        // console.log("Review : ", review) ;
+        // console.log("Course id : ", courseId) ;
+
         // check if user is enrolled or not
         const courseDetails = await Course.findById(courseId) ;
 
@@ -67,7 +71,9 @@ exports.createRating = async(req, res) => {
 exports.getAverageRating = async(req, res) => {
     try{
         // get course id
-        const courseId = req.body.courseId ;
+        const {courseId} = req.body ;
+
+        console.log("Course id : ", courseId) ;
 
         // calculate average rating
         const result = await RatingAndReview.aggregate([
@@ -95,8 +101,9 @@ exports.getAverageRating = async(req, res) => {
         // if no rating/review exists
         return res.status(200).json({
             success: true,
-            message: "Average ratings is 0, no rating given till now."
-        })
+            message: "Average ratings is 0, no rating given till now.",
+            averageRating: 0
+        }) ;
     }catch(err){
         console.log(err) ;
         return res.status(500).json({
@@ -135,7 +142,7 @@ exports.getAllRating = async(req, res) => {
     }
 }
 
-// TODO: getAllRating related to a specific Course
+// TODO -- done : getAllRating related to a specific Course
 exports.getCourseRelatedRating = async(req, res) => {
     try{
         // get course id
