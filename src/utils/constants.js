@@ -10,3 +10,5 @@ export const COURSE_STATUS = {
 }
 
 export const TRUNCATE_LENGTH = 30 ;
+
+export const TRUNCATE_WORDS = 15 ;

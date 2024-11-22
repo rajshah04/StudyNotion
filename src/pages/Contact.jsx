@@ -4,6 +4,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { IoCallSharp } from "react-icons/io5";
 import ContactForm from '../components/ContactPage/ContactForm';
 import Footer from '../components/common/Footer';
+import ReviewSlider from '../components/common/ReviewSlider';
 
 
 
@@ -69,7 +70,7 @@ const Contact = () => {
                     Reviews from other learners
                 </h1>
 
-                {/* <ReviewSlider /> */}
+                <ReviewSlider />
             </div>
         </div>
 

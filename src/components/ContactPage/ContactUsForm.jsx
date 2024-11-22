@@ -95,13 +95,13 @@ const ContactUsForm = () => {
                             CountryCode.map((ele, index) => {
                                 return (
                                     <option key={index} value={ele.code} className='flex gap-x-10 justify-between'>
-                                        <p>
+                                        {/* <span> */}
                                             {ele.code}
-                                        </p>
+                                        {/* </span> */}
                                         {"  -  "}
-                                        <p>
+                                        {/* <span> */}
                                             {ele.country}
-                                        </p>
+                                        {/* </span> */}
                                           
                                     </option>
                                 )
