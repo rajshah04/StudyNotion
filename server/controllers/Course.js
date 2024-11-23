@@ -263,7 +263,13 @@ exports.getCourseDetails = async(req, res) => {
                                             }
                                         )
                                         .populate("category")
-                                        .populate("ratingAndReviews")
+                                        .populate({
+                                            path: "ratingAndReviews",
+                                            populate: {
+                                                path: "user",
+                                                select: "firstName lastName email image"
+                                            }
+                                        })
                                         .populate(
                                             {
                                                 path: "courseContent",
@@ -319,7 +325,13 @@ exports.getFullCourseDetails = async(req, res) => {
                                                                 },
                                                             })
                                                             .populate("category")
-                                                            .populate("ratingAndReviews")
+                                                            .populate({
+                                                                path: "ratingAndReviews",
+                                                                populate: {
+                                                                    path: "user",
+                                                                    select: "firstName lastName email image"
+                                                                }
+                                                            })
                                                             .populate({
                                                                 path: "courseContent",
                                                                 populate: {

@@ -52,21 +52,23 @@ export const getCourseAvgRating = async(data) => {
     return result ;
 }
 
-export const getCourseRelatedRatings = async(data) => {
+export const getCourseRelatedRatings = async(courseId) => {
     // not checked
     const toastId = toast.loading("Loading...") ;
     let result = [] ;
 
+    // console.log("Course Id : ", courseId) ;
+
     try{
-        const response = await apiConnector("GET", GET_COURSE_RELATED_RATING, data) ;
+        const response = await apiConnector("POST", GET_COURSE_RELATED_RATING, {courseId}) ;
 
         console.log("GET_COURSE_RELATED_RATING_API API RESPONSE............", response) ;
 
         if(!response?.data?.success){
-            throw new Error("Could Not Fetch All Courses' Ratings and Reviews") ;
+            throw new Error("Could Not Fetch Course's Ratings and Reviews") ;
         }
       
-        result = response?.data?.data ;
+        result = response?.data?.allCourseRelatedReviews ;
     }
     catch(err){
         console.log("GET_RELATED_RATING_API API ERROR............", err) ;

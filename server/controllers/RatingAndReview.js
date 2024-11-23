@@ -146,12 +146,31 @@ exports.getAllRating = async(req, res) => {
 exports.getCourseRelatedRating = async(req, res) => {
     try{
         // get course id
-        const {courseId} = req.body ;
+        const { courseId } = req.body ;
+
+        // console.log("Course id : ", courseId) ;
 
         // get all reviews related to the course id from the DB (to be checked)
-        const allCourseRelatedReviews = await RatingAndReview.find({course: courseId}) ;
+        const allCourseRelatedReviews = await RatingAndReview.find({course: courseId}).sort({rating: "desc"}).populate({
+                    path: "user",
+                    select: "firstName lastName email image"
+                })
+                .populate({
+                    path: "course",
+                    select: "courseName"
+                })
+                .exec() ;
 
         console.log("Course related ratings : ", allCourseRelatedReviews) ;
+
+        if(!allCourseRelatedReviews){
+            console.log("No reviews found related to the course id : ", courseId) ;
+
+            return res.status(404).json({
+                success: false,
+                message: `No reviews found related to the course id : ${courseId}`
+            }) ;
+        }
 
         // return response
         return res.status(200).json({

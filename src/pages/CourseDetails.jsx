@@ -13,6 +13,7 @@ import dateFormatter from '../utils/dateFormatter';
 import { GrLanguage } from 'react-icons/gr';
 import { CgInfo } from 'react-icons/cg';
 import Footer from '../components/common/Footer';
+import ReviewSlider from '../components/common/ReviewSlider';
 
 const CourseDetails = () => {
 
@@ -260,11 +261,16 @@ const CourseDetails = () => {
                                 {about}
                             </p>
                         </div>
-                        
                     </div>
 
                 </div>
 
+                {/* course reviews */}
+                <h2 className='text-left lg:text-center font-semibold text-4xl'>
+                    Reviews from other learners
+                </h2>
+
+                <ReviewSlider courseRelatedRating={true} />
             </div>
 
             

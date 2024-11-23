@@ -6,14 +6,17 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import { Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 import ReactStars from 'react-rating-stars-component';
-import { getAllRatings } from '../../services/operations/ratingReviewsAPI';
+import { getAllRatings, getCourseRelatedRatings } from '../../services/operations/ratingReviewsAPI';
 import { TRUNCATE_WORDS } from '../../utils/constants';
+import { useParams } from 'react-router-dom';
 
 
-const ReviewSlider = () => {
+const ReviewSlider = ({ courseRelatedRating }) => {
 
     const [reviews, setReviews] = useState([]) ;
     const [loading, setLoading] = useState(false) ;
+
+    const { courseId } = useParams() ;
     
     useEffect(() => {
         const fetchAllReviews = async() => {
@@ -27,7 +30,23 @@ const ReviewSlider = () => {
             setLoading(false) ;
         }
 
-        fetchAllReviews() ;
+        const fetchCourseRelatedRatings = async() => {
+            setLoading(true) ;
+            
+            console.log("Course id : ", courseId) ;
+            const response = await getCourseRelatedRatings(courseId) ;
+                        
+            console.log("Course related Rating and Reviews : ", response) ;
+
+            setReviews(response) ;
+            
+            setLoading(false) ;
+        }
+
+        if(courseRelatedRating)
+            fetchCourseRelatedRatings() ;
+        else
+            fetchAllReviews() ; 
 
     }, []) ;
 
@@ -41,7 +60,7 @@ const ReviewSlider = () => {
                 <Swiper slidesPerView={4} spaceBetween={24} loop={true} freeMode={true} autoplay={{delay: 2500, disableOnInteraction: false}} modules={[FreeMode, Pagination, Autoplay, Navigation]} className='w-full'>
 
                     {
-                        reviews.map((review, index) => (
+                        reviews?.map((review, index) => (
                             <SwiperSlide key={index} >
                                 <div className='flex flex-col gap-3 bg-richblack-800 p-6 text-[14px] text-richblack-25'>
                                     <div className='flex items-center gap-4'>
