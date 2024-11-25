@@ -74,7 +74,7 @@ exports.updateProfile = async(req, res) => {
     }
 }
 
-// TODO: done -- delete account
+// TODO -- done : delete account
 // Explore -> how can we schedule this deletion operation (cronjob)
 exports.deleteAccount = async(req, res) => {
     try{
@@ -322,6 +322,52 @@ exports.getEnrolledCourses = async(req, res) => {
         return res.status(500).json({
             success: false,
             message: err.message,
+        }) ;
+    }
+}
+
+exports.instructorDashboard = async(req, res) => {
+    try{
+        // fetch the data
+        const instructorId = req.user.id ;
+
+        console.log("Req's user id : ", req.user.id) ;
+
+        // validate data
+        const courseDetails = await Course.find({instructor: instructorId}) ;
+
+        console.log("Course Details : ", courseDetails) ;
+
+        const coursesData = courseDetails.map((course) => {
+            const totalStudentsEnrolled = course.studentsEnrolled.length ;
+
+            const totalAmountGenerated = totalStudentsEnrolled * course.price ;
+
+            // creating a new object with additional fields
+            const courseDataWithStats = {
+                _id: course._id,
+                courseName: course.courseName,
+                courseDescription: course.courseDescription,
+                totalStudentsEnrolled,
+                totalAmountGenerated
+            }
+
+            return courseDataWithStats ;
+        })
+
+        // return response
+        return res.status(200).json({
+            success: true,
+            message: "Courses' data for Instructor Dashboard fetched Successfully.",
+            coursesData
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured in Instructor Dashboard controller : ", err) ;
+        return res.status(500).json({
+            success: false,
+            message: "Error occured in Instructor Dashboard",
+            error: err
         }) ;
     }
 }

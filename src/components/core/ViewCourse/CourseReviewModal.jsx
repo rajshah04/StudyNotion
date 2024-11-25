@@ -112,7 +112,7 @@ const CourseReviewModal = ({setReviewModal}) => {
                             {
                                 errors.courseExperience && (
                                     <span className='ml-2 text-xs tracking-wide text-red-600'>
-                                        Please add your experience
+                                        Share details of your own experience for this course
                                     </span>
                                 )
                             }
