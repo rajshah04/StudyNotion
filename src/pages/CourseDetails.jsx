@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import toast from 'react-hot-toast';
 import { fetchCourseDetails } from '../services/operations/courseDetailsAPI';
 import getAvgRating from '../utils/AvgRating';
-// import Error from '../pages/Error';
+import Error from '../pages/Error';
 import ConfirmationModal from '../components/common/ConfirmationModal';
 import RatingStars from '../components/common/RatingStars';
 import CourseDetailsCard from '../components/core/Course/CourseDetailsCard';
@@ -14,6 +14,7 @@ import { GrLanguage } from 'react-icons/gr';
 import { CgInfo } from 'react-icons/cg';
 import Footer from '../components/common/Footer';
 import ReviewSlider from '../components/common/ReviewSlider';
+import CourseAccordionBar from '../components/core/Course/CourseAccordionBar';
 
 const CourseDetails = () => {
 
@@ -29,6 +30,7 @@ const CourseDetails = () => {
     const [confirmationModal, setConfirmationModal] = useState(null) ;
     const [date, setDate] = useState("") ;
     const [isActive, setIsActive] = useState([]) ;
+
     const handleActive = (id) => {
         setIsActive(!isActive.includes(id) ? isActive.concat(id) : isActive.filter((e) => e != id)) ;
     }
@@ -39,7 +41,7 @@ const CourseDetails = () => {
                 const result = await fetchCourseDetails(courseId) ;
 
                 setCourseData(result) ;
-                // console.log("Course data result : ", result) ;
+                console.log("Course data result : ", result) ;
             }   
             catch(err){
                 console.log("Could not fetch course details : ", err) ;
@@ -53,11 +55,11 @@ const CourseDetails = () => {
     const [avgReviewCount, setAvgReviewCount] = useState(0) ;
 
     useEffect(() => {
-        const count = getAvgRating(courseData?.ratingAndReviews) ;
+        const count = getAvgRating(courseData?.courseDetails?.ratingAndReviews) ;
 
         setAvgReviewCount(count) ;
 
-        const fetchDate = dateFormatter(courseData?.createdAt) ;
+        const fetchDate = dateFormatter(courseData?.courseDetails?.createdAt) ;
 
         setDate(fetchDate) ;
     }, [courseData]) ;
@@ -66,7 +68,7 @@ const CourseDetails = () => {
 
     useEffect(() => {
         let lectures = 0 ;
-        courseData?.courseContent?.forEach((section) =>{
+        courseData?.courseDetails?.courseContent?.forEach((section) =>{
             lectures += section.subSection.length || 0 ;
         })
 
@@ -97,9 +99,9 @@ const CourseDetails = () => {
         )
     }
 
-    // if(!courseData.success){
-    //     return <Error />
-    // }
+    if(!courseData.success){
+        return <Error />
+    }
 
     const {
         _id: course_id,
@@ -113,7 +115,7 @@ const CourseDetails = () => {
         instructor,
         studentsEnrolled,
         createdAt
-    } = courseData ;
+    } = courseData.courseDetails ;
 
     const {
         image,
@@ -185,7 +187,7 @@ const CourseDetails = () => {
             {/* </div> */}
 
                     <div className='absolute right-0 top-0 z-30 min-h-[600px] max-w-[410px]'>
-                        <CourseDetailsCard course={courseData} setConfirmationModal={setConfirmationModal} buyCourseHandler={buyCourseHandler} />
+                        <CourseDetailsCard course={courseData.courseDetails} setConfirmationModal={setConfirmationModal} buyCourseHandler={buyCourseHandler} />
                     </div>
 
                 </div>
@@ -224,8 +226,7 @@ const CourseDetails = () => {
                                     </span>
 
                                     <span>
-                                        {/* add total duration of the course here */}
-                                        {/* {courseData.to} total duration */}
+                                        {courseData.totalDuration} total duration
                                     </span>
                                 </div>
                                 
@@ -239,7 +240,13 @@ const CourseDetails = () => {
                         </div>
 
                         {/* add section-subsection details here */}
-                        
+                        <div className='my-4'>
+                            {
+                                courseContent?.map((section, index) => {
+                                    return <CourseAccordionBar key={index} section={section} handleActive={handleActive} isActive={isActive} />
+                                })
+                            }
+                        </div>
 
 
                         {/* instructor's details */}

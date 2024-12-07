@@ -14,6 +14,8 @@ export const getAllCourses = async () => {
   try {
     const response = await apiConnector("GET", GET_ALL_COURSE_API) ;
 
+    console.log("GET_ALL_COURSE_API API RESPONSE............", response) ;
+
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch All Courses") ;
     }
@@ -41,8 +43,7 @@ export const fetchCourseDetails = async (courseId) => {
       throw new Error(response.data.message) ;
     }
 
-    result = response.data.courseDetails ;
-
+    result = response.data ;
   } catch (err) {
     console.log("COURSE_DETAILS_API API ERROR............", err) ;
     result = err.response.data ;

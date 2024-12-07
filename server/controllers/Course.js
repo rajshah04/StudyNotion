@@ -297,12 +297,25 @@ exports.getCourseDetails = async(req, res) => {
         }
 
         // count total duration of the course
+        let totalDurationInSeconds = 0 ;
+
+        courseDetails.courseContent.forEach((section) => {
+            section.subSection.forEach((subSection) => {
+                const timeDurationInSeconds = parseInt(subSection.timeDuration)
+                totalDurationInSeconds += timeDurationInSeconds
+            })
+        })
+
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds) ;
+
+        console.log("Total Duration : ", totalDuration) ;
         
         // return response
         return res.status(200).json({
             success: true,
             message: "Course details fetched successfully",
-            courseDetails
+            courseDetails,
+            totalDuration
         }) ;
     }catch(err){
         return res.status.json({
@@ -383,7 +396,6 @@ exports.getFullCourseDetails = async(req, res) => {
         }) ;
     }
 }
-
 
 // handler funciton to get Instructor courses
 exports.getInstructorCourses = async(req, res) => {
