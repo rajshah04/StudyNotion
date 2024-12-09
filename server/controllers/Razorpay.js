@@ -150,7 +150,7 @@ const enrollStudents = async(courses, userId, res) => {
 
             console.log("Updated course detail after adding student : ", courseDetail) ;
 
-            const courseProgress = await CourseProgress.create({courseId: courseId, userId: userId, completedVideos: []}) ;
+            const courseProgress = await CourseProgress.create({courseId: course, userId: userId, completedVideos: []}) ;
 
             // find and add the student to their list of enrolled courses
             const user = await User.findByIdAndUpdate(userId, 
@@ -184,6 +184,7 @@ const enrollStudents = async(courses, userId, res) => {
         }) ;
     }
     catch(err){
+        console.log(err) ;
         return res.status(500).json({
             success: false,
             message: err.message
