@@ -18,7 +18,7 @@ const AddCourse = () => {
             </div>
 
             <div className='sticky top-10 hidden max-w-[400px] flex-1 w-full lg:w-[40%] text-richblack-5 text-sm bg-richblack-800 max-h-fit p-6 border border-richblack-700 rounded-lg  xl:block'>
-                <p className='font-semibold text-lg mb-8'>⚡Course Upload Tips</p>
+                <p className='font-semibold text-lg mb-8'>✨ Course Upload Tips ✨</p>
 
                 <ul className='ml-5 space-y-4 list-item list-disc'>
                     <li>
