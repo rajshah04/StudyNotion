@@ -177,11 +177,12 @@ const enrollStudents = async(courses, userId, res) => {
             console.log("Email response after sending course enrollment mail to student : ", emailResponse) ;
         }
         
+        // commented because a function can't return 2 responses
         // return res
-        return res.status(200).json({
-            success: true,
-            message: "Student enrolled Successfully"
-        }) ;
+        // return res.status(200).json({
+        //     success: true,
+        //     message: "Student enrolled Successfully"
+        // }) ;
     }
     catch(err){
         console.log(err) ;

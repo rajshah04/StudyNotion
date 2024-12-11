@@ -269,7 +269,7 @@ exports.getEnrolledCourses = async(req, res) => {
                                                         })
                                                         .exec() ;
 
-        console.log("User Details before updating time duration : ", userDetails) ;
+        // console.log("User Details before updating time duration : ", userDetails) ;
 
         // adding time duration to each course && progress percentage
         userDetails = userDetails.toObject() ;
@@ -280,17 +280,23 @@ exports.getEnrolledCourses = async(req, res) => {
             let totalDurationInSeconds = 0 ;
             subSectionLength = 0 ;
 
-            console.log("Inside 1st loop") ;
-
             for (let j = 0 ; j < userDetails.courses[i].courseContent.length ; j++) {
                 totalDurationInSeconds += userDetails.courses[i].courseContent[j].subSection.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0) ;
+
                 userDetails.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSeconds) ;
+                
                 subSectionLength += userDetails.courses[i].courseContent[j].subSection.length ;
             } 
 
-            let courseProgressCount = await CourseProgress.findOne({courseID: userDetails.courses[i]._id,userId: userId}) ;
-
+            // console.log("Course ID : ", userDetails.courses[i]._id) ;
+        
+            let courseProgressCount = await CourseProgress.findById(userDetails?.courseProgress) ;
+            
+            // console.log("Course progress count : ", courseProgressCount) ;
+            
             courseProgressCount = courseProgressCount?.completedVideos.length ;
+
+            // console.log("Course progress count : ", courseProgressCount) ;
 
             if(subSectionLength === 0) {
                 userDetails.courses[i].progressPercentage = 100 ;
@@ -301,6 +307,8 @@ exports.getEnrolledCourses = async(req, res) => {
 
                 userDetails.courses[i].progressPercentage = Math.round((courseProgressCount / subSectionLength) * 100 * multiplier) / multiplier ;
             }
+
+            // console.log("Course progress percentage : ", userDetails.courses[i].progressPercentage) ;
         }
 
         if(!userDetails){
@@ -310,7 +318,7 @@ exports.getEnrolledCourses = async(req, res) => {
             }) ;
         }
 
-        console.log("User's after updating time duration : ", userDetails) ;
+        // console.log("User's after updating time duration : ", userDetails) ;
 
         return res.status(200).json({
             success: true,
