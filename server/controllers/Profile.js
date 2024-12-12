@@ -4,6 +4,7 @@ const Course = require("../models/Course") ;
 const CourseProgress = require("../models/CourseProgress");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secondsToDuration") ;
+const RatingAndReview = require("../models/RatingAndReview") ;
 
 exports.updateProfile = async(req, res) => {
     try{
@@ -124,6 +125,11 @@ exports.deleteAccount = async(req, res) => {
                 ) ;
             }
         }
+
+        // delete reviews of the user
+        const deleteUserReviews = await RatingAndReview.deleteMany({user: userId}) ;
+
+        console.log("Deleted user reviews : ", deleteUserReviews) ;
 
         // delete user
         await User.findByIdAndDelete({_id: userId}) ;

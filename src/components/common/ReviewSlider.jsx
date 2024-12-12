@@ -65,7 +65,7 @@ const ReviewSlider = ({ courseRelatedRating }) => {
                                 <div className='flex flex-col gap-3 bg-richblack-800 p-6 text-[14px] text-richblack-25'>
                                     <div className='flex items-center gap-4'>
 
-                                        <img src={review?.user?.image} alt={`${review.user.firstName}'s profile`} className='h-10 w-10 object-cover rounded-full' />
+                                        <img src={review?.user?.image} alt={`${review?.user?.firstName}'s profile`} className='h-10 w-10 object-cover rounded-full' />
 
                                         <div className='flex flex-col'>
                                             <p className='font-semibold'>
