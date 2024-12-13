@@ -179,16 +179,20 @@ const Home = () => {
         </div>
         
         {/* Section 3 */}
-        <div className='relative mx-auto flex flex-col gap-y-8 w-11/12 max-w-maxContent text-white items-center justify-between my-10'>
+        <div className='relative mx-auto w-11/12 max-w-maxContent text-white my-10'>
 
             <InstructorSection />
-            
-            <h2 className='text-left lg:text-center font-semibold text-4xl'>Reviews from other learners</h2>
-           
-            {/* reviews part*/}
-            <ReviewSlider />
 
         </div>
+
+        <div className="w-11/12 max-w-maxContent mx-auto">
+            <h1 className='font-semibold text-4xl text-richblack-5 text-center my-8'>
+                Reviews from other learners
+            </h1>
+
+            <ReviewSlider />
+        </div>
+
         
         {/* Footer */}
         <Footer />

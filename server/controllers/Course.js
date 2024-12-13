@@ -360,6 +360,8 @@ exports.getFullCourseDetails = async(req, res) => {
             }) ;
         }
 
+        // console.log("Course details : ", courseDetails) ;
+
         // a lot more to add like total duration of the course, course progress -- TODO -- done
         
         let totalDurationInSeconds = 0 ;
@@ -373,9 +375,11 @@ exports.getFullCourseDetails = async(req, res) => {
 
         const totalDuration = convertSecondsToDuration(totalDurationInSeconds) ;
 
-        const courseProgressCount = await CourseProgress.findOne({courseID: courseId, userId: userId}) ;
+        // console.log("Time duration : ", totalDuration) ;
+
+        const courseProgressCount = await CourseProgress.findOne({courseId: courseId, userId: userId}) ;
       
-        console.log("courseProgressCount : ", courseProgressCount) ;
+        // console.log("courseProgressCount : ", courseProgressCount) ;
 
         return res.status(200).json({
             success: true,

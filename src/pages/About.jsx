@@ -105,8 +105,8 @@ const About = () => {
             <ContactFormSection />
         </section>
 
-        <section className="mx-auto my-20 flex w-11/12 max-w-maxContent flex-col justify-between items-center gap-10 text-white">
-            <h1 className='font-semibold text-4xl'>
+        <section className="w-11/12 max-w-maxContent mx-auto">
+            <h1 className='font-semibold text-4xl text-richblack-5 text-center my-8'>
                 Reviews from other learners
             </h1>
 
