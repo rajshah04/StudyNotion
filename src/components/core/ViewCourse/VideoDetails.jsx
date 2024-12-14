@@ -169,7 +169,7 @@ const VideoDetails = () => {
                   <CommonBtn disabled={loading} onclick={() => handleRewatchVideo()} text={"Rewatch"} customClasses={"text-xl max-w-max px-4 mx-auto mt-2"} />
 
                   {/* prev & next buttons */}
-                  <div className='mt-10 flex min-w-[250px] justify-center gap-x-4 text-xl'>
+                  <div>
                     {!isFirstVideo() && (
                       <button disabled={loading} onClick={goToPreviousVideo} className='bg-richblack-800 px-5 py-2 font-semibold text-richblack-5 rounded-md cursor-pointer'>
                         Previous

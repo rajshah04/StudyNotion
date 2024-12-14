@@ -22,7 +22,7 @@ const ProfileDropDown = () => {
   if(user === null) return ;
 
   return (
-    <button className='relative' onClick={() => setOpenBox(value => !value)}>
+    <div className='relative cursor-pointer' onClick={() => setOpenBox(value => !value)}>
       <img src={user?.image} alt={`profile-${user?.firstName}`} className="aspect-square w-[30px] rounded-full object-cover" />
       {/* <AiOutlineCaretDown className="text-sm text-richblack-100" /> */}
 
@@ -35,16 +35,6 @@ const ProfileDropDown = () => {
             Dashboard
           </div>
         </Link>
-
-        {/* <div className='flex items-center gap-2 py-2 px-3 hover:bg-richblack-700 hover:text-richblack-5 hover:rounded-md' 
-        onClick={() => {
-          // function to logout
-          dispatch(logout(navigate)) ;
-          setOpenBox(false) ;
-        }}>
-          <VscSignOut className='text-xl' />
-          Logout
-        </div> */}
 
         <button onClick={ () => setConfirmationModal({
           text1: "Are You Sure ?",
@@ -69,7 +59,7 @@ const ProfileDropDown = () => {
       {
         confirmationModal && <ConfirmationModal modalData={confirmationModal} />
       }
-    </button>
+    </div>
   )
 }
 
