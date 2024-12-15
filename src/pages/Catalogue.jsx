@@ -36,7 +36,7 @@ const Catalogue = () => {
                 console.log("Response of fetching catalogue page data : ", response) ;
 
                 setCataloguePageData(response) ;
-                // console.log("Catalogue page data after setting : ", cataloguePageData) ;
+                console.log("Catalogue page data after setting : ", cataloguePageData) ;
 
                 // console.log("Trying to find diff. categories courses : ", cataloguePageData?.data?.differentCategories?.course) ;
             }
@@ -72,7 +72,7 @@ const Catalogue = () => {
             {/* section 1 */}
             <div className='mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent'>
                 <div>
-                    <div>
+                    <div className='text-richblack-5 font-semibold text-2xl lg:text-4xl'>
                         Courses to get you started
                     </div>
                     <div className='my-4 flex border-b border-b-richblack-600 text-sm'>
@@ -93,18 +93,18 @@ const Catalogue = () => {
                 {/* section 2 */}
                 <div className='mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent'>
                     <p className='text-2xl font-bold text-richblack-5 lg:text-4xl'>
-                        Top Courses in {cataloguePageData?.data?.selectedCategory?.name}
+                        Top Courses in {cataloguePageData?.data?.differentCategories?.name}
                     </p>
 
                     <div className='py-8'>
-                        <CourseSlider Courses={cataloguePageData?.data?.differentCategories?.courses} />
+                        <CourseSlider Courses={cataloguePageData?.data?.differentCategories?.course} />
                     </div>
                 </div>
 
                 {/* section 3 */}
                 <div className='mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent'>
                     <p className='text-2xl font-bold text-richblack-5 lg:text-4xl'>
-                        Frequently Bought 
+                        Most Selling Courses 
                     </p>
 
                     <div className='py-8'>

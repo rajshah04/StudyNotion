@@ -2,7 +2,7 @@ const Category = require("../models/Category") ;
 const Course = require("../models/Course");
 
 function getRandomInt(max) {
-    return Math.floor(Math.random() * max)
+    return Math.floor(Math.random() * max) ;
 }
 
 // handler function to create Category
@@ -71,10 +71,16 @@ exports.categoryPageDetails = async(req, res) => {
         // get categoryId
         const {categoryId} = req.body ;
 
-        console.log("Category id in category page details : ", categoryId) ;
+        // console.log("Category id in category page details : ", categoryId) ;
 
         // get courses for specified categoryId
-        const selectedCategory = await Category.findById(categoryId).populate("course").exec() ;
+        const selectedCategory = await Category.findById(categoryId).populate({
+                                                                        path: "course",
+                                                                        match: { status: "Published" },
+                                                                        populate: [
+                                                                        { path: "ratingAndReviews" }
+                                                                        ]
+                                                                    }).exec() ;
 
         // validation
         if(!selectedCategory){
@@ -87,19 +93,22 @@ exports.categoryPageDetails = async(req, res) => {
         // get courses for different categories
         const otherCategories = await Category.find({
             _id: { $ne: categoryId },
+            course: { $not : { $size : 0 }}
         }) ;
 
-        let differentCategories = await Category.findOne([getRandomInt(otherCategories.length)]._id)
+        // console.log("Other categories : ", otherCategories) ;
+
+        let differentCategories = await Category.findById(otherCategories[getRandomInt(otherCategories.length)]._id)
             .populate({
                 path: "course",
                 match: { status: "Published" },
             })
             .exec() ;
 
-        console.log("Different Categories' Courses", differentCategories) ;
+        // console.log("Different Categories' Courses", differentCategories) ;
 
         // get top 10 selling courses
-        const top10Courses = await Course.find({status: "Published"}).sort({ studentsEnrolled: -1}).limit(10).populate("instructor").populate("category").exec() ;
+        const top10Courses = await Course.find({status: "Published"}).sort({ studentsEnrolled: -1}).limit(10).populate("instructor").populate("category").populate("ratingAndReviews").exec() ;
 
         console.log("Top 10 selling courses : ", top10Courses) ;
 
