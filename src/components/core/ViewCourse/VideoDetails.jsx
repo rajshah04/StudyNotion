@@ -6,7 +6,7 @@ import { Player } from 'video-react';
 import 'video-react/dist/video-react.css'; // import css
 import CommonBtn from '../../common/CommonBtn';
 import { markLectureAsComplete } from '../../../services/operations/courseDetailsAPI';
-
+// import { IoPlay } from "react-icons/io5";
 
 
 const VideoDetails = () => {
@@ -103,8 +103,6 @@ const VideoDetails = () => {
   const goToPreviousVideo = () => {
     const currentSectionIndex = courseSectionData.findIndex((data) => data._id === sectionId) ;
 
-    const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length ;
-
     const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex((data) => data._id === subSectionId) ;
 
     if(currentSubSectionIndex !== 0){
@@ -146,7 +144,7 @@ const VideoDetails = () => {
   }
 
   return (
-    <div className='flex flex-col gap-5 text-white'>
+    <div className='flex flex-col gap-5 text-richblack-5'>
       {
         !videoData ? (
           <div>
@@ -155,32 +153,37 @@ const VideoDetails = () => {
         ) : (
           <Player ref={videoPlayerRef} aspectRatio='16:9' playsInline onEnded={() => setVideoEnded(true)} src={videoData?.videoUrl} height={`50vh`}>
 
-            {/* add play button icon */}
+            {/* add play button icon - no need to add custom play-pause buttons */}
+            {/* <IoPlay className='absolute top-10 left-10 z-50' /> */}
 
             {
               videoEnded && (
                 <div>
                   {
                     !completedLectures.includes(subSectionId) && (
-                      <CommonBtn disabled={loading} onclick={() => handleLectureCompletion()} text={!loading ? "Mark As Completed" : "Loading..."} customClasses={"text-xl max-w-max px-4 mx-auto"} />
+                      <CommonBtn disabled={loading} onclick={() => handleLectureCompletion()} text={!loading ? "Mark As Completed" : "Loading..."} customClasses={"text-xl max-w-max px-4 mx-auto  hover:scale-105 transition-all duration-200"} />
                     )
                   }
 
-                  <CommonBtn disabled={loading} onclick={() => handleRewatchVideo()} text={"Rewatch"} customClasses={"text-xl max-w-max px-4 mx-auto mt-2"} />
+                  <CommonBtn disabled={loading} onclick={() => handleRewatchVideo()} text={"Rewatch"} customClasses={"text-xl max-w-max px-4 mx-auto mt-2 hover:scale-105 transition-all duration-200"} />
 
                   {/* prev & next buttons */}
-                  <div>
-                    {!isFirstVideo() && (
-                      <button disabled={loading} onClick={goToPreviousVideo} className='bg-richblack-800 px-5 py-2 font-semibold text-richblack-5 rounded-md cursor-pointer'>
-                        Previous
-                      </button>
-                    )}
+                  <div className='flex justify-center gap-4 my-10 min-w-[250px] text-xl'>
+                    {
+                      !isFirstVideo() && (
+                        <button disabled={loading} onClick={goToPreviousVideo} className='bg-richblack-800 px-5 py-2 font-semibold text-richblack-5 rounded-md cursor-pointer hover:scale-105 transition-all duration-200 border-b-2 border-richblack-700'>
+                          Previous
+                        </button>
+                      )
+                    }
 
-                    {!isLastVideo() && (
-                      <button disabled={loading} onClick={goToNextVideo} className='bg-richblack-800 px-5 py-2 font-semibold text-richblack-5 rounded-md cursor-pointer'>
-                        Next
-                      </button>
-                    )}
+                    {
+                      !isLastVideo() && (
+                        <button disabled={loading} onClick={goToNextVideo} className='bg-richblack-800 px-5 py-2 font-semibold text-richblack-5 rounded-md cursor-pointer hover:scale-105 transition-all duration-200 border-b-2 border-richblack-700'>
+                          Next
+                        </button>
+                      )
+                    }
                   </div>
                 </div>
               )
