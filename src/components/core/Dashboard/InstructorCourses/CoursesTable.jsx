@@ -128,7 +128,9 @@ const CoursesTable = ({courses, setCourses}) => {
                                     </Td>
 
                                     <Td className='text-sm font-medium text-richblack-100'>
-                                        2hr 30min
+                                        {
+                                            course.totalDuration || 0
+                                        }
                                     </Td>
 
                                     <Td className='text-sm font-medium text-richblack-100'>

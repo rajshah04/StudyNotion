@@ -417,7 +417,38 @@ exports.getInstructorCourses = async(req, res) => {
         const lastName = instructor?.lastName ;
         
         // find the courses of the instructor
-        const instructorCourses = await Course.find({instructor: instructorId}).sort({ createdAt: -1 }) ;
+        const instructorCourses = await Course.find({instructor: instructorId})
+                                            .populate(
+                                                {
+                                                    path: "courseContent",
+                                                    populate: {
+                                                        path: "subSection"
+                                                    }
+                                                }
+                                            )
+                                            .sort({ createdAt: -1 }) ;
+
+        // calculating total time duration of each course
+        for(let i = 0 ; i < instructorCourses?.length ; i++){
+            let totalDurationInSeconds = 0 ;
+
+            instructorCourses[i].courseContent.forEach((section) => {
+                section.subSection.forEach((subSection) => {
+                    const timeDurationInSeconds = parseInt(subSection.timeDuration)
+                    totalDurationInSeconds += timeDurationInSeconds
+                })
+            })
+
+            const totalDuration = convertSecondsToDuration(totalDurationInSeconds) ;
+
+            // console.log("Time duration of " + i + "th course : " + totalDuration) ;
+
+            instructorCourses[i] = instructorCourses[i].toObject() ; 
+            instructorCourses[i].totalDuration = totalDuration ; 
+            
+        }
+
+        // console.log("Instructor's courses : ", instructorCourses) ;
 
         // return the courses
         return res.status(200).json({
