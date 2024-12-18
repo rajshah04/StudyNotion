@@ -231,9 +231,21 @@ const CourseDetails = () => {
                                 </div>
                                 
                                 <div>
-                                    <button onClick={() => setIsActive([])} className='text-yellow-25'>
-                                        Collapse all sections
-                                    </button>
+                                    {
+                                        isActive?.length !== 0 && (
+                                            <button onClick={() => setIsActive([])} className='text-yellow-25'>
+                                                Collapse all sections
+                                            </button>
+                                        )
+                                    }
+
+                                    {
+                                        isActive?.length === 0 && (
+                                            <button onClick={() => setIsActive(courseContent?.map((section) => section._id))} className='text-yellow-25'>
+                                                Expand all sections
+                                            </button>
+                                        )
+                                    }
                                 </div>
 
                             </div>

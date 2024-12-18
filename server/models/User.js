@@ -56,10 +56,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        courseProgress: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "CourseProgress"
-        }
+        courseProgress: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "CourseProgress"
+            }
+        ]
     },
     // add timestamps for when the document is created and last modified
     {timestamps: true}

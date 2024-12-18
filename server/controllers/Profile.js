@@ -273,6 +273,7 @@ exports.getEnrolledCourses = async(req, res) => {
                                                                 },
                                                             },
                                                         })
+                                                        .populate("courseProgress")
                                                         .exec() ;
 
         // console.log("User Details before updating time duration : ", userDetails) ;
@@ -295,8 +296,9 @@ exports.getEnrolledCourses = async(req, res) => {
             } 
 
             // console.log("Course ID : ", userDetails.courses[i]._id) ;
-        
-            let courseProgressCount = await CourseProgress.findById(userDetails?.courseProgress) ;
+            // console.log("Course Progress Id : ", userDetails?.courseProgress[i]?._id) ;
+
+            let courseProgressCount = await CourseProgress.findById(userDetails?.courseProgress[i]?._id) ;
             
             // console.log("Course progress count : ", courseProgressCount) ;
             
