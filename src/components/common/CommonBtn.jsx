@@ -7,7 +7,7 @@ const CommonBtn = ({text, onclick, children, disabled, outline=false, customClas
         type={type}
         >
             {children ? (
-                <div className='flex flex-row justify-center items-center gap-x-4'>
+                <div className='flex flex-row justify-center items-center gap-x-2'>
                     <span className={`${outline && "text-yellow-50"}`}>{text}</span>
                     {children}
                 </div>

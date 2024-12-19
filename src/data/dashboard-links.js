@@ -41,4 +41,18 @@ export const sidebarLinks = [
     type: ACCOUNT_TYPE.STUDENT,
     icon: "AiOutlineShoppingCart",
   },
+  {
+    id: 7,
+    name: "Categories",
+    path: "/dashboard/category",
+    type: ACCOUNT_TYPE.ADMIN,
+    icon: "TbCategory",
+  },
+  {
+    id: 8,
+    name: "Add Category",
+    path: "/dashboard/add-category",
+    type: ACCOUNT_TYPE.ADMIN,
+    icon: "TbCategoryPlus",
+  },
 ];

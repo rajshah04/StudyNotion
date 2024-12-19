@@ -10,20 +10,7 @@ const MyCourses = () => {
 
     const { token } = useSelector((state) => state.auth) ;
     const navigate = useNavigate() ;
-    const [courses, setCourses] = useState([]) ;
-
-    // useEffect(() => {
-    //     const fetchCourses = async() => {
-    //         const result = await fetchInstructorCourses(token) ;
-
-    //         if(result){
-    //         setCourses(result) ;
-    //         }
-    //     }
-
-    //     fetchCourses() ;
-    // }, []) ;
-    
+    const [courses, setCourses] = useState([]) ;    
 
     return (
         <div>

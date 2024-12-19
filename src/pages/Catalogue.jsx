@@ -17,7 +17,7 @@ const Catalogue = () => {
     // fetch all categories
     useEffect(() => {
         const getCategories = async() => {
-            const response = await apiConnector("GET", categories.CATEGORIES_API) ;
+            const response = await apiConnector("GET", categories.SHOW_ALL_CATEGORIES_API) ;
 
             const category_id = response?.data?.allCategoriesDetails?.filter((ct) => ct.name.split(" ").join("-").toLowerCase() === catalogueName)[0]._id ;
 

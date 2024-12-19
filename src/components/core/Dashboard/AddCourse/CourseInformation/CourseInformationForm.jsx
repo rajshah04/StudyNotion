@@ -115,6 +115,8 @@ const CourseInformationForm = () => {
 
         const result = await editCourseDetails(formData, token) ;
 
+        // console.log("Form's tag : ", formData.get("tag")) ;
+
         // setLoading(false) ;
         
         if(result){

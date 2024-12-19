@@ -1,14 +1,18 @@
 import React from 'react';
 import * as Icons from 'react-icons/vsc';
 import * as aiIcons from 'react-icons/ai';
+import * as tbIcons from 'react-icons/tb';
 import { matchPath, NavLink, useLocation} from 'react-router-dom';
 
 
 const SideBarLink = ({link, iconName}) => {
     
     let Icon = Icons[iconName] ;
-    if(link.id == 6)
+    if(link.id === 6)
         Icon = aiIcons[iconName] ;
+    if(link.id === 7 || link.id === 8)
+        Icon = tbIcons[iconName] ;
+
     const location = useLocation() ;
 
     const matchRoute = (route) => {
