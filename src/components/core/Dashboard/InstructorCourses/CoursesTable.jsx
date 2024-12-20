@@ -90,7 +90,7 @@ const CoursesTable = ({courses, setCourses}) => {
                             </Tr>
                         ) : (
                             courses?.map((course) => (
-                                <Tr key={course._id} className='flex gap-x-12 border-b border-richblack-800 px-6 py-8'>
+                                <Tr key={course._id} className='flex gap-x-12 border-b border-richblack-700 px-6 py-8'>
 
                                     <Td className='flex flex-1 gap-x-4'>
                                         <img src={course?.thumbnail} className='h-[150px] w-[220px] rounded-lg object-cover' loading='lazy' />
