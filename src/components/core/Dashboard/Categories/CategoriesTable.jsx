@@ -4,6 +4,7 @@ import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import { TRUNCATE_LENGTH } from '../../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
+import { GoArrowRight } from 'react-icons/go';
 
 const CategoriesTable = ({ categories, setCategories }) => {
 
@@ -28,16 +29,16 @@ const CategoriesTable = ({ categories, setCategories }) => {
 
     return (
         <div>
-            <Table className='rounded-3xl border border-richblack-700'>
+            <Table className='rounded-3xl'>
                 <Thead>
-                    <Tr className='flex gap-x-12 rounded-t-md border-b border-richblack-700 px-6 py-3'>
-                        <Th className='flex-1 text-left text-sm font-medium uppercase text-richblack-100'>
+                    <Tr className='flex gap-x-12 rounded-t-md border border-richblack-500 px-6 py-3 text-richblack-5 bg-richblack-500'>
+                        <Th className='flex-1 text-left text-sm font-medium uppercase'>
                             Categories
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase text-richblack-100'>
+                        <Th className='text-left text-sm font-medium uppercase'>
                             No. of Courses
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase text-richblack-100'>
+                        <Th className='text-left text-sm font-medium uppercase'>
                             Actions
                         </Th>
                     </Tr>
@@ -52,11 +53,11 @@ const CategoriesTable = ({ categories, setCategories }) => {
                                 </Td>
                             </Tr>
                         ) : (
-                            categories.map((category) => (
-                                <Tr key={category._id} className='flex gap-x-12 border border-richblack-700 px-6 py-8 hover:border-richblack-300'>
+                            categories.map((category, index, array) => (
+                                <Tr key={category._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-6 hover:border-richblack-300 items-center`}>
                                     <Td className='flex flex-1 gap-x-4'>
 
-                                        <div onClick={() => navigate(`/catalogue/${category.name.split(" ").join("-").toLowerCase()}`)} className='flex flex-col items-start justify-start gap-y-4 cursor-pointer'>
+                                        <div className='flex flex-col items-start justify-start gap-y-4'>
                                             <p className='text-lg font-semibold text-richblack-5'>
                                                 {category.name}
                                             </p>
@@ -72,7 +73,7 @@ const CategoriesTable = ({ categories, setCategories }) => {
 
                                     </Td>
 
-                                    <Td className='font-medium text-richblack-100 mr-20'>
+                                    <Td className='font-medium text-richblack-100 mr-10'>
                                         {
                                             category.course.length || 0
                                         }
@@ -85,6 +86,11 @@ const CategoriesTable = ({ categories, setCategories }) => {
                                         }} title='Edit' className='px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300'
                                         >
                                             <FaEdit className='text-xl' />
+                                        </button>
+                                        
+                                        <button disabled={loading} onClick={() => navigate(`/catalogue/${category.name.split(" ").join("-").toLowerCase()}`)} title='Go to Category page' className='px-2 transition-all duration-200 hover:scale-110 hover:text-yellow-300'
+                                        >
+                                            <GoArrowRight className='text-xl' />
                                         </button>
                                     </Td>
                                 </Tr>

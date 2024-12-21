@@ -19,6 +19,21 @@ exports.createCategory = async(req, res) => {
             }) ;
         }
 
+        // check whether the category with the same name exists or not
+        const categoryPresent = await Category.find({name: name}) ;
+
+        // forEach loop won't work here as return inside a forEach does not exit the loop or the surrounding function.
+        for(let i = 0 ; i < categoryPresent.length ; i++){
+            if(name.toLocaleLowerCase() === categoryPresent[i].name.toLowerCase()){
+                console.log("Category is already present : ", categoryPresent) ;
+
+                return res.status(500).json({
+                    success: false,
+                    message: "Category Already Exists"
+                }) ;
+            }
+        }
+
         // create entry in DB
         const categoryDetails = await Category.create({
             name: name,
