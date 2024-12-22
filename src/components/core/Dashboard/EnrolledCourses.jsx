@@ -45,13 +45,13 @@ const EnrolledCourses = () => {
                 ) : (
                     <div className='my-8 text-richblack-5'>   
                         <div className='flex rounded-t-xl bg-richblack-500'>
-                            <p className='w-[45%] px-6 py-3'>
+                            <p className='w-[45%] px-6 py-3 uppercase'>
                                 Course Name
                             </p>
-                            <p className='w-1/4 px-3 py-3'>
+                            <p className='w-1/4 px-3 py-3 uppercase'>
                                 Duration
                             </p>
-                            <p className='flex-1 px-2 py-3'>
+                            <p className='flex-1 px-2 py-3 uppercase'>
                                 Progress
                             </p>
                         </div>

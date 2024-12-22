@@ -62,19 +62,19 @@ const CoursesTable = ({courses, setCourses}) => {
 
     return (
         <div>
-            <Table className='rounded-3xl border border-richblack-800'>
+            <Table className='rounded-3xl'>
                 <Thead>
-                    <Tr className='flex gap-x-12 rounded-t-md border-b border-richblack-800 px-6 py-3'>
-                        <Th className='flex-1 text-left text-sm font-medium uppercase text-richblack-100'>
+                    <Tr className='flex gap-x-12 rounded-t-md border border-richblack-500 bg-richblack-500 text-richblack-5 px-6 py-3'>
+                        <Th className='flex-1 text-left text-sm font-medium uppercase'>
                             Courses
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase text-richblack-100'>
+                        <Th className='text-left text-sm font-medium uppercase'>
                             Duration
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase text-richblack-100'>
+                        <Th className='text-left text-sm font-medium uppercase'>
                             Price
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase text-richblack-100'>
+                        <Th className='text-left text-sm font-medium uppercase'>
                             Actions
                         </Th>
                     </Tr>
@@ -89,8 +89,8 @@ const CoursesTable = ({courses, setCourses}) => {
                                 </Td>
                             </Tr>
                         ) : (
-                            courses?.map((course) => (
-                                <Tr key={course._id} className='flex gap-x-12 border-b border-richblack-700 px-6 py-8'>
+                            courses?.map((course, index, array) => (
+                                <Tr key={course._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-8 hover:border-richblack-300`}>
 
                                     <Td className='flex flex-1 gap-x-4'>
                                         <img src={course?.thumbnail} className='h-[150px] w-[220px] rounded-lg object-cover' loading='lazy' />

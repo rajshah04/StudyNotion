@@ -29,6 +29,7 @@ import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import Categories from "./components/core/Dashboard/Categories";
 import AddCategory from "./components/core/Dashboard/AddCategory";
+import EditCategory from "./components/core/Dashboard/EditCategory";
 
 function App() {
 
@@ -112,6 +113,7 @@ function App() {
             <>
               <Route path="/dashboard/category" element={<Categories />} />
               <Route path="/dashboard/add-category" element={<AddCategory />} />
+              <Route path="/dashboard/edit-category/:categoryId" element={<EditCategory />} />
             </>
           )
         }
