@@ -393,7 +393,7 @@ exports.getFullCourseDetails = async(req, res) => {
     }
     catch(err){
         console.log("Error occured while fetching the course details : ", err.message) ;
-        return res.status.json({
+        return res.status(500).json({
             success: false,
             message: "Some error occured in fetching the course details.",
             error: err.message

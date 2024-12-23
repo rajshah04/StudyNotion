@@ -144,3 +144,36 @@ exports.categoryPageDetails = async(req, res) => {
         }) ;
     }
 }
+
+// handler function to get details about a specific category
+exports.getSpecificCategoryDetails = async(req, res) => {
+    try{
+        const { categoryId } = req.body ;
+
+        const categoryDetails = await Category.findById(categoryId).populate("course") ;
+
+        if(!categoryDetails){
+            return res.status(400).json({
+                success: false,
+                message: `Could not find category with id: ${categoryId}`
+            }) ;
+        }
+
+        console.log(`Category details based on id - ${categoryId} : ${categoryDetails} `) ;
+
+        return res.status(200).json({
+            success: true,
+            message: "Category details fetched Successfully",
+            categoryDetails
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured while fetching the category details : ", err.message) ;
+
+        return res.status(500).json({
+            success: false,
+            message: "Some error occured in fetching the category details.",
+            error: err.message
+        }) ;
+    }
+}

@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import { categories } from "../apis";
 import { apiConnector } from "../apiconnector";
 
-const { SHOW_ALL_CATEGORIES_API, ADD_NEW_CATEGORY_API } = categories ;
+const { SHOW_ALL_CATEGORIES_API, ADD_NEW_CATEGORY_API, GET_CATEGORY_DETAILS_API } = categories ;
 
 export const getAllCategories = async() => {
     const toastId = toast.loading("Loading...") ;
@@ -48,6 +48,31 @@ export const addNewCategory = async(data, token) => {
         toast.success("Category Added Successfully") ;
     }catch(err){
         console.log("ADD_NEW_CATEGORY_API ERROR ---> ", err) ;
+        toast.error(err?.response?.data?.message) ;
+    }
+
+    toast.dismiss(toastId) ;
+    return result ;
+}
+
+export const getSpecificCategoryDetails = async(categoryId) => {
+    const toastId = toast.loading("Loading...") ;
+    let result = [] ;
+
+    try{
+
+        const response = await apiConnector("POST", GET_CATEGORY_DETAILS_API, { categoryId }) ;
+
+        console.log("GET_CATEGORY_DETAILS_API RESPONSE ---> ", response) ;
+
+        if(!response.data.message){
+            throw new Error(response.data.error) ;
+        }
+
+        result = response.data.categoryDetails ;
+
+    }catch(err){
+        console.log("GET_CATEGORY_DETAILS_API ERROR ---> ", err) ;
         toast.error(err?.response?.data?.message) ;
     }
 
