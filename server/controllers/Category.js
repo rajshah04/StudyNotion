@@ -57,6 +57,55 @@ exports.createCategory = async(req, res) => {
     }
 }
 
+// handler function to edit a category
+exports.editCategory = async(req, res) => {
+    try{
+        const { categoryId, ...updatedInformation } = req.body ;
+
+        console.log("Updated Info : ", updatedInformation) ;
+
+        const categoryDetails = await Category.findById(categoryId) ;
+
+        if(!categoryDetails){
+            return res.status(404).json({
+                success: false,
+                message: `Category Not Found with category id : ${categoryId}`
+            }) ;
+        }
+
+        // how to update all the remaining information using a for loop ??
+        for(const item in updatedInformation){
+            if(updatedInformation.hasOwnProperty(item)){
+                console.log("Properties of category : ", item, updatedInformation[item]) ;
+                categoryDetails[item] = updatedInformation[item] ;
+                console.log("Updated properties of category : ", item, " : ", categoryDetails[item]) ;
+            }
+        }
+
+        categoryDetails.save() ;
+
+        // fetch the updated category
+        const updatedCategory = await Category.findById(categoryId).populate("course") ;
+
+        console.log("Updated Category : ", updatedCategory) ;
+
+        // return the updated category details
+        return res.status(200).json({
+            success: true,
+            message: "Category updated/edited Successfully",
+            updatedCategory
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured while editing the category ", err.message) ;
+        return res.status(400).json({
+            success: false,
+            message: "Error occurred while editing category",
+            error: err.message 
+        }) ;
+    }
+}
+
 // handler function to get all Categories
 exports.showAllCategories = async(req, res) => {
     try{

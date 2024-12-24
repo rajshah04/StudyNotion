@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import { categories } from "../apis";
 import { apiConnector } from "../apiconnector";
 
-const { SHOW_ALL_CATEGORIES_API, ADD_NEW_CATEGORY_API, GET_CATEGORY_DETAILS_API } = categories ;
+const { SHOW_ALL_CATEGORIES_API, ADD_NEW_CATEGORY_API, GET_CATEGORY_DETAILS_API, EDIT_CATEGORY_API } = categories ;
 
 export const getAllCategories = async() => {
     const toastId = toast.loading("Loading...") ;
@@ -76,6 +76,34 @@ export const getSpecificCategoryDetails = async(categoryId) => {
         toast.error(err?.response?.data?.message) ;
     }
 
+    toast.dismiss(toastId) ;
+    return result ;
+}
+
+// edit the category details
+export const editCategoryDetails = async (data, token) => {
+    let result = null ;
+    const toastId = toast.loading("Loading...") ;
+  
+    try {
+        const response = await apiConnector("POST", EDIT_CATEGORY_API, data, {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+        }) ;
+      
+        console.log("EDIT CATEGORY API RESPONSE............", response) ;
+        
+        if (!response?.data?.success) {
+            throw new Error("Could Not Update Category Details") ;
+        }
+        
+        toast.success("Category Details Updated Successfully") ;
+        result = response?.data?.updatedCategory ;
+    } catch (err) {
+        console.log("EDIT CATEGORY API ERROR............", err) ;
+        toast.error(err.message) ;
+    }
+  
     toast.dismiss(toastId) ;
     return result ;
 }

@@ -3,7 +3,8 @@ const BASE_URL = process.env.REACT_APP_BASE_URL ;
 export const categories = {
     SHOW_ALL_CATEGORIES_API: BASE_URL + "/course/showAllCategories",
     ADD_NEW_CATEGORY_API: BASE_URL + "/course/createCategory",
-    GET_CATEGORY_DETAILS_API: BASE_URL + "/course/getSpecificCategoryDetails"
+    GET_CATEGORY_DETAILS_API: BASE_URL + "/course/getSpecificCategoryDetails",
+    EDIT_CATEGORY_API: BASE_URL + "/course/editCategory",
 }
 
 // CATALOGUE PAGE DATA
