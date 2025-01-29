@@ -42,7 +42,7 @@ const AddCategoryForm = () => {
         console.log("Category data on submit : ", data) ;
 
         if(editCategory){
-            if(isFormUpdated){
+            if(isFormUpdated()){
                 const currValue = getValues() ;
                 const formData = new FormData() ;
         

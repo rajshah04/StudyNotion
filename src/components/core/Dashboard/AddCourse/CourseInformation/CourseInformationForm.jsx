@@ -73,7 +73,7 @@ const CourseInformationForm = () => {
     console.log("Course data on submit : ", data) ;
 
     if(editCourse){
-      if(isFormUpdated){
+      if(isFormUpdated()){
         const currValue = getValues() ;
         const formData = new FormData() ;
 
