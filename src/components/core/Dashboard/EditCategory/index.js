@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import AddCategoryForm from '../AddCategory/AddCategoryForm';
 import { useParams } from 'react-router-dom';
+import { getSpecificCategoryDetails } from '../../../../services/operations/categoryAPI';
+import { useDispatch } from 'react-redux';
+import { setCategory, setEditCategory } from '../../../../slices/categorySlice';
 
 const EditCategory = () => {
 
@@ -9,13 +12,34 @@ const EditCategory = () => {
 
     console.log("Category Id : ", categoryId) ;
 
-    // useEffect(() => {
-    //     const populateCategoryDetails = async() => {
+    const dispatch = useDispatch() ;
 
-    //         const result = await fet
+    useEffect(() => {
+        const populateCategoryDetails = async() => {
+            setLoading(true) ;
 
-    //     }
-    // }, []) ;
+            const result = await getSpecificCategoryDetails(categoryId) ;
+
+            console.log("Result of fetching category details : ", result) ;
+
+            dispatch(setCategory(result)) ;
+            dispatch(setEditCategory(true)) ;
+
+            setLoading(false) ;
+        }
+
+        populateCategoryDetails() ;
+    }, []) ;
+
+    if(loading){
+        return (
+            <div className='h-[80vh] w-full grid place-items-center'>
+                <div className='custom-loader'>
+        
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className='font-medium text-richblack-5'>

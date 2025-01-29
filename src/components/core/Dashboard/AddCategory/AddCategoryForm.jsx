@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux';
-import { addNewCategory } from '../../../../services/operations/categoryAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewCategory, editCategoryDetails } from '../../../../services/operations/categoryAPI';
 import CommonBtn from '../../../common/CommonBtn';
+import toast from 'react-hot-toast';
+import { setCategory } from '../../../../slices/categorySlice';
 
 const AddCategoryForm = () => {
     
@@ -14,11 +16,63 @@ const AddCategoryForm = () => {
         formState: {errors}
     } = useForm() ;
 
-    const { token } = useSelector((state) => state.auth) ;
+    const { token } = useSelector((state) => state.auth) ; 
+    const { category, editCategory } = useSelector((state) => state.category) ; 
     const [loading, setLoading] = useState(false) ;
+
+    const dispatch = useDispatch() ;
+
+    useEffect(() => {
+        if(editCategory){
+            setValue("categoryName", category.name) ;
+            setValue("categoryDescription", category.description) ;
+        }
+    }, []) ;
+
+    const isFormUpdated = () => {
+        const currValue = getValues() ;
+        if(currValue.categoryName !== category.name ||
+            currValue.categoryDescription !== category.description)
+            return true ;
+        else  
+            return false ;  
+    }
 
     const submitHandler = async(data) => {
         console.log("Category data on submit : ", data) ;
+
+        if(editCategory){
+            if(isFormUpdated){
+                const currValue = getValues() ;
+                const formData = new FormData() ;
+        
+                formData.append("categoryId", category._id) ;
+                if(currValue.categoryName !== category.name){
+                    formData.append("name", data.categoryName) ;
+                }
+                
+                if(currValue.categoryDescription !== category.description){
+                    formData.append("description", data.categoryDescription) ;
+                }   
+      
+                setLoading(true) ;
+        
+                const result = await editCategoryDetails(formData, token) ;
+        
+                // setLoading(false) ;
+                
+                if(result){
+                    dispatch(setCategory(result)) ;
+                }
+        
+                setLoading(false) ;
+            }
+            else{
+                toast.error("No changes were done.") ;
+            }
+      
+            return ;
+        }
 
         const formData = new FormData() ;
         formData.append("name", data.categoryName) ;  
@@ -78,8 +132,7 @@ const AddCategoryForm = () => {
 
         </div>
 
-        {/* <CommonBtn text={!editCourse ? "Submit" : "Save Changes"}/> */}
-        <CommonBtn text={"Submit"}/>
+        <CommonBtn text={!editCategory ? "Submit" : "Save Changes"}/>
 
         </form>
     )

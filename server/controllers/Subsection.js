@@ -105,7 +105,7 @@ exports.updateSubSection = async(req, res) => {
             console.log("Video file uploaded on cloud : ", uploadDetails) ;
 
             subSection.videoUrl = uploadDetails.secure_url ;
-            subSection.timeDuration = uploadDetails.durations ;
+            subSection.timeDuration = uploadDetails.duration ;
         }
 
         // update the subsection
