@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AddCategoryForm from '../AddCategory/AddCategoryForm';
+import CategoryForm from '../AddCategory/CategoryForm';
 import { useParams } from 'react-router-dom';
 import { getSpecificCategoryDetails } from '../../../../services/operations/categoryAPI';
 import { useDispatch } from 'react-redux';
@@ -47,7 +47,7 @@ const EditCategory = () => {
                 Edit Category
             </p>
 
-            <AddCategoryForm />
+            <CategoryForm />
         </div>
     )
 }
