@@ -64,7 +64,7 @@ const Navbar = () => {
                                 <li key={index}>
                                     {
                                         link.title === "Catalogue" ? (
-                                            // TODO -- done : rotate the down arrow on hover(make it up arrow)
+                                            // rotate the down arrow on hover(make it up arrow)
                                             <div className={`relative flex gap-2 items-center group cursor-pointer ${matchRoute(`${link.path}/:catalogueName`) ? 'text-yellow-25' : 'text-richblack-25'}`}>
                                                 <p>
                                                     {link.title}

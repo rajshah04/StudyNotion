@@ -70,7 +70,7 @@ exports.createSubSection = async(req, res) => {
     }
 }
 
-// TODO -- done : update the subsection
+// update the subsection
 exports.updateSubSection = async(req, res) => {
     try{
         // fetch the data

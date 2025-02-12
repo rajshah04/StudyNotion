@@ -255,7 +255,6 @@ exports.logIn = async(req, res) => {
 }
 
 // changePassword
-// TODO: HOMEWORK -- done
 exports.changePassword = async(req, res) => {
     try{
 

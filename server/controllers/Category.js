@@ -129,7 +129,7 @@ exports.showAllCategories = async(req, res) => {
     }
 }
 
-// TODO -- done: get top 10 selling courses
+// get top 10 selling courses
 exports.categoryPageDetails = async(req, res) => {
     try{
         // get categoryId
@@ -166,6 +166,9 @@ exports.categoryPageDetails = async(req, res) => {
             .populate({
                 path: "course",
                 match: { status: "Published" },
+                populate: {
+                    path: "ratingAndReviews",
+                },
             })
             .exec() ;
 
@@ -199,7 +202,12 @@ exports.getSpecificCategoryDetails = async(req, res) => {
     try{
         const { categoryId } = req.body ;
 
-        const categoryDetails = await Category.findById(categoryId).populate("course") ;
+        const categoryDetails = await Category.findById(categoryId).populate({
+            path: "courses",
+            populate: {
+                path: "ratingAndReviews",
+            },
+        }) ;
 
         if(!categoryDetails){
             return res.status(400).json({

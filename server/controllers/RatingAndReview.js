@@ -142,7 +142,7 @@ exports.getAllRating = async(req, res) => {
     }
 }
 
-// TODO -- done : getAllRating related to a specific Course
+// getAllRating related to a specific Course
 exports.getCourseRelatedRating = async(req, res) => {
     try{
         // get course id

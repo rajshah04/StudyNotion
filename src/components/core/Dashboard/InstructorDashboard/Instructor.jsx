@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchInstructorCourses } from "../../../../services/operations/courseDetailsAPI";
-import { getInstructorData } from '../../../../services/operations/profileAPI';
+import { getInstructorDashboardData } from '../../../../services/operations/profileAPI';
 import { Link } from 'react-router-dom';
 import InstructorChart from './InstructorChart';
 
@@ -18,7 +18,7 @@ const Instructor = () => {
         const getCourseDataWithStats = async() => {
             setLoading(true) ;
 
-            const instructorApiData = await getInstructorData(token) ;
+            const instructorApiData = await getInstructorDashboardData(token) ;
             
             const result = await fetchInstructorCourses(token) ;
             

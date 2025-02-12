@@ -120,7 +120,7 @@ export function logout(navigate){
         dispatch(setToken(null)) ;
         dispatch(setUser(null)) ;
         
-        // TODO : function to reset cart
+        // function to reset cart
         dispatch(resetCart()) ;
         localStorage.removeItem("user") ;
         localStorage.removeItem("token") ;

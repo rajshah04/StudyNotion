@@ -94,7 +94,6 @@ exports.createCourse = async(req, res) => {
         console.log("Course added into the Instructor schema : ", addCourseToInstructor) ;
 
         // update the TAG / CATEGORY ka schema
-        // TODO: HW -- done
         // push the course id into Category
         const updatedCategoryDetails = await Category.findByIdAndUpdate(category,
             {
@@ -258,7 +257,8 @@ exports.getCourseDetails = async(req, res) => {
                                             {
                                                 path: "instructor",
                                                 populate: {
-                                                    path: "additionalDetails"
+                                                    path: "additionalDetails courses",
+                                                    options: { sort: { studentsEnrolled: -1}}
                                                 },
                                             }
                                         )
@@ -278,6 +278,7 @@ exports.getCourseDetails = async(req, res) => {
                                                 },
                                             }
                                         )
+                                        .sort()
                                         // .populate(
                                         //     {
                                         //         path: "studentsEnrolled",
@@ -309,16 +310,26 @@ exports.getCourseDetails = async(req, res) => {
         const totalDuration = convertSecondsToDuration(totalDurationInSeconds) ;
 
         console.log("Total Duration : ", totalDuration) ;
-        
+
+        // count the total no. of students of the instructor
+        let totalStudents = 0 ;
+
+        courseDetails.instructor.courses.forEach((course) => {
+            totalStudents += course.studentsEnrolled.length ;
+        })
+
+        console.log("Total Students : ", totalStudents) ;
+
         // return response
         return res.status(200).json({
             success: true,
             message: "Course details fetched successfully",
             courseDetails,
-            totalDuration
+            totalDuration,
+            totalStudents
         }) ;
     }catch(err){
-        return res.status.json({
+        return res.status(500).json({
             success: false,
             message: "Some error occured in fetching the course details.",
             error: err.message

@@ -55,7 +55,7 @@ const Home = () => {
 
             {/* Code Section 1 */}
             <div className='w-full flex flex-col justify-start mb-14 lg:mb-32'>
-                {/* TODO -- done : try making 2 different codes to display in the section */}
+                {/* try making 2 different codes to display in the section */}
                 <CodeBlocks 
                 position={"flex-col lg:flex-row"} 
                 heading={<h1 className='text-white font-semibold text-4xl'>Unlock your <HighlightText text={"coding potential"} /> with our online courses. </h1>} 
