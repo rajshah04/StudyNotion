@@ -6,6 +6,8 @@ module.exports = {
       inter: ["Inter", "sans-serif"],
       "edu-sa": ["Edu SA Beginner", "cursive"],
       mono: ["Roboto Mono", "monospace"],
+      playfair: ["Playfair Display", "sans-serif"],
+      poppins: ["Poppins", "sans-serif"],
     },
     colors: {
       white: "#fff",

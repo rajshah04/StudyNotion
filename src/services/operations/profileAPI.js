@@ -3,7 +3,7 @@ import { profileEndpoints } from "../apis";
 import { apiConnector } from "../apiconnector";
 
 
-const { GET_USER_ENROLLED_COURSES_API, GET_INSTRUCTOR_DATA_API } =  profileEndpoints ;
+const { GET_USER_ENROLLED_COURSES_API, GET_INSTRUCTOR_DASHBOARD_DATA_API, GET_INSTRUCTOR_DATA_API } =  profileEndpoints ;
 
 export async function getUserEnrolledCourses(token){
     const toastId = toast.loading("Loading...") ;
@@ -33,18 +33,18 @@ export async function getUserEnrolledCourses(token){
     return result ;
 }
 
-export async function getInstructorData(token){
+export async function getInstructorDashboardData(token){
     const toastId = toast.loading("Loading...") ;
     let result = [] ;
 
     try{
-        const response = await apiConnector("GET", GET_INSTRUCTOR_DATA_API, null, 
+        const response = await apiConnector("GET", GET_INSTRUCTOR_DASHBOARD_DATA_API, null, 
             {
                 Authorization: `Bearer ${token}`
             }
         ) ;
 
-        console.log("GET_INSTRUCTOR_DATA_API Response ---> ", response) ;
+        console.log("GET_INSTRUCTOR_DASHBOARD_DATA_API Response ---> ", response) ;
 
         if(!response.data.success){
             throw new Error(response.data.message) ;
@@ -52,6 +52,31 @@ export async function getInstructorData(token){
 
         result = response?.data?.coursesData ;
         toast.success("Enrolled courses fetched successfully.") ;
+    }
+    catch(err){
+        console.log("GET_INSTRUCTOR_DASHBOARD_DATA_API Error", err) ;
+        toast.error("Could Not Get Instructor Dashboard Data") ;
+    }
+
+    toast.dismiss(toastId) ;
+    return result ;
+}
+
+export async function getInstructorData(instructorName){
+    const toastId = toast.loading("Loading...") ;
+    let result = [] ;
+
+    try{
+        const response = await apiConnector("POST", GET_INSTRUCTOR_DATA_API, {instructorName}) ;
+
+        console.log("GET_INSTRUCTOR_DATA_API Response ---> ", response) ;
+
+        if(!response.data.success){
+            throw new Error(response.data.message) ;
+        }
+
+        result = response?.data?.instructorDetails ;
+        toast.success("Instructor details fetched successfully.") ;
     }
     catch(err){
         console.log("GET_INSTRUCTOR_DATA_API Error", err) ;

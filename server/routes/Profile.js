@@ -1,8 +1,8 @@
 const express = require("express") ;
 const router = express.Router() ;
 
-const {updateProfile, getAllUserDetails, deleteAccount, updateProfilePicture, removeProfilePicture, getEnrolledCourses, instructorDashboard} = require("../controllers/Profile") ;
-const {auth, isInstructor} = require("../middlewares/auth") ;
+const {updateProfile, getAllUserDetails, deleteAccount, updateProfilePicture, removeProfilePicture, getEnrolledCourses, instructorDashboard, getAllInstructorsDetails, instructorDetails} = require("../controllers/Profile") ;
+const {auth, isInstructor, isAdmin} = require("../middlewares/auth") ;
 
 // PROFILE ROUTES
 
@@ -12,7 +12,7 @@ router.put("/updateProfile", auth, updateProfile) ;
 router.delete("/deleteAccount", auth, deleteAccount) ;
 // route for getting all user's details
 router.get("/getAllUserDetails", auth, getAllUserDetails) ;
-// TODO: route for updating the profile picture
+// route for updating the profile picture
 router.put("/updateProfilePicture", auth, updateProfilePicture) ;
 // route for removing the profile picture
 router.put("/removeProfilePicture", auth, removeProfilePicture) ;
@@ -22,6 +22,12 @@ router.get("/getEnrolledCourses", auth, getEnrolledCourses) ;
 
 // route for getting instructor dashboard's data
 router.get("/instructorDashboard", auth, isInstructor, instructorDashboard) ;
+
+// route for getting a particular instructor's details
+router.post("/getInstructorDetails", instructorDetails) ;
+
+// route for getting all instructors details (only by admin)
+router.get("/getInstructorsDetails", auth, isAdmin, getAllInstructorsDetails) ;
 
 
 module.exports = router ;

@@ -75,8 +75,8 @@ exports.updateProfile = async(req, res) => {
     }
 }
 
-// TODO -- done : delete account
-// Explore -> how can we schedule this deletion operation (cronjob)
+// delete account
+// TODO : Explore -> how can we schedule this deletion operation (cronjob)
 exports.deleteAccount = async(req, res) => {
     try{
 
@@ -99,8 +99,8 @@ exports.deleteAccount = async(req, res) => {
         // delete profile
         await Profile.findByIdAndDelete({_id:userDetails.additionalDetails}) ;
 
-        // do we also need to delete course progress of the user/student
-        // TODO: done -- delete course progress of the user/student
+        // do we also need to delete course progress of the user/student ?? Yes
+        // delete course progress of the user/student
         
         let courseProgress = await CourseProgress.findOneAndDelete({userId: userId}) ;
         
@@ -112,7 +112,7 @@ exports.deleteAccount = async(req, res) => {
 
         console.log("Deleted Course Progress : ", deletedCourseProgress) ;
 
-        // TODO: done -- unenroll user from all enrolled courses 
+        // unenroll user from all enrolled courses 
         if(userDetails.courses.length != 0){
             for(const courseId of userDetails.courses){
                 await Course.findByIdAndUpdate(courseId,
@@ -258,7 +258,6 @@ exports.removeProfilePicture = async(req, res) => {
     }
 }
 
-// TODO -- done : write controller for getEnrolledCourses
 exports.getEnrolledCourses = async(req, res) => {
     try{
         // fetch userId
@@ -384,6 +383,100 @@ exports.instructorDashboard = async(req, res) => {
             success: false,
             message: "Error occured in Instructor Dashboard",
             error: err
+        }) ;
+    }
+}
+
+// controller to fetch the instructor details based on the user id
+// exports.instructorDetails = async(req, res) => {
+//     try{
+//         // fetch the data
+//         const { instructorId } = req.body ;
+
+//         // validate
+//         const instructorDetails = await User.findById(instructorId).populate("additionalDetails")
+//                                                                    .populate("courses")
+//                                                                    .exec() ;
+
+//         // send response
+//         return res.status(200).json({
+//             success: true,
+//             message: "Instructor details fetched Successfully.",
+//             instructorDetails
+//         }) ;
+//     }
+//     catch(err){
+//         console.log("Error occured in fetching details of Instructor : ", err) ;
+//         return res.status(500).json({
+//             success: false,
+//             message: "Cannot fetch details of the Instructor",
+//             error: err.message
+//         }) ;
+//     }
+// }
+
+exports.instructorDetails = async(req, res) => {
+    try{
+        // fetch the data
+        const { instructorName } = req.body ;
+
+        const name = instructorName.split("-") ;
+
+        const firstName = name[0].charAt(0).toUpperCase() + name[0].slice(1) ;
+        const lastName = name[1].charAt(0).toUpperCase() + name[1].slice(1) ;
+
+        // validate
+        const instructorDetails = await User.findOne({firstName: firstName, lastName: lastName}).populate("additionalDetails")
+                                                                    // .populate("courses")
+                                                                    .populate({
+                                                                        path: "courses",
+                                                                        populate: {
+                                                                            path: "ratingAndReviews",
+                                                                        },
+                                                                    })
+                                                                   .exec() ;
+
+        console.log("Instructor details : ", instructorDetails) ;
+
+        // add the rating and review to each of the courses
+
+        // send response
+        return res.status(200).json({
+            success: true,
+            message: "Instructor details fetched Successfully.",
+            instructorDetails
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured in fetching details of Instructor : ", err) ;
+        return res.status(500).json({
+            success: false,
+            message: "Cannot fetch details of the Instructor",
+            error: err.message
+        }) ;
+    }
+}
+
+// write controller to fetch the instructors details
+exports.getAllInstructorsDetails = async(req, res) => {
+    try{
+        // fetch the data
+
+        // validate
+        const instructorsDetails = await User.find({accountType : "Instructor"}).populate("courses") ;
+
+        // send response
+        return res.status(200).json({
+            success: true,
+            instructorsDetails
+        }) ;
+    }
+    catch(err){
+        console.log("Error occured in fetching details of all Instructors.", err) ;
+        return res.status(500).json({
+            success: false,
+            message: "Cannot fetch details of all Instructors.",
+            error: err.message
         }) ;
     }
 }

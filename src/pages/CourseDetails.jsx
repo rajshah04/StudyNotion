@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { buyCourse } from '../services/operations/studentFeaturesAPI';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 // import toast from 'react-hot-toast';
 import { fetchCourseDetails } from '../services/operations/courseDetailsAPI';
 import getAvgRating from '../utils/AvgRating';
@@ -15,6 +15,8 @@ import { CgInfo } from 'react-icons/cg';
 import Footer from '../components/common/Footer';
 import ReviewSlider from '../components/common/ReviewSlider';
 import CourseAccordionBar from '../components/core/Course/CourseAccordionBar';
+import { PiStudentDuotone } from 'react-icons/pi';
+import { MdVideoLibrary } from 'react-icons/md';
 
 const CourseDetails = () => {
 
@@ -118,15 +120,21 @@ const CourseDetails = () => {
     } = courseData.courseDetails ;
 
     const {
+        _id: instructor_id,
         image,
         firstName,
         lastName,
-        additionalDetails
+        additionalDetails,
+        courses
     } = instructor ;
 
     const {
         about
     } = additionalDetails ;
+
+    const filteredCourses = courses.filter((course) => course._id !== course_id) ;
+
+    // console.log("Filtered courses : ", filteredCourses) ;
 
     return (
         <div className='flex flex-col gap-4 text-white'>
@@ -162,7 +170,10 @@ const CourseDetails = () => {
 
                     <div>
                         <p>
-                            Created By {`${instructor.firstName} ${instructor.lastName}`}
+                            Created By {" "}
+                                <span className='text-yellow-25 hover:text-yellow-50 cursor-pointer border-b-2' onClick={() => document.getElementById("instructor-section").scrollIntoView({ behavior: "smooth" })}>
+                                    {`${instructor.firstName} ${instructor.lastName}`}
+                                </span>
                         </p>
                     </div>
 
@@ -262,7 +273,7 @@ const CourseDetails = () => {
 
 
                         {/* instructor's details */}
-                        <div className='mb-12 py-4'>
+                        <div id='instructor-section' className='mb-12 py-4'>
                             <p className='text-3xl font-semibold'>
                                 Instructor
                             </p>
@@ -270,16 +281,104 @@ const CourseDetails = () => {
                             <div className='flex items-center gap-6 my-4 py-4'>
                                 <img src={image} className='h-16 w-16 rounded-full object-cover' />
 
-                                <p className='text-lg'>
+                                {/* insert link here which on click directs to the instructor page */}
+                                <p onClick={() => navigate(`/instructor/${firstName.toLowerCase()}-${lastName.toLowerCase()}`)} className='text-xl font-medium border-b-2 text-yellow-25 hover:text-yellow-50 cursor-pointer'>
                                     {firstName} {lastName}
                                 </p>
 
                             </div>
+
+                            {/* total courses and no. of students enrolled of instructors */}
+                            <div className='flex flex-col gap-2'>
+                                {/* total students */}
+                                <p className='flex items-center gap-4 text-sm'>
+                                    <PiStudentDuotone size={18} />
+
+                                    <p>
+                                        { courseData?.totalStudents || 0 } Students
+                                    </p>
+                                </p>
+
+                                {/* courses */}
+                                <p className='flex items-center gap-4 text-sm'>
+                                    <MdVideoLibrary size={18} />
+
+                                    <p>
+                                        { courses?.length || 0 } Courses
+                                    </p>
+                                </p>
+                            </div>
                             
-                            <p className='text-lg'>
+                            <p className='text-lg mt-6'>
                                 {about}
                             </p>
+
+                            <div>
+                                <p className='text-3xl font-semibold py-6'>
+                                    More Courses by {" "}
+                                    <span onClick={() => navigate(`/instructor/${firstName.toLowerCase()}-${lastName.toLowerCase()}`)} className='text-yellow-25 hover:text-yellow-50 cursor-pointer'>
+                                        {firstName} {lastName}
+                                    </span>
+                                </p>
+
+                                {/* do this more properly that is when we are on a certain course's page, do not show that specific course in here, and also when click on the certain course, it should to its course details page -- done */}
+                                <div className='flex items-start space-x-6 my-4'>
+                                {
+                                    filteredCourses.slice(0, 3).map((course) => (
+                                        <Link to={`/courses/${course._id}`} key={course._id} className='w-[33%]'>
+                                            <img src={course.thumbnail} alt="" className='h-[201px] w-full rounded-md object-cover' />
+
+                                            <div className='mt-3 w-full'>
+                                                <p className='text-sm font-medium text-richblack-50'>
+                                                    {course.courseName}
+                                                </p>
+
+                                                <div className='mt-1 flex items-center space-x-2'>
+                                                    <p className='text-xs font-medium text-richblack-300'>
+                                                        {
+                                                            course.studentsEnrolled.length > 1
+                                                            ? (
+                                                                <p>
+                                                                    {course.studentsEnrolled.length} Students Enrolled
+                                                                </p>
+                                                            )
+                                                            : (
+                                                                <p>
+                                                                    {course.studentsEnrolled.length} Student Enrolled
+                                                                </p>
+                                                            )
+                                                        } 
+                                                    </p>
+
+                                                    <p className='text-xs font-medium text-richblack-300'>
+                                                        |
+                                                    </p>
+
+                                                    <p className='text-xs font-medium text-richblack-300'>
+                                                        {
+                                                            course.price === 0 
+                                                            ? (
+                                                                <p>
+                                                                    Free
+                                                                </p>
+                                                            ) 
+                                                            : (
+                                                                <p>
+                                                                    Rs. {course.price}
+                                                                </p>
+                                                            ) 
+                                                        }
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    ))
+                                }
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
 
                 </div>

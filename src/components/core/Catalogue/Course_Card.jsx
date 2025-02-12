@@ -43,14 +43,12 @@ const Course_Card = ({course, Height}) => {
                             <RatingStars reviewCount={avgReviewCount} />
 
                             <span className='text-richblack-400'>
-                                {course?.ratingAndReviews?.length} Ratings
+                                ( {course?.ratingAndReviews?.length} )
                             </span>
                         </div>
 
                         <p className='text-xl text-richblack-5'>
-                        ₹ {
-                                course?.price
-                            }
+                        {course?.price > 0 ? `₹ ${course?.price}` : "Free"}
                         </p>
                     </div>
                 </div>

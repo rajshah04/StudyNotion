@@ -30,6 +30,7 @@ import Instructor from "./components/core/Dashboard/InstructorDashboard/Instruct
 import Categories from "./components/core/Dashboard/Categories";
 import AddCategory from "./components/core/Dashboard/AddCategory";
 import EditCategory from "./components/core/Dashboard/EditCategory";
+import InstructorDetails from "./pages/InstructorDetails";
 
 function App() {
 
@@ -137,6 +138,7 @@ function App() {
 
         </Route>
 
+        <Route path="/instructor/:instructorName" element={<InstructorDetails />} />
 
         <Route path="*" element={<Error />} />
       
