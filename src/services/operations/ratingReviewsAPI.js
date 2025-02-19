@@ -3,7 +3,7 @@ import { ratingAndReviewEndpoints } from "../apis";
 import { apiConnector } from "../apiconnector";
 
 
-const { GET_ALL_RATING, GET_COURSE_AVERAGE_RATING, GET_COURSE_RELATED_RATING } = ratingAndReviewEndpoints ;
+const { GET_ALL_RATING, GET_COURSE_AVERAGE_RATING, GET_COURSE_RELATED_RATING, GET_USER_COURSE_RELATED_RATING } = ratingAndReviewEndpoints ;
 
 export const getAllRatings = async() => {
     const toastId = toast.loading("Loading...") ;
@@ -76,5 +76,33 @@ export const getCourseRelatedRatings = async(courseId) => {
     }
 
     toast.dismiss(toastId) ;
+    return result ;
+}
+
+export const getUserCourseRelatedRating = async(courseId, token) => {
+    // const toastId = toast.loading("Loading...") ;
+    let result = [] ;
+
+    // console.log("Course Id : ", courseId) ;
+
+    try{
+        const response = await apiConnector("POST", GET_USER_COURSE_RELATED_RATING, {courseId}, {
+            Authorization: `Bearer ${token}`,
+        }) ;
+
+        console.log("GET_USER_COURSE_RELATED_RATING API RESPONSE............", response) ;
+
+        if(!response?.data?.success){
+            throw new Error("Could Not Fetch User's Course Rating and Review") ;
+        }
+      
+        result = response?.data ;
+    }
+    catch(err){
+        console.log("GET_USER_COURSE_RELATED_RATING API ERROR............", err) ;
+        // toast.error(err.message) ;
+    }
+
+    // toast.dismiss(toastId) ;
     return result ;
 }

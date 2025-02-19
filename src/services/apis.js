@@ -73,5 +73,6 @@ export const studentEndpoints = {
 export const ratingAndReviewEndpoints = {
     GET_ALL_RATING: BASE_URL + "/course/getAllRating",
     GET_COURSE_RELATED_RATING: BASE_URL + "/course/getCourseRelatedRating",
-    GET_COURSE_AVERAGE_RATING: BASE_URL + "/course/getAverageRating"
+    GET_COURSE_AVERAGE_RATING: BASE_URL + "/course/getAverageRating",
+    GET_USER_COURSE_RELATED_RATING: BASE_URL + "/course/getCourseUserRating"
 }

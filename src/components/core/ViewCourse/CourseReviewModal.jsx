@@ -7,7 +7,7 @@ import { createRating } from '../../../services/operations/courseDetailsAPI';
 import { useParams } from 'react-router-dom';
 import { ImCross } from 'react-icons/im';
 
-const CourseReviewModal = ({setReviewModal}) => {
+const CourseReviewModal = ({setReviewModal, setCourseAlreadyReviewed}) => {
 
     const { user } = useSelector((state) => state.profile) ;
     const { token } = useSelector((state) => state.auth) ;
@@ -33,9 +33,15 @@ const CourseReviewModal = ({setReviewModal}) => {
     const onSubmit = async(data) => {
         console.log("Course id : ", courseId) ;
 
-        await createRating({courseId: courseId, rating: data.courseRating, review: data.courseExperience}, token) ;
+        const response = await createRating({courseId: courseId, rating: data.courseRating, review: data.courseExperience}, token) ;
+
+        console.log("Response : ", response) ;
 
         setReviewModal(false) ;
+
+        if(response){
+            setCourseAlreadyReviewed(true) ;
+        }
     }
 
     const secondExample = {

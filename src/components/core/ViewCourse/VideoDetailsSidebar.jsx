@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { MdOutlineArrowDropDown } from 'react-icons/md';
 
-const VideoDetailsSidebar = ({ setReviewModal }) => {
+const VideoDetailsSidebar = ({ setReviewModal, courseAlreadyReviewed }) => {
 
     const [activeStatus, setActiveStatus] = useState("") ;
     const [videoBarActive, setVideoBarActive] = useState("") ;
@@ -24,6 +24,20 @@ const VideoDetailsSidebar = ({ setReviewModal }) => {
         totalNoOfLectures,
         completedLectures
     } = useSelector((state) => state.viewCourse) ;
+
+    // useEffect(() => {
+    //     const courseReviewedOrNot = async() => {
+
+    //         const response = await getUserCourseRelatedRating(courseId, token) ;
+
+    //         // console.log("Response : ", response) ;
+    //         if(response.review){
+    //             setCourseAlreadyReviewed(true) ;
+    //         }
+    //     }
+
+    //     courseReviewedOrNot() ;
+    // }, []) ;
     
     useEffect(() => {
         const setActiveFlags = () => {
@@ -92,7 +106,12 @@ const VideoDetailsSidebar = ({ setReviewModal }) => {
                             </div>
 
                             <div>
-                                <CommonBtn text="Add Review" onclick={() => setReviewModal(true)} />
+                                {
+                                    courseAlreadyReviewed ? 
+                                    ("") : 
+                                    (<CommonBtn text="Add Review" onclick={() => setReviewModal(true)} />)
+                                }
+                                
                             </div>
                         </div>
 

@@ -186,3 +186,41 @@ exports.getCourseRelatedRating = async(req, res) => {
         }) ;
     }
 }
+
+// maybe : controller to fetch the details based on the user id and course id (to display in the course review modal)
+
+// controller to check whether the student has already reviewed the particular course or not
+// exports.editCourseRating = async(req, res) => {
+exports.getCourseUserRating = async(req, res) => {
+    try{
+        // fetch user id
+        const userId = req.user.id ;
+
+        // fetch course id
+        const { courseId } = req.body ;
+
+        // find a review related to the given course id and user id
+        const review = await RatingAndReview.findOne({user: userId, course: courseId}) ;
+
+        // return response
+        if(!review){
+            return res.status(204).json({
+                success: true,
+                message: "No review found of this user and course",
+                review
+            }) ;
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Review found Successfully",
+            review
+        }) ;
+    }catch(err){
+        console.log(err) ;
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        }) ;
+    }
+}
