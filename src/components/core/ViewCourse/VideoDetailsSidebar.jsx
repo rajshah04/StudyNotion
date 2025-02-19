@@ -24,20 +24,6 @@ const VideoDetailsSidebar = ({ setReviewModal, courseAlreadyReviewed }) => {
         totalNoOfLectures,
         completedLectures
     } = useSelector((state) => state.viewCourse) ;
-
-    // useEffect(() => {
-    //     const courseReviewedOrNot = async() => {
-
-    //         const response = await getUserCourseRelatedRating(courseId, token) ;
-
-    //         // console.log("Response : ", response) ;
-    //         if(response.review){
-    //             setCourseAlreadyReviewed(true) ;
-    //         }
-    //     }
-
-    //     courseReviewedOrNot() ;
-    // }, []) ;
     
     useEffect(() => {
         const setActiveFlags = () => {

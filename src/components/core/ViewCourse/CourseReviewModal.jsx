@@ -35,8 +35,6 @@ const CourseReviewModal = ({setReviewModal, setCourseAlreadyReviewed}) => {
 
         const response = await createRating({courseId: courseId, rating: data.courseRating, review: data.courseExperience}, token) ;
 
-        console.log("Response : ", response) ;
-
         setReviewModal(false) ;
 
         if(response){
