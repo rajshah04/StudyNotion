@@ -4,6 +4,7 @@ import { getInstructorData } from '../services/operations/profileAPI';
 import getTotalStudents from '../utils/TotalStudents';
 import getInstructorTotalReviews from '../utils/InstructorReviews';
 import Course_Card from '../components/core/Catalogue/Course_Card';
+import getInstructorRating from '../utils/InstructorRating';
 
 const InstructorDetails = () => {
 
@@ -13,6 +14,7 @@ const InstructorDetails = () => {
 
     const [totalStudents, setTotalStudents] = useState(0) ;
     const [totalReviews, setTotalReviews] = useState(0) ;
+    const [instructorRating, setInstructorRating] = useState(0) ;
 
     useEffect(() => {
 
@@ -40,6 +42,10 @@ const InstructorDetails = () => {
         const totalReviews = getInstructorTotalReviews(instructorDetails?.courses) ;
 
         setTotalReviews(totalReviews) ;
+
+        const fetchInstructorRating = getInstructorRating(instructorDetails?.courses) ;
+
+        setInstructorRating(fetchInstructorRating) ;
     }, [instructorDetails]) ;
 
     if(loading){
@@ -54,7 +60,7 @@ const InstructorDetails = () => {
 
     return (
         <div>
-            <div className='relative mx-auto flex flex-col-reverse md:flex-row w-11/12 max-w-maxContent text-white py-8 gap-8'>
+            <div className='relative mx-auto flex justify-center items-center flex-col-reverse md:flex-row md:items-start w-11/12 max-w-maxContent text-white py-8 gap-8'>
                 {/* left section - instructor's information */}
                 <div className='flex flex-col w-[70%]'>
                     <p className='uppercase text-richblack-200'>
@@ -65,8 +71,19 @@ const InstructorDetails = () => {
                         {instructorDetails?.firstName} {instructorDetails?.lastName}
                     </p>
 
-                    {/* div for students and reviews */}
+                    {/* div for instructor rating, students and reviews */}
                     <div className='flex gap-8'>
+                        {/* instructor rating */}
+                        <div className='gap-2'>
+                            <p className='font-semibold text-richblack-300'>
+                                Instructor Rating
+                            </p>
+
+                            <p className='text-center'>
+                                {instructorRating || 0}
+                            </p>
+                        </div>
+                        
                         {/* students */}
                         <div className='gap-2'>
                             <p className='font-semibold text-richblack-300'>
@@ -107,7 +124,7 @@ const InstructorDetails = () => {
                             My courses ({`${instructorDetails?.courses?.length || 0}`})
                         </p>
 
-                        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
                             {
                                 instructorDetails?.courses?.map((course, index) => (
                                     <Course_Card course={course} Height={`h-[200px]`} key={index} />

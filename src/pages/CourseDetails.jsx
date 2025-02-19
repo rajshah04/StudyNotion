@@ -17,6 +17,11 @@ import ReviewSlider from '../components/common/ReviewSlider';
 import CourseAccordionBar from '../components/core/Course/CourseAccordionBar';
 import { PiStudentDuotone } from 'react-icons/pi';
 import { MdVideoLibrary } from 'react-icons/md';
+import { IoMdStar } from "react-icons/io";
+import getInstructorRating from '../utils/InstructorRating';
+import getInstructorTotalReviews from '../utils/InstructorReviews';
+import { MdReviews } from "react-icons/md";
+
 
 const CourseDetails = () => {
 
@@ -32,6 +37,8 @@ const CourseDetails = () => {
     const [confirmationModal, setConfirmationModal] = useState(null) ;
     const [date, setDate] = useState("") ;
     const [isActive, setIsActive] = useState([]) ;
+    const [instructorRating, setInstructorRating] = useState(0) ;
+    const [totalReviews, setTotalReviews] = useState(0) ;
 
     const handleActive = (id) => {
         setIsActive(!isActive.includes(id) ? isActive.concat(id) : isActive.filter((e) => e != id)) ;
@@ -64,6 +71,14 @@ const CourseDetails = () => {
         const fetchDate = dateFormatter(courseData?.courseDetails?.createdAt) ;
 
         setDate(fetchDate) ;
+
+        const fetchInstructorRating = getInstructorRating(courseData?.courseDetails?.instructor?.courses) ;
+
+        setInstructorRating(fetchInstructorRating) ;
+
+        const totalReviews = getInstructorTotalReviews(courseData?.courseDetails?.instructor?.courses) ;
+
+        setTotalReviews(totalReviews) ;
     }, [courseData]) ;
 
     const [totalLectures, setTotalLectures] = useState(0) ;
@@ -288,25 +303,43 @@ const CourseDetails = () => {
 
                             </div>
 
+                            {/* the instructor rating */}
+                            <div className='flex flex-row my-2 gap-4 text-sm'>
+                                <IoMdStar size={18} />
+        
+                                <p>
+                                    {instructorRating || 0} Instructor Rating
+                                </p>
+                            </div>
+
+                            {/* no. of reviews */}
+                            <div className='flex flex-row my-2 gap-4 text-sm'>
+                                <MdReviews size={18} />
+        
+                                <p>
+                                    {totalReviews || 0} Reviews
+                                </p>
+                            </div>
+
                             {/* total courses and no. of students enrolled of instructors */}
                             <div className='flex flex-col gap-2'>
                                 {/* total students */}
-                                <p className='flex items-center gap-4 text-sm'>
+                                <div className='flex items-center gap-4 text-sm'>
                                     <PiStudentDuotone size={18} />
 
                                     <p>
                                         { courseData?.totalStudents || 0 } Students
                                     </p>
-                                </p>
+                                </div>
 
                                 {/* courses */}
-                                <p className='flex items-center gap-4 text-sm'>
+                                <div className='flex items-center gap-4 text-sm'>
                                     <MdVideoLibrary size={18} />
 
                                     <p>
                                         { courses?.length || 0 } Courses
                                     </p>
-                                </p>
+                                </div>
                             </div>
                             
                             <p className='text-lg mt-6'>
@@ -334,7 +367,7 @@ const CourseDetails = () => {
                                                 </p>
 
                                                 <div className='mt-1 flex items-center space-x-2'>
-                                                    <p className='text-xs font-medium text-richblack-300'>
+                                                    <div className='text-xs font-medium text-richblack-300'>
                                                         {
                                                             course.studentsEnrolled.length > 1
                                                             ? (
@@ -348,13 +381,13 @@ const CourseDetails = () => {
                                                                 </p>
                                                             )
                                                         } 
-                                                    </p>
+                                                    </div>
 
                                                     <p className='text-xs font-medium text-richblack-300'>
                                                         |
                                                     </p>
 
-                                                    <p className='text-xs font-medium text-richblack-300'>
+                                                    <div className='text-xs font-medium text-richblack-300'>
                                                         {
                                                             course.price === 0 
                                                             ? (
@@ -368,7 +401,7 @@ const CourseDetails = () => {
                                                                 </p>
                                                             ) 
                                                         }
-                                                    </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </Link>

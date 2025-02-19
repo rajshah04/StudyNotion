@@ -256,10 +256,18 @@ exports.getCourseDetails = async(req, res) => {
                                         .populate(
                                             {
                                                 path: "instructor",
-                                                populate: {
-                                                    path: "additionalDetails courses",
-                                                    options: { sort: { studentsEnrolled: -1}}
-                                                },
+                                                populate: [
+                                                    {
+                                                        path: "additionalDetails"
+                                                    },
+                                                    {
+                                                        path: "courses",
+                                                        options: { sort: { studentsEnrolled: -1}},
+                                                        populate: {
+                                                            path: "ratingAndReviews"
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         )
                                         .populate("category")
