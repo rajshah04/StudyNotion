@@ -6,6 +6,7 @@ const profileRoutes = require("./routes/Profile") ;
 const paymentRoutes = require("./routes/Payments") ;
 const courseRoutes = require("./routes/Course") ;
 const contactUsRoute = require("./routes/Contact") ;
+const adminRoutes = require("./routes/Admin") ;
 const {cloudinaryConnect} = require("./config/cloudinary") ;
 const fileUpload = require("express-fileupload") ;
 const cors = require("cors") ; // to make both frontend and backend run on the local machine
@@ -38,6 +39,7 @@ app.use("/api/v1/profile", profileRoutes) ;
 app.use("/api/v1/payment", paymentRoutes) ;
 app.use("/api/v1/course", courseRoutes) ;
 app.use("/api/v1/reach", contactUsRoute) ;
+app.use("/api/v1/admin", adminRoutes) ;
 
 // default route 
 app.get("/", (req, res) => {

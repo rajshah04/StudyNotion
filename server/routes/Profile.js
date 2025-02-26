@@ -26,8 +26,5 @@ router.get("/instructorDashboard", auth, isInstructor, instructorDashboard) ;
 // route for getting a particular instructor's details
 router.post("/getInstructorDetails", instructorDetails) ;
 
-// route for getting all instructors details (only by admin)
-router.get("/getInstructorsDetails", auth, isAdmin, getAllInstructorsDetails) ;
-
 
 module.exports = router ;
