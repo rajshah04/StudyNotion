@@ -18,7 +18,7 @@ export const FooterLink2 = [
       { title: "Math", link: "/math" },
       { title: "Mobile Development", link: "/mobile-development" },
       { title: "Web Design", link: "/web-design" },
-      { title: "Web Development", link: "/web-development" },
+      { title: "Web Development", link: "/catalogue/web-development" },
     ],
   },
   {
