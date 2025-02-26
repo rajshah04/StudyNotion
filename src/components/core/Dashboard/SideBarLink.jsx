@@ -2,6 +2,7 @@ import React from 'react';
 import * as Icons from 'react-icons/vsc';
 import * as aiIcons from 'react-icons/ai';
 import * as tbIcons from 'react-icons/tb';
+import * as faIcons from 'react-icons/fa';
 import { matchPath, NavLink, useLocation} from 'react-router-dom';
 
 
@@ -12,6 +13,8 @@ const SideBarLink = ({link, iconName}) => {
         Icon = aiIcons[iconName] ;
     if(link.id === 7 || link.id === 8)
         Icon = tbIcons[iconName] ;
+    if(link.id === 9)
+        Icon = faIcons[iconName] ;
 
     const location = useLocation() ;
 

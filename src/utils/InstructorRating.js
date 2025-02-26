@@ -1,21 +1,21 @@
-import getAvgRating from "./AvgRating";
-
 const getInstructorRating = (courses) => {
     if(!courses || courses?.length === 0) return 0 ;
 
-    // TODO : check whether the below logic is working for all cases or not
-    const totalRating = courses.reduce((acc, course) => {
+    let totalRating = 0;
+    let totalCoursesWithRatings = 0;
 
-        const courseRating = getAvgRating(course.ratingAndReviews) ;
+    courses.forEach(course => {
+        if(course.ratingAndReviews.length > 0){
+            const courseRatingSum = course.ratingAndReviews.reduce((sum, rating) => sum + rating.rating, 0);
+            const courseRatingAvg = courseRatingSum / course.ratingAndReviews.length;
+            totalRating += courseRatingAvg;
+            totalCoursesWithRatings++;
+        }
+    });
 
-        acc += courseRating ;
+    const instructorRating = totalCoursesWithRatings > 0 ? (totalRating / totalCoursesWithRatings).toFixed(1) : 0;
 
-        return acc ;
-    }, 0) ;
-
-    const avgRating = totalRating / courses.length ;
-
-    return avgRating ;
+    return instructorRating ;
 }
 
 export default getInstructorRating

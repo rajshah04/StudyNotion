@@ -55,4 +55,11 @@ export const sidebarLinks = [
     type: ACCOUNT_TYPE.ADMIN,
     icon: "TbCategoryPlus",
   },
+  {
+    id: 9,
+    name: "Instructors",
+    path: "/dashboard/instructors",
+    type: ACCOUNT_TYPE.ADMIN,
+    icon: "FaChalkboardTeacher",
+  },
 ];

@@ -460,14 +460,19 @@ exports.instructorDetails = async(req, res) => {
 // write controller to fetch the instructors details
 exports.getAllInstructorsDetails = async(req, res) => {
     try{
-        // fetch the data
-
         // validate
-        const instructorsDetails = await User.find({accountType : "Instructor"}).populate("courses") ;
+        let instructorsDetails = await User.find({accountType : "Instructor"}).populate({
+                                                                                    path: "courses",
+                                                                                    populate: {
+                                                                                        path: "ratingAndReviews",
+                                                                                    },
+                                                                                })
+                                                                            .exec() ;
 
         // send response
         return res.status(200).json({
             success: true,
+            message: "Successfully fetched details of all the instructors",
             instructorsDetails
         }) ;
     }
