@@ -14,7 +14,7 @@ const Categories = () => {
         <div>
             <div className='mb-14 flex justify-between items-center'>
                 <h1 className='text-3xl font-medium text-richblack-5'>
-                    All Categories
+                    Categories
                 </h1>
 
                 <CommonBtn text="Add Category" children={<FiPlusCircle />} onclick={() => navigate("/dashboard/add-category")} /> 

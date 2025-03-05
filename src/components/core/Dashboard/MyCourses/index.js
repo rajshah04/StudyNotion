@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchInstructorCourses } from '../../../../services/operations/courseDetailsAPI';
 import CommonBtn from '../../../common/CommonBtn';
 import CoursesTable from '../InstructorCourses/CoursesTable';
 import { FiPlusCircle } from 'react-icons/fi';

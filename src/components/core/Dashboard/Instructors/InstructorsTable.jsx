@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Table, Tbody, Td, Th, Thead, Tr } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { useNavigate } from 'react-router-dom';
-import { getAllInstructorsData } from '../../../../services/operations/profileAPI';
+import { getAllInstructorsData } from '../../../../services/operations/adminAPI';
 import { useSelector } from 'react-redux';
 import getInstructorRating from '../../../../utils/InstructorRating';
+import { FaArrowRight } from "react-icons/fa";
+import { FaCircleInfo } from 'react-icons/fa6';
 
 const InstructorsTable = ({ instructors, setInstructors }) => {
 
@@ -29,16 +31,6 @@ const InstructorsTable = ({ instructors, setInstructors }) => {
         fetchAllInstructors() ;
     }, []) ;
 
-    if(loading){
-        return (
-            <div className='h-[80vh] w-full grid place-items-center'>
-                <div className='custom-loader'>
-        
-                </div>
-            </div>
-        ) ;
-    }
-
     return (
         <div>
             <Table className='rounded-3xl'>
@@ -53,6 +45,9 @@ const InstructorsTable = ({ instructors, setInstructors }) => {
                         <Th className='flex-auto text-left text-sm font-medium uppercase'>
                             No. of Courses
                         </Th>
+                        <Th className='flex-auto text-left text-sm font-medium uppercase'>
+                            Actions
+                        </Th>
                     </Tr>
                 </Thead>
 
@@ -66,9 +61,7 @@ const InstructorsTable = ({ instructors, setInstructors }) => {
                             </Tr>
                         ) : (
                             instructors.map((instructor, index, array) => (
-                                <Tr key={instructor._id} onClick={() => {
-                                    navigate(`/instructor/${instructor.firstName.toLowerCase()}-${instructor.lastName.toLowerCase()}`)
-                                }} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-6 cursor-pointer hover:border-richblack-300 items-center`}>
+                                <Tr key={instructor._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-6 cursor-pointer hover:border-richblack-300 items-center`}>
                                     <Td className='flex flex-1 justify-start items-center gap-x-4'>
 
                                         <img src={instructor.image} alt="" className='w-10 rounded-full' />
@@ -91,6 +84,18 @@ const InstructorsTable = ({ instructors, setInstructors }) => {
                                         {
                                             instructor.courses.length || 0
                                         }
+                                    </Td>
+
+                                    <Td className='flex-1 font-medium text-richblack-100 translate-x-12'>
+                                        <button disabled={loading} title='Instructor Information' className='px-2 transition-all duration-200 hover:scale-110 hover:text-yellow-100' onClick={() => {navigate(`/instructor/${instructor.firstName.toLowerCase()}-${instructor.lastName.toLowerCase()}`)}}
+                                        >
+                                            <FaCircleInfo className='text-lg'/>
+                                        </button>  
+                                        
+                                        <button disabled={loading} title='Instructor Dashboard' className='px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300' onClick={() => navigate(`${instructor._id}/instructor-dashboard`)}
+                                        >
+                                            <FaArrowRight className='text-lg'/>
+                                        </button>  
                                     </Td>
                                 </Tr>
                             ))

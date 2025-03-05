@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InstructorsTable from './InstructorsTable';
 
-const Categories = () => {
+const Instructors = () => {
 
     const [instructors, setInstructors] = useState([]) ;
 
@@ -9,7 +9,7 @@ const Categories = () => {
         <div>
             <div className='mb-14 flex justify-between items-center'>
                 <h1 className='text-3xl font-medium text-richblack-5'>
-                    All Instructors
+                    Instructors
                 </h1>
             </div>
 
@@ -30,4 +30,4 @@ const Categories = () => {
     )
 }
 
-export default Categories
+export default Instructors

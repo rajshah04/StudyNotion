@@ -60,6 +60,16 @@ const CoursesTable = ({courses, setCourses}) => {
 
     console.log("Instructor's Courses : ", courses) ;
 
+    // if(loading){
+    //     return (
+    //         <div className='h-[80vh] w-full grid place-items-center'>
+    //             <div className='custom-loader'>
+        
+    //             </div>
+    //         </div>
+    //     ) ;
+    // }
+
     return (
         <div>
             <Table className='rounded-3xl'>
@@ -82,88 +92,97 @@ const CoursesTable = ({courses, setCourses}) => {
 
                 <Tbody>
                     {
-                        courses.length === 0 ? (
-                            <Tr>
-                                <Td  className='py-10 text-center text-2xl font-medium text-richblack-100'>
-                                    No Courses Found
-                                </Td>
-                            </Tr>
-                        ) : (
-                            courses?.map((course, index, array) => (
-                                <Tr key={course._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-8 hover:border-richblack-300`}>
-
-                                    <Td className='flex flex-1 gap-x-4'>
-                                        <img src={course?.thumbnail} className='h-[150px] w-[220px] rounded-lg object-cover' loading='lazy' />
-
-                                        <div className='flex flex-col items-start justify-start gap-y-4'>
-                                            <p className='text-lg font-semibold text-richblack-5'>
-                                                {course.courseName}
-                                            </p>
-                                            <p  className='text-xs text-richblack-300'>
-                                                {
-                                                    course.courseDescription.split(" ").length > TRUNCATE_LENGTH ? 
-                                                    course.courseDescription.split(" ").slice(0, TRUNCATE_LENGTH).join(" ") + "..."
-                                                    : course.courseDescription
-                                                }
-                                            </p>
-                                            <p className='text-xs text-white'>
-                                                Created on : {course.createdAt.slice(0, 10)}
-                                            </p>
-                                            {
-                                                course.status === COURSE_STATUS.DRAFT ? (
-                                                    <p className="flex w-fit flex-row items-center justify-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
-                                                        <HiClock size={14} />
-                                                        Drafted
-                                                    </p>
-                                                ) : (
-                                                    <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
-                                                        <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
-                                                        <FaCheck size={8} />
-                                                        </div>
-                                                        Published
-                                                    </p>
-                                                )
-                                            }
-                                        </div>
+                        !loading ? 
+                        (
+                            courses.length === 0 ? (
+                                <Tr>
+                                    <Td  className='py-10 text-center text-2xl font-medium text-richblack-100'>
+                                        No Courses Found
                                     </Td>
-
-                                    <Td className='text-sm font-medium lg:mr-6 text-richblack-100'>
-                                        {
-                                            course.totalDuration || 0
-                                        }
-                                    </Td>
-
-                                    <Td className='text-sm font-medium text-richblack-100'>
-                                        ₹{course.price}
-                                    </Td>
-
-                                    <Td className='text-sm font-medium text-richblack-100'>
-                                        <button disabled={loading} 
-                                        onClick={() => {
-                                            navigate(`/dashboard/edit-course/${course._id}`)
-                                        }} title='Edit' className='px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300'
-                                        >
-                                            <FaEdit className='text-xl' />
-                                        </button>
-                                        
-                                        <button disabled={loading} 
-                                        onClick={() => {
-                                            setConfirmationModal({
-                                                text1: "Do you want to delete this course ?",
-                                                text2: "All the data related to this course will be deleted",
-                                                btn1Text: "Delete",
-                                                btn2Text: "Cancel",
-                                                btn1Handler: !loading ? () => handleCourseDelete(course._id) : () => {},
-                                                btn2Handler: !loading ? () =>setConfirmationModal(null) : () => {},
-                                            })
-                                        }} title='Delete' className='px-1 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]'
-                                        >
-                                           <MdDeleteForever className='text-xl' />
-                                        </button>
-                                    </Td>
-
                                 </Tr>
-                            ))
+                            ) : (
+                                courses?.map((course, index, array) => (
+                                    <Tr key={course._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-8 hover:border-richblack-300`}>
+
+                                        <Td className='flex flex-1 gap-x-4'>
+                                            <img src={course?.thumbnail} className='h-[150px] w-[220px] rounded-lg object-cover' loading='lazy' />
+
+                                            <div className='flex flex-col items-start justify-start gap-y-4'>
+                                                <p className='text-lg font-semibold text-richblack-5'>
+                                                    {course.courseName}
+                                                </p>
+                                                <p  className='text-xs text-richblack-300'>
+                                                    {
+                                                        course.courseDescription.split(" ").length > TRUNCATE_LENGTH ? 
+                                                        course.courseDescription.split(" ").slice(0, TRUNCATE_LENGTH).join(" ") + "..."
+                                                        : course.courseDescription
+                                                    }
+                                                </p>
+                                                <p className='text-xs text-white'>
+                                                    Created on : {course.createdAt.slice(0, 10)}
+                                                </p>
+                                                {
+                                                    course.status === COURSE_STATUS.DRAFT ? (
+                                                        <p className="flex w-fit flex-row items-center justify-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                                                            <HiClock size={14} />
+                                                            Drafted
+                                                        </p>
+                                                    ) : (
+                                                        <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
+                                                            <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
+                                                            <FaCheck size={8} />
+                                                            </div>
+                                                            Published
+                                                        </p>
+                                                    )
+                                                }
+                                            </div>
+                                        </Td>
+
+                                        <Td className='text-sm font-medium lg:mr-6 text-richblack-100'>
+                                            {
+                                                course.totalDuration || 0
+                                            }
+                                        </Td>
+
+                                        <Td className='text-sm font-medium text-richblack-100'>
+                                            ₹{course.price}
+                                        </Td>
+
+                                        <Td className='text-sm font-medium text-richblack-100'>
+                                            <button disabled={loading} 
+                                            onClick={() => {
+                                                navigate(`/dashboard/edit-course/${course._id}`)
+                                            }} title='Edit' className='px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300'
+                                            >
+                                                <FaEdit className='text-xl' />
+                                            </button>
+                                            
+                                            <button disabled={loading} 
+                                            onClick={() => {
+                                                setConfirmationModal({
+                                                    text1: "Do you want to delete this course ?",
+                                                    text2: "All the data related to this course will be deleted",
+                                                    btn1Text: "Delete",
+                                                    btn2Text: "Cancel",
+                                                    btn1Handler: !loading ? () => handleCourseDelete(course._id) : () => {},
+                                                    btn2Handler: !loading ? () =>setConfirmationModal(null) : () => {},
+                                                })
+                                            }} title='Delete' className='px-1 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]'
+                                            >
+                                            <MdDeleteForever className='text-xl' />
+                                            </button>
+                                        </Td>
+
+                                    </Tr>
+                                ))
+                            )) 
+                        : (
+                            <div className='h-[80vh] w-full grid place-items-center'>
+                                <div className='custom-loader'>
+                        
+                                </div>
+                            </div>
                         )
                     }
                 </Tbody>
