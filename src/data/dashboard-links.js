@@ -62,4 +62,11 @@ export const sidebarLinks = [
     type: ACCOUNT_TYPE.ADMIN,
     icon: "FaChalkboardTeacher",
   },
+  {
+    id: 10,
+    name: "Courses",
+    path: "/dashboard/courses",
+    type: ACCOUNT_TYPE.ADMIN,
+    icon: "VscVm",
+  },
 ];

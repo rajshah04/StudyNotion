@@ -32,6 +32,8 @@ import AddCategory from "./components/core/Dashboard/AddCategory";
 import EditCategory from "./components/core/Dashboard/EditCategory";
 import Instructors from "./components/core/Dashboard/Instructors";
 import InstructorDetails from "./pages/InstructorDetails";
+import Courses from "./components/core/Dashboard/Courses";
+import CourseEnrollments from "./components/core/Dashboard/Courses/CourseEnrollments";
 
 function App() {
 
@@ -117,6 +119,9 @@ function App() {
               <Route path="/dashboard/add-category" element={<AddCategory />} />
               <Route path="/dashboard/edit-category/:categoryId" element={<EditCategory />} />
               <Route path="/dashboard/instructors" element={<Instructors />} />
+              {/* <Route path="/dashboard/instructors/:instructorId/instructor-dashboard" element={<Instructor />} /> */}
+              <Route path="/dashboard/courses/course/:courseId" element={<CourseEnrollments />} />
+              <Route path="/dashboard/courses" element={<Courses />} />
             </>
           )
         }
