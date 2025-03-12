@@ -108,6 +108,7 @@ function App() {
               <Route path="/dashboard/add-course" element={<AddCourse />} />
               <Route path="/dashboard/my-courses" element={<MyCourses />} />
               <Route path="/dashboard/edit-course/:courseId" element={<EditCourse />} />
+              <Route path="/dashboard/my-courses/course/:courseId" element={<CourseEnrollments />} />
             </>
           )
         }
@@ -119,7 +120,6 @@ function App() {
               <Route path="/dashboard/add-category" element={<AddCategory />} />
               <Route path="/dashboard/edit-category/:categoryId" element={<EditCategory />} />
               <Route path="/dashboard/instructors" element={<Instructors />} />
-              {/* <Route path="/dashboard/instructors/:instructorId/instructor-dashboard" element={<Instructor />} /> */}
               <Route path="/dashboard/courses/course/:courseId" element={<CourseEnrollments />} />
               <Route path="/dashboard/courses" element={<Courses />} />
             </>

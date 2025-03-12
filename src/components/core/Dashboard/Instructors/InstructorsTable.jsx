@@ -46,6 +46,9 @@ const InstructorsTable = ({ instructors, setInstructors }) => {
                             No. of Courses
                         </Th>
                         <Th className='flex-auto text-left text-sm font-medium uppercase'>
+                            Income
+                        </Th>
+                        <Th className='flex-auto text-left text-sm font-medium uppercase'>
                             Actions
                         </Th>
                     </Tr>
@@ -61,7 +64,7 @@ const InstructorsTable = ({ instructors, setInstructors }) => {
                             </Tr>
                         ) : (
                             instructors.map((instructor, index, array) => (
-                                <Tr key={instructor._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-6 cursor-pointer hover:border-richblack-300 items-center`}>
+                                <Tr key={instructor._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-6 hover:border-richblack-300 items-center`}>
                                     <Td className='flex flex-1 justify-start items-center gap-x-4'>
 
                                         <img src={instructor.image} alt="" className='w-10 rounded-full' />
@@ -80,13 +83,19 @@ const InstructorsTable = ({ instructors, setInstructors }) => {
                                         }
                                     </Td>
 
-                                    <Td className='flex-1 font-medium text-richblack-100 translate-x-16'>
+                                    <Td className='flex-1 font-medium text-richblack-100 translate-x-28'>
                                         {
                                             instructor.courses.length || 0
                                         }
                                     </Td>
 
-                                    <Td className='flex-1 font-medium text-richblack-100 translate-x-12'>
+                                    <Td className='flex-1 font-medium text-richblack-100 translate-x-20'>
+                                        ₹ {" "} {
+                                            instructor.totalIncome || 0
+                                        }
+                                    </Td>
+
+                                    <Td className='flex-1 font-medium text-richblack-100 translate-x-8'>
                                         <button disabled={loading} title='Instructor Information' className='px-2 transition-all duration-200 hover:scale-110 hover:text-yellow-100' onClick={() => {navigate(`/instructor/${instructor.firstName.toLowerCase()}-${instructor.lastName.toLowerCase()}`)}}
                                         >
                                             <FaCircleInfo className='text-lg'/>

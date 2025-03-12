@@ -19,7 +19,7 @@ const CoursesTable = ({ courses, loading }) => {
                         <Th className='flex-1 text-left text-sm font-medium uppercase'>
                             Courses
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase'>
+                        <Th className='text-left text-sm font-medium uppercase -translate-x-8'>
                             Author
                         </Th>
                         <Th className='text-left text-sm font-medium uppercase'>

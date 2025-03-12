@@ -59,7 +59,7 @@ const CourseEnrollments = () => {
                             </Tr>
                         ) : (
                             studentsEnrolled.map((student, index, array) => (
-                                <Tr key={student._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-6 cursor-pointer hover:border-richblack-300 items-center`}>
+                                <Tr key={student._id} className={`flex gap-x-12 border border-richblack-700 ${index === array.length - 1 ? "rounded-b-md" : ""} px-6 py-6 hover:border-richblack-300 items-center`}>
                                     <Td className='flex flex-1 justify-start items-center gap-x-4'>
 
                                         <img src={student.image} alt="" className='w-10 rounded-full' />

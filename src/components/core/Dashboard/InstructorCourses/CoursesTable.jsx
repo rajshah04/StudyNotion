@@ -9,6 +9,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { MdDeleteForever } from 'react-icons/md';
 import { FaCheck, FaEdit } from "react-icons/fa";
 import { HiClock } from "react-icons/hi";
+import { FaCircleInfo } from 'react-icons/fa6';
 
 const CoursesTable = ({courses, setCourses}) => {
 
@@ -78,13 +79,13 @@ const CoursesTable = ({courses, setCourses}) => {
                         <Th className='flex-1 text-left text-sm font-medium uppercase'>
                             Courses
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase'>
+                        <Th className='text-left text-sm font-medium uppercase -translate-x-5'>
                             Duration
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase'>
+                        <Th className='text-left text-sm font-medium uppercase -translate-x-5'>
                             Price
                         </Th>
-                        <Th className='text-left text-sm font-medium uppercase'>
+                        <Th className='text-left text-sm font-medium uppercase -translate-x-5'>
                             Actions
                         </Th>
                     </Tr>
@@ -150,6 +151,11 @@ const CoursesTable = ({courses, setCourses}) => {
                                         </Td>
 
                                         <Td className='text-sm font-medium text-richblack-100'>
+                                            <button disabled={loading} title='Info page' className='px-2 transition-all duration-200 hover:scale-110 hover:text-yellow-100' onClick={() => navigate(`course/${course._id}`)}
+                                            >
+                                                <FaCircleInfo className='text-lg'/>
+                                            </button> 
+
                                             <button disabled={loading} 
                                             onClick={() => {
                                                 navigate(`/dashboard/edit-course/${course._id}`)

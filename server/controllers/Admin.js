@@ -14,6 +14,17 @@ exports.getAllInstructorsDetails = async(req, res) => {
                                                                                 })
                                                                             .exec() ;
 
+        for(let i = 0 ; i < instructorsDetails.length ; i++){
+            let totalIncome = 0 ;
+            let courses = instructorsDetails[i].courses || [] ;
+            for(let course of courses){
+                totalIncome += (course.price * (course.studentsEnrolled?.length || 0)) ; 
+            }
+
+            instructorsDetails[i] = instructorsDetails[i].toObject() ;
+            instructorsDetails[i].totalIncome = totalIncome ;
+        }
+                    
         // send response
         return res.status(200).json({
             success: true,

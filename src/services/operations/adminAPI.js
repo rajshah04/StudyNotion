@@ -53,11 +53,11 @@ export async function getCourses(token, courseType){
         }
 
         result = response?.data?.courses ;
-        toast.success("Courses fetched successfully for Admin.") ;
+        toast.success(`${courseType.courseType} Courses fetched Successfully.`) ;
     }
     catch(err){
         console.log("GET_COURSES_API Error", err) ;
-        toast.error("Could Not Get Courses Data for Admin.") ;
+        toast.error(`${courseType.courseType} Courses fetched Successfully.`) ;
     }
 
     toast.dismiss(toastId) ;
@@ -82,11 +82,11 @@ export async function getCourseDetails(token, data){
         }
 
         result = response?.data?.course ;
-        toast.success("Course Details fetched successfully for Admin.") ;
+        toast.success("Course Details fetched successfully.") ;
     }
     catch(err){
         console.log("GET_COURSE_DETAIL_API Error", err) ;
-        toast.error("Could Not Get Course's Details for Admin.") ;
+        toast.error("Could Not Get Course's Details.") ;
     }
 
     toast.dismiss(toastId) ;
